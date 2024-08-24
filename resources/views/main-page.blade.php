@@ -185,6 +185,7 @@
                             <div class="col-6">
                                 <div class="row">
                                     <h1 class="display-6">Counters</h1>
+                                    <h5>(Es malo contra:)</h5>
                                 </div>
                                 <div class="row alert alert-danger p-2">
                                     @if ($counters)
@@ -200,7 +201,8 @@
                             </div>
                             <div class="col-6">
                                 <div class="row">
-                                    <h1 class="display-6">Counter</h1>
+                                    <h1 class="display-6">Hace counter</h1>
+                                    <h5>(Es bueno contra:)</h5>
                                 </div>
                                 <div class="row alert alert-success p-2">
                                     @if ($countereas)
@@ -216,7 +218,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
             </div>

@@ -52,15 +52,15 @@ class MainPage extends Component
 
     public function selectHero($id)
     {
-        $this->selectedHero = hero::where('id',$id)->first();
-        $this->counters=$this->selectedHero->counteredBy;
-        $this->countereas=$this->selectedHero->counters;
+        $this->selectedHero = hero::where('id', $id)->first();
+        $this->counters = $this->selectedHero->counteredBy;
+        $this->countereas = $this->selectedHero->counters;
     }
 
     #[On('hidden.bs.modal')]
     public function reiniciar()
     {
-        $this->selectedHero=null;
+        $this->selectedHero = null;
     }
 
     public function render()
