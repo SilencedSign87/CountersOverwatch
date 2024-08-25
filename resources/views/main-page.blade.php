@@ -31,7 +31,8 @@
             padding: 10px 15px;
             transition: all 0.3s ease;
             height: 100%;
-            width: 9rem;
+            /* Tamaño de los botones superiores */
+            width: 9.5rem; 
             /* Cambia flex-direction a 'row' */
             display: flex;
             flex-direction: row;
@@ -138,43 +139,45 @@
         <ul class="nav custom-nav-tabs p-2" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link {{ $selectedFilter == 'all' ? 'active' : '' }}" id="all-tab" type="button"
-                    wire:click="todosHeroes">
-                    <span>
-                        TODOS
+                    wire:click="todosHeroes" wire:loading.attr="disabled">
+                    <span wire:loading.class="spinner-border spinner-border-sm" wire:target="todosHeroes">
+                        <span class="visually-hidden">Cargando...</span>
                     </span>
+                    <span wire:loading.remove>TODOS</span>
                 </button>
             </li>
 
             <li class="nav-item" role="presentation">
                 <button class="nav-link {{ $selectedFilter == 'tank' ? 'active' : '' }}" id="tanque-tab" type="button"
-                    wire:click="soloTank">
-                    <i class="bi bi-shield-fill"></i>
-                    <span class="texto-nav">
-                        TANQUE
+                    wire:click="soloTank" wire:loading.attr="disabled">
+                    <span wire:loading.class="spinner-border spinner-border-sm" wire:target="soloTank">
+                        <span class="visually-hidden">Cargando...</span>
                     </span>
+                    <span wire:loading.remove><i class="bi bi-shield-fill"></i> TANQUE</span>
                 </button>
             </li>
 
             <li class="nav-item" role="presentation">
                 <button class="nav-link {{ $selectedFilter == 'dps' ? 'active' : '' }}" id="dps-tab" type="button"
-                    wire:click="soloDps">
-                    <i class="bi bi-crosshair"></i>
-                    <span class="texto-nav">
-                        DAÑO
+                    wire:click="soloDps" wire:loading.attr="disabled">
+                    <span wire:loading.class="spinner-border spinner-border-sm" wire:target="soloDps">
+                        <span class="visually-hidden">Cargando...</span>
                     </span>
+                    <span wire:loading.remove><i class="bi bi-crosshair"></i> DAÑO</span>
                 </button>
             </li>
 
             <li class="nav-item" role="presentation">
                 <button class="nav-link {{ $selectedFilter == 'supp' ? 'active' : '' }}" id="soporte-tab" type="button"
-                    wire:click="soloSupp">
-                    <i class="bi bi-plus-circle"></i>
-                    <span class="texto-nav">
-                        SOPORTE
+                    wire:click="soloSupp" wire:loading.attr="disabled">
+                    <span wire:loading.class="spinner-border spinner-border-sm" wire:target="soloSupp">
+                        <span class="visually-hidden">Cargando...</span>
                     </span>
+                    <span wire:loading.remove><i class="bi bi-plus-circle"></i> SOPORTE</span>
                 </button>
             </li>
         </ul>
+
         @if ($selectedFilter)
             @if ($selectedFilter == 'tank')
                 <h6 class="h5 text-center mt-2 subtitulo">Lista de Counters del rol de tanque</h6>
