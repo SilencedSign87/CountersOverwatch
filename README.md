@@ -1,66 +1,39 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Página web para la lista de counters de Overwatch
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Capturas de pantalla
 
-## About Laravel
+### Pantalla principal
+![Pantalla Principal](./Capturas%20de%20Pantalla/Principal.png)
+### Modal de los Counters
+![Counters](./Capturas%20de%20Pantalla/Modal.png)
+### Pantalla Principal en Movil
+![Pantalla Principal Movil](./Capturas%20de%20Pantalla/MovilP.png)
+### Modal de counters en Movil
+![Counters en Movil](./Capturas%20de%20Pantalla/MovilM.png)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Espacio de Trabajo
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### PHP y Composer
+El proyecto usa PHP 8.2.12 (Se usó la versión de php que viene en [XAMPP](https://www.apachefriends.org/es/index.html)) y [Composer](https://getcomposer.org) para la administración de los paquetes.
+### SQLite
+Para almacenar datos y hacer las relaciones se usa SQLite, no debería ser necesario instalarlo ya que esta incluido en Composer. Si se amplía el scope del proyecto tal vez necesitemos la migración a MySQL que debería ser solo cambiar el archivo de entorno.
+### Editor de código
+Desarrollado en VScode
+## Preparar espacio de trabajo
+1. Clonar el repositorio.
+2. Abrir una terminal en el directorio raíz.
+3. Escribir `composer install` para instalar todos los paquetes.
+4. Para preparar el entorno escribe `cp .env.example .env` esto creará un archivo .env para la conexión a base de datos
+5. Para crear y rellenar la base de datos usar: `php artisan migrate --seed`
+6. Para generar la clave de encriptado usar: `php artisan key:generate`
+7. Finalmente, para probar que todo funciona correctamente usar `php artisan serve` para iniciar el servidor local, esto debería mostrar en consola una dirección local (ejemplo: http://127.0.0.1:8000 ) escribe esa dirección en un navegador y todo debería funcionar correctamente.
+## Problemas con composer
+Al momento de ejecutar `composer install` puede mostrar un error de que no se encontró la extensión ZIP, esto se puede solucionar usando el servidor de XAMPP.
 
-## Learning Laravel
+1. Abrir XAMPP
+2. Con los servicios apagados seleccionar en la fila de "Apache" seleccionar el botón "Config" y en el desplegable "PHP(php.ini)" esto abrirá un archivo en el bloc de notas u otro editor de texto.
+3. En el archivo de texto busca (ctrl+b) ";extension=zip" y borra el ";" delante de "extension=zip", haz lo mismo con ";extension=gd."
+4. Guarda y cierra el archivo de texto.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Si hay algún otro problema usa `composer diagnose` en el terminal para arreglar posibles corrupciones.
