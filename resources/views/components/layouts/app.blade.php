@@ -12,7 +12,7 @@
     <style>
         body {
             background: linear-gradient(to bottom,rgb(52,127,211),rgb(32,93,163));
-            height: 100vh;
+            height: 100%;
         }
     </style>
 </head>
