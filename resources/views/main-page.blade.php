@@ -50,6 +50,14 @@
             width: auto;
         }
 
+        .nav-item {
+            transition: transform 0.2s ease;
+        }
+
+        .nav-item:hover {
+            transform: scale(1.02);
+        }
+
         .card {
             transition: transform 0.2s ease;
         }
