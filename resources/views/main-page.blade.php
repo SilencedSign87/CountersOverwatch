@@ -1,21 +1,28 @@
 <div>
     <style>
+        .texto-nav {
+            margin-left: 0.5rem;
+        }
+
+        .nav-link {
+            justify-content: center;
+        }
+
         .custom-nav-tabs {
             display: flex;
-            flex-wrap: wrap;
+            align-items: center;
             justify-content: center;
             border-bottom: none;
             background: rgba(255, 255, 255, 0.178);
             padding: 1%;
         }
-    
+
         .custom-nav-tabs .nav-item {
-            
             margin: 0 5px;
         }
-    
+
         .custom-nav-tabs .nav-link {
-            font-size: 1.4rem;
+            font-size: 1.25rem;
             font-weight: bold;
             border: 0.2rem solid rgb(255, 255, 255);
             background-color: #ffffffb2;
@@ -24,11 +31,16 @@
             padding: 10px 15px;
             transition: all 0.3s ease;
             height: 100%;
+            width: 9rem;
+            /* Cambia flex-direction a 'row' */
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
             justify-content: center;
             text-align: center;
+            /* Define un ancho mínimo para el elemento */
+            min-width: 100px;
+            /* Ajusta este valor según sea necesario */
         }
 
         .custom-nav-tabs .nav-link img {
@@ -36,78 +48,78 @@
             width: 20px;
             height: 20px;
         }
-    
+
         .custom-nav-tabs .nav-link.active {
             background-color: white;
             color: #3d3d3d;
             border: 0.2rem solid #ffffff;
         }
-    
+
         .custom-nav-tabs .nav-link:hover:not(.active) {
             background-color: #ececec;
         }
-    
+
         .iconRol {
-            height: 1.25rem;
+            height: 1rem;
             width: auto;
         }
-    
+
         .nav-item {
             transition: transform 0.2s ease;
         }
-    
+
         .nav-item:hover {
             transform: scale(1.02);
         }
-    
+
         .card {
             transition: transform 0.2s ease;
         }
-    
+
         .card:hover {
             transform: scale(1.05);
         }
-    
+
         .imgHero {
             width: 20%;
             height: auto;
         }
-    
+
         .imgSM {
             width: 10vh;
             height: auto;
         }
 
-        .infoModal{
+        .infoModal {
             background: rgba(0, 0, 0, 0.5)
         }
-    
+
         /* Responsividad para el diseño de cartas */
         @media (min-width: 1200px) {
             .card-container {
                 grid-template-columns: repeat(5, 1fr);
             }
         }
-    
+
         @media (max-width: 1199px) and (min-width: 992px) {
             .card-container {
                 grid-template-columns: repeat(4, 1fr);
             }
         }
-    
+
         @media (max-width: 991px) and (min-width: 768px) {
             .card-container {
                 grid-template-columns: repeat(3, 1fr);
             }
         }
-    
+
         @media (max-width: 767px) {
             .card-container {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
-    
+
 
     <div class="container mt-5 mb-5 p-3">
 
@@ -115,44 +127,39 @@
             <li class="nav-item" role="presentation">
                 <button class="nav-link {{ $selectedFilter == 'all' ? 'active' : '' }}" id="all-tab" type="button"
                     wire:click="todosHeroes">
-                    TODOS
+                    <span>
+                        TODOS
+                    </span>
                 </button>
             </li>
 
             <li class="nav-item" role="presentation">
                 <button class="nav-link {{ $selectedFilter == 'tank' ? 'active' : '' }}" id="tanque-tab" type="button"
                     wire:click="soloTank">
-                    <svg class="iconRol" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                        fill="currentColor" class="bi bi-shield-fill" viewBox="0 0 16 16">
-                        <path
-                            d="M5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.8 11.8 0 0 1-2.517 2.453 7 7 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7 7 0 0 1-1.048-.625 11.8 11.8 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 63 63 0 0 1 5.072.56" />
-                    </svg>
-                    TANQUE
+                    <i class="bi bi-shield-fill"></i>
+                    <span class="texto-nav">
+                        TANQUE
+                    </span>
                 </button>
             </li>
 
             <li class="nav-item" role="presentation">
                 <button class="nav-link {{ $selectedFilter == 'dps' ? 'active' : '' }}" id="dps-tab" type="button"
                     wire:click="soloDps">
-                    <svg class="iconRol" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                        fill="currentColor" class="bi bi-crosshair" viewBox="0 0 16 16">
-                        <path
-                            d="M8.5.5a.5.5 0 0 0-1 0v.518A7 7 0 0 0 1.018 7.5H.5a.5.5 0 0 0 0 1h.518A7 7 0 0 0 7.5 14.982v.518a.5.5 0 0 0 1 0v-.518A7 7 0 0 0 14.982 8.5h.518a.5.5 0 0 0 0-1h-.518A7 7 0 0 0 8.5 1.018zm-6.48 7A6 6 0 0 1 7.5 2.02v.48a.5.5 0 0 0 1 0v-.48a6 6 0 0 1 5.48 5.48h-.48a.5.5 0 0 0 0 1h.48a6 6 0 0 1-5.48 5.48v-.48a.5.5 0 0 0-1 0v.48A6 6 0 0 1 2.02 8.5h.48a.5.5 0 0 0 0-1zM8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4" />
-                    </svg>
-                    DAÑO
+                    <i class="bi bi-crosshair"></i>
+                    <span class="texto-nav">
+                        DAÑO
+                    </span>
                 </button>
             </li>
 
             <li class="nav-item" role="presentation">
                 <button class="nav-link {{ $selectedFilter == 'supp' ? 'active' : '' }}" id="soporte-tab" type="button"
                     wire:click="soloSupp">
-                    <svg class="iconRol" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                        fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                        <path
-                            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
-                    </svg>
-                    SOPORTE
+                    <i class="bi bi-plus-circle"></i>
+                    <span class="texto-nav">
+                        SOPORTE
+                    </span>
                 </button>
             </li>
         </ul>
@@ -168,28 +175,11 @@
                                 <div class="col-2">
                                     <span class="h6">
                                         @if ($heroe->rol == 'tank')
-                                            <svg class="iconRol" xmlns="http://www.w3.org/2000/svg" width="16"
-                                                height="16" fill="currentColor" class="bi bi-shield-fill"
-                                                viewBox="0 0 16 16">
-                                                <path
-                                                    d="M5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.8 11.8 0 0 1-2.517 2.453 7 7 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7 7 0 0 1-1.048-.625 11.8 11.8 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 63 63 0 0 1 5.072.56" />
-                                            </svg>
+                                            <i class="bi bi-shield-fill"></i>
                                         @elseif ($heroe->rol == 'dps')
-                                            <svg class="iconRol" xmlns="http://www.w3.org/2000/svg" width="16"
-                                                height="16" fill="currentColor" class="bi bi-crosshair"
-                                                viewBox="0 0 16 16">
-                                                <path
-                                                    d="M8.5.5a.5.5 0 0 0-1 0v.518A7 7 0 0 0 1.018 7.5H.5a.5.5 0 0 0 0 1h.518A7 7 0 0 0 7.5 14.982v.518a.5.5 0 0 0 1 0v-.518A7 7 0 0 0 14.982 8.5h.518a.5.5 0 0 0 0-1h-.518A7 7 0 0 0 8.5 1.018zm-6.48 7A6 6 0 0 1 7.5 2.02v.48a.5.5 0 0 0 1 0v-.48a6 6 0 0 1 5.48 5.48h-.48a.5.5 0 0 0 0 1h.48a6 6 0 0 1-5.48 5.48v-.48a.5.5 0 0 0-1 0v.48A6 6 0 0 1 2.02 8.5h.48a.5.5 0 0 0 0-1zM8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4" />
-                                            </svg>
+                                            <i class="bi bi-crosshair"></i>
                                         @elseif ($heroe->rol == 'supp')
-                                            <svg class="iconRol" xmlns="http://www.w3.org/2000/svg" width="16"
-                                                height="16" fill="currentColor" class="bi bi-plus-circle"
-                                                viewBox="0 0 16 16">
-                                                <path
-                                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                                                <path
-                                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
-                                            </svg>
+                                            <i class="bi bi-plus-circle"></i>
                                         @else
                                             *
                                         @endif
@@ -217,8 +207,7 @@
                                 alt="Imagen del héroe" style="width: 100px; height: auto;">
                             <h1 class="modal-title display-4">{{ $selectedHero->nombre ?? '' }}</h1>
                         </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="row">
@@ -248,7 +237,7 @@
                                     @if ($countereas)
                                         @foreach ($countereas as $counterea)
                                             <img class="imgSM" src="{{ $counterea->img_path }}"
-                                                alt="Imagen de {{ $counterea->nombre }}" >
+                                                alt="Imagen de {{ $counterea->nombre }}">
                                         @endforeach
                                     @else
                                         No hay registros
