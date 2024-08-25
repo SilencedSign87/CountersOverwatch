@@ -2,24 +2,26 @@
     <style>
         .custom-nav-tabs {
             display: flex;
+            flex-wrap: wrap;
             justify-content: center;
             border-bottom: none;
             background: rgba(255, 255, 255, 0.178);
             padding: 1%;
         }
-
+    
         .custom-nav-tabs .nav-item {
-            margin: 0 10px;
+            
+            margin: 0 5px;
         }
-
+    
         .custom-nav-tabs .nav-link {
-            font-size: 1.25rem;
+            font-size: 1.4rem;
             font-weight: bold;
             border: 0.2rem solid rgb(255, 255, 255);
             background-color: #ffffffb2;
             color: rgba(0, 0, 0, 0.548);
             border-radius: 5%;
-            padding: 10px 20px;
+            padding: 10px 15px;
             transition: all 0.3s ease;
             height: 100%;
             display: flex;
@@ -31,54 +33,85 @@
 
         .custom-nav-tabs .nav-link img {
             margin-bottom: 5px;
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
         }
-
+    
         .custom-nav-tabs .nav-link.active {
             background-color: white;
             color: #3d3d3d;
             border: 0.2rem solid #ffffff;
         }
-
+    
         .custom-nav-tabs .nav-link:hover:not(.active) {
             background-color: #ececec;
         }
-
+    
         .iconRol {
-            height: 1.5rem;
+            height: 1.25rem;
             width: auto;
         }
-
+    
         .nav-item {
             transition: transform 0.2s ease;
         }
-
+    
         .nav-item:hover {
             transform: scale(1.02);
         }
-
+    
         .card {
             transition: transform 0.2s ease;
         }
-
+    
         .card:hover {
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
-
+    
         .imgHero {
-            width: 10%;
-            height: auto;
-        }
-
-        .imgSM {
             width: 20%;
             height: auto;
         }
+    
+        .imgSM {
+            width: 10vh;
+            height: auto;
+        }
+
+        .infoModal{
+            background: rgba(0, 0, 0, 0.5)
+        }
+    
+        /* Responsividad para el diseño de cartas */
+        @media (min-width: 1200px) {
+            .card-container {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+    
+        @media (max-width: 1199px) and (min-width: 992px) {
+            .card-container {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    
+        @media (max-width: 991px) and (min-width: 768px) {
+            .card-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    
+        @media (max-width: 767px) {
+            .card-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
     </style>
+    
 
     <div class="container mt-5 mb-5 p-3">
-        <ul class="nav custom-nav-tabs" id="myTab" role="tablist">
+
+        <ul class="nav custom-nav-tabs p-2" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link {{ $selectedFilter == 'all' ? 'active' : '' }}" id="all-tab" type="button"
                     wire:click="todosHeroes">
@@ -124,7 +157,7 @@
             </li>
         </ul>
 
-        <div class="mt-5" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px;">
+        <div class="mt-5 card-container" style="display: grid; gap: 20px;">
             @if ($heroes)
                 @foreach ($heroes as $heroe)
                     <div class="card shadow-lg" style="width: 100%;" wire:click="selectHero({{ $heroe->id }})"
@@ -166,7 +199,6 @@
                                     <h5 class="card-title text-left h5">{{ $heroe->nombre }}</h5>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 @endforeach
@@ -175,9 +207,9 @@
 
 
         {{-- Modal de información --}}
-        <div wire:ignore.self class="modal fade" id="heroInfo" tabindex="-1" aria-labelledby="heroInfoLabel"
+        <div wire:ignore.self class="modal fade infoModal" id="heroInfo" tabindex="-1" aria-labelledby="heroInfoLabel"
             aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center">
@@ -195,7 +227,7 @@
                                     <h1 class="display-6">Counters</h1>
                                     <h5>(Es malo contra:)</h5>
                                 </div>
-                                <div class="row alert alert-danger p-2">
+                                <div class="row alert alert-danger p-1">
                                     @if ($counters)
                                         @foreach ($counters as $counter)
                                             <img class="imgSM" src="{{ $counter->img_path }}"
@@ -216,7 +248,7 @@
                                     @if ($countereas)
                                         @foreach ($countereas as $counterea)
                                             <img class="imgSM" src="{{ $counterea->img_path }}"
-                                                alt="Imagen de {{ $counterea->nombre }}">
+                                                alt="Imagen de {{ $counterea->nombre }}" >
                                         @endforeach
                                     @else
                                         No hay registros
