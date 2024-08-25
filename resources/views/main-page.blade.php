@@ -227,7 +227,7 @@
                                     <h1 class="display-6">Counters</h1>
                                     <h5>(Es malo contra:)</h5>
                                 </div>
-                                <div class="row alert alert-danger p-1">
+                                <div class="row alert alert-danger p-2">
                                     @if ($counters)
                                         @foreach ($counters as $counter)
                                             <img class="imgSM" src="{{ $counter->img_path }}"
