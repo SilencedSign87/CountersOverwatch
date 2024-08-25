@@ -96,7 +96,14 @@
 
         .subtitulo {
             color: #ffffff;
-            text-shadow:2px 2px 2px rgba(0, 0, 0, 0.212) ;
+            text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.212);
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
         }
 
         /* Responsividad para el diseño de cartas */
@@ -123,7 +130,6 @@
                 grid-template-columns: repeat(2, 1fr);
             }
         }
-        
     </style>
 
 
@@ -225,39 +231,47 @@
                         </div>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="row">
-                                    <h1 class="display-6">Counters</h1>
-                                    <h5>(Es malo contra:)</h5>
-                                </div>
-                                <div class="row alert alert-danger p-2">
-                                    @if ($counters)
-                                        @foreach ($counters as $counter)
-                                            <img class="imgSM" src="{{ $counter->img_path }}"
-                                                alt="Imagen de {{ $counter->nombre }}">
-                                        @endforeach
-                                    @else
-                                        No hay registros
-                                    @endif
-                                </div>
-
+                    <div class="modal-body" wire:loading.class="loading">
+                        <div wire:loading>
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Cargando...</span>
                             </div>
-                            <div class="col-6">
-                                <div class="row">
-                                    <h1 class="display-6">Hace counter</h1>
-                                    <h5>(Es bueno contra:)</h5>
+                            <p class="mt-2">Cargando información del héroe...</p>
+                        </div>
+                        <div wire:loading.remove>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="row">
+                                        <h1 class="display-6">Counters</h1>
+                                        <h5>(Es malo contra:)</h5>
+                                    </div>
+                                    <div class="row alert alert-danger p-2">
+                                        @if ($counters)
+                                            @foreach ($counters as $counter)
+                                                <img class="imgSM" src="{{ $counter->img_path }}"
+                                                    alt="Imagen de {{ $counter->nombre }}">
+                                            @endforeach
+                                        @else
+                                            No hay registros
+                                        @endif
+                                    </div>
+
                                 </div>
-                                <div class="row alert alert-success p-2">
-                                    @if ($countereas)
-                                        @foreach ($countereas as $counterea)
-                                            <img class="imgSM" src="{{ $counterea->img_path }}"
-                                                alt="Imagen de {{ $counterea->nombre }}">
-                                        @endforeach
-                                    @else
-                                        No hay registros
-                                    @endif
+                                <div class="col-6">
+                                    <div class="row">
+                                        <h1 class="display-6">Hace counter</h1>
+                                        <h5>(Es bueno contra:)</h5>
+                                    </div>
+                                    <div class="row alert alert-success p-2">
+                                        @if ($countereas)
+                                            @foreach ($countereas as $counterea)
+                                                <img class="imgSM" src="{{ $counterea->img_path }}"
+                                                    alt="Imagen de {{ $counterea->nombre }}">
+                                            @endforeach
+                                        @else
+                                            No hay registros
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
