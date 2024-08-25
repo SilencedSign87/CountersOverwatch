@@ -16,6 +16,10 @@
 
 ### PHP y Composer
 El proyecto usa PHP 8.2.12 (Se usó la versión de php que viene en [XAMPP](https://www.apachefriends.org/es/index.html)) y [Composer](https://getcomposer.org) para la administración de los paquetes.
+### Paquetes usados
+1. Laravel (framework de PHP)
+2. Livewire (Lógica interna de los componentes)
+3. Bootstrap 5.3 (Frontend)
 ### SQLite
 Para almacenar datos y hacer las relaciones se usa SQLite, no debería ser necesario instalarlo ya que esta incluido en Composer. Si se amplía el scope del proyecto tal vez necesitemos la migración a MySQL que debería ser solo cambiar el archivo de entorno.
 ### Editor de código
