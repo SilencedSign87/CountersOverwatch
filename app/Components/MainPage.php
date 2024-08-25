@@ -28,26 +28,26 @@ class MainPage extends Component
     {
         $this->reset();
         $this->selectedFilter = 'all';
-        $this->heroes = hero::all();
+        $this->heroes = hero::orderBy('nombre','asc')->get();
     }
 
     public function soloTank()
     {
         $this->reset();
         $this->selectedFilter = 'tank';
-        $this->heroes = hero::where('rol', 'tank')->get();
+        $this->heroes = hero::where('rol', 'tank')->orderBy('nombre','asc')->get();
     }
     public function soloDps()
     {
         $this->reset();
         $this->selectedFilter = 'dps';
-        $this->heroes = hero::where('rol', 'dps')->get();
+        $this->heroes = hero::where('rol', 'dps')->orderBy('nombre','asc')->get();
     }
     public function soloSupp()
     {
         $this->reset();
         $this->selectedFilter = 'supp';
-        $this->heroes = hero::where('rol', 'supp')->get();
+        $this->heroes = hero::where('rol', 'supp')->orderBy('nombre','asc')->get();
     }
 
     public function selectHero($id)

@@ -13,7 +13,7 @@ class HeroSeeder extends Seeder
      */
     public function run(): void
     {
-        // Crear algunos héroes
+        // Tank
         $Dva = hero::create(['nombre' => 'Dva', 'rol' => 'tank', 'img_path' => 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/ca114f72193e4d58a85c087e9409242f1a31e808cf4058678b8cbf767c2a9a0a.png']);
         $Doomfist = hero::create(['nombre' => 'Doomfist', 'rol' => 'tank', 'img_path' => 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/13750471c693c1a360eb19d5ace229c8599a729cd961d72ebee0e157657b7d18.png']);
         $JunkerQueen = hero::create(['nombre' => 'JunkerQueen', 'rol' => 'tank', 'img_path' => 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/cef2406b2244b80506f83b8fb9ebaf214f41fa8795cbeef84026cd8018561d04.png']);
@@ -27,7 +27,7 @@ class HeroSeeder extends Seeder
         $WreckingBall = hero::create(['nombre' => 'Wrecking Ball', 'rol' => 'tank', 'img_path' => 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/5c18e39ce567ee8a84078f775b9f76a2ba891de601c059a3d2b46b61ae4afb42.png']);
         $Zarya = hero::create(['nombre' => 'Zarya', 'rol' => 'tank', 'img_path' => 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/8819ba85823136640d8eba2af6fd7b19d46b9ee8ab192a4e06f396d1e5231f7a.png']);
 
-
+        // Dps
 
         $Ashe = hero::create(['nombre' => 'Ashe', 'rol' => 'dps', 'img_path' => 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/8dc2a024c9b7d95c7141b2ef065590dbc8d9018d12ad15f76b01923986702228.png']);
         $Bastion = hero::create(['nombre' => 'Bastion', 'rol' => 'dps', 'img_path' => 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/4d715f722c42215072b5dd0240904aaed7b5285df0b2b082d0a7f1865b5ea992.png']);
@@ -48,11 +48,13 @@ class HeroSeeder extends Seeder
         $Venture = hero::create(['nombre' => 'Venture', 'rol' => 'dps', 'img_path' => 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/7e33dd756c8a1abca519af6c3bf26813f2f81d39885373539efcf8442c4bc647.png']);
         $Widowmaker = hero::create(['nombre' => 'Widowmaker', 'rol' => 'dps', 'img_path' => 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/a714f1cb33cc91c6b5b3e89ffe7e325b99e7c89cc8e8feced594f81305147efe.png']);
 
+        // Supp
 
         $Ana = hero::create(['nombre' => 'Ana', 'rol' => 'supp', 'img_path' => 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/3429c394716364bbef802180e9763d04812757c205e1b4568bc321772096ed86.png']);
         $Baptiste = hero::create(['nombre' => 'Baptiste', 'rol' => 'supp', 'img_path' => 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/f979896f74ba22db2a92a85ae1260124ab0a26665957a624365e0f96e5ac5b5c.png']);
         $Brigitte = hero::create(['nombre' => 'Brigitte', 'rol' => 'supp', 'img_path' => 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/48392820c6976ee1cd8dde13e71df85bf15560083ee5c8658fe7c298095d619a.png']);
         $Illari = hero::create(['nombre' => 'Illari', 'rol' => 'supp', 'img_path' => 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/5ea986038f9d307bd4613d5e6f2c4c8e7f15f30ceeeabbdd7a06637a38f17e1f.png']);
+        $Juno = hero::create(['nombre' => 'Juno', 'rol' => 'supp', 'img_path' => 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/585b2d60cbd3c271b6ad5ad0922537af0c6836fab6c89cb9979077f7bb0832b5.png']);
         $Kiriko = hero::create(['nombre' => 'Kiriko', 'rol' => 'supp', 'img_path' => 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/088aff2153bdfa426984b1d5c912f6af0ab313f0865a81be0edd114e9a2f79f9.png']);
         $Lifeweaver = hero::create(['nombre' => 'Lifeweaver', 'rol' => 'supp', 'img_path' => 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/39d4514f1b858bc228035b09d5a74ed41f8eeefc9a0d1873570b216ba04334df.png']);
         $Lucio = hero::create(['nombre' => 'Lúcio', 'rol' => 'supp', 'img_path' => 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/e2ff2527610a0fbe0c9956f80925123ef3e66c213003e29d37436de30b90e4e1.png']);
@@ -62,17 +64,38 @@ class HeroSeeder extends Seeder
 
 
 
-
         // Establecer relaciones de counter
-        $Mauga->counteredBy()->attach([$Sigma->id,$Dva->id, $Sojourn->id,$Tracer->id,$Widowmaker->id,$Ana->id,$Zenyatta->id]);
-        $Dva->counteredBy()->attach([$Zarya->id, $Mei->id,$Sombra->id,$Symmetra->id,$Zenyatta->id,$Moira->id]);
-        $Doomfist->counteredBy()->attach([$JunkerQueen->id,$Orisa->id,$Roadhog->id,$Cassidy->id, $Sombra->id,$Torbjorn->id,$Echo->id,$Ana->id,$Brigitte->id,$Zenyatta->id]);
+        $Mauga->counteredBy()->attach([$Sigma->id, $Dva->id, $Sojourn->id, $Tracer->id, $Widowmaker->id, $Ana->id, $Zenyatta->id]);
+        $Dva->counteredBy()->attach([$Zarya->id, $Mei->id, $Sombra->id, $Symmetra->id, $Zenyatta->id, $Moira->id]);
+        $Doomfist->counteredBy()->attach([$JunkerQueen->id, $Orisa->id, $Roadhog->id, $Cassidy->id, $Sombra->id, $Torbjorn->id, $Echo->id, $Ana->id, $Brigitte->id, $Zenyatta->id]);
+        $JunkerQueen->counteredBy()->attach([$Zarya->id, $Orisa->id, $Sigma->id, $Dva->id, $Cassidy->id, $Echo->id, $Mei->id, $Pharah->id, $Ana->id, $Kiriko->id]);
+        $Orisa->counteredBy()->attach([$Zarya->id, $Symmetra->id, $Sojourn->id, $Echo->id, $Zenyatta->id]);
+        $Ramattra->counteredBy()->attach([$Mauga->id, $Orisa->id, $Echo->id, $Pharah->id, $Mei->id, $Bastion->id, $Symmetra->id, $Zenyatta->id, $Ana->id]);
+        $Reinhardt->counteredBy()->attach([$Mauga->id, $JunkerQueen->id, $Orisa->id, $Ramattra->id, $Bastion->id, $Echo->id, $Mei->id, $Symmetra->id, $Baptiste->id, $Lucio->id]);
+        $Roadhog->counteredBy()->attach([$Orisa->id, $Roadhog->id, $Mauga->id, $Reaper->id, $Sojourn->id, $Ana->id, $Zenyatta->id]);
+        $Sigma->counteredBy()->attach([$Reinhardt->id, $Zarya->id, $Winston->id, $Ramattra->id, $Echo->id, $Pharah->id, $Mei->id, $Baptiste->id, $Lucio->id]);
+        $Winston->counteredBy()->attach([$Orisa->id, $Roadhog->id, $Mauga->id, $Dva->id, $Bastion->id, $Reaper->id, $Torbjorn->id, $Tracer->id, $Brigitte->id, $Zenyatta->id]);
+        $WreckingBall->counteredBy()->attach([$Orisa->id, $Roadhog->id, $Mauga->id, $Bastion->id, $Cassidy->id, $Sombra->id, $Ana->id, $Brigitte->id, $Lucio->id, $Zenyatta->id]);
+        $Zarya->counteredBy()->attach([$Winston->id, $Zarya->id, $Reinhardt->id]);
 
-        $Cassidy->counteredBy()->attach([$Kiriko->id, $Ana->id]);
-        $Tracer->counteredBy()->attach([$Ana->id, $Mauga->id]);
-
-        $Ana->counteredBy()->attach([$Mauga->id, $Dva->id]);
-        $Kiriko->counteredBy()->attach([$Tracer->id, $Mauga->id]);
+        $Venture->counteredBy()->attach([$Zarya->id, $Roadhog->id, $Orisa->id, $Cassidy->id, $Venture->id, $Lucio->id, $Kiriko->id, $Moira->id]);
+        $Ashe->counteredBy()->attach([$Sigma->id, $Dva->id, $Winston->id, $WreckingBall->id, $Widowmaker->id, $Hanzo->id, $Genji->id, $Kiriko->id, $Zenyatta->id]);
+        $Bastion->counteredBy()->attach([$Dva->id, $Sigma->id, $Hanzo->id, $Genji->id, $Junkrat->id, $Illari->id, $Zenyatta->id, $Baptiste->id]);
+        $Cassidy->counteredBy()->attach([$Dva->id, $Sigma->id, $Cassidy->id, $Sojourn->id, $Illari->id]);
+        $Echo->counteredBy()->attach([$Dva->id, $Zarya->id, $Ashe->id, $Cassidy->id, $Bastion->id, $Soldado76->id, $Widowmaker->id, $Illari->id, $Baptiste->id]);
+        $Genji->counteredBy()->attach([$Winston->id, $Zarya->id, $Echo->id, $Cassidy->id, $Sombra->id, $Torbjorn->id, $Symmetra->id, $Mei->id, $Moira->id, $Brigitte->id]);
+        $Hanzo->counteredBy()->attach([$Dva->id, $Doomfist->id, $Winston->id, $WreckingBall->id, $Echo->id, $Genji->id, $Pharah->id, $Sojourn->id, $Kiriko->id, $Lucio->id]);
+        $Junkrat->counteredBy()->attach([$Roadhog->id, $Sigma->id, $Winston->id, $Zarya->id, $Ashe->id, $Cassidy->id, $Pharah->id, $Echo->id, $Widowmaker->id, $Hanzo->id, $Baptiste->id, $Illari->id]);
+        $Mei->counteredBy()->attach([$Zarya->id, $Winston->id, $Cassidy->id, $Echo->id, $Pharah->id, $Kiriko->id, $Lifeweaver->id, $Lucio->id]);
+        $Pharah->counteredBy()->attach([$Dva->id, $Cassidy->id, $Ashe->id, $Soldado76->id, $Echo->id, $Baptiste->id, $Illari->id]);
+        $Reaper->counteredBy()->attach([$Dva->id, $Orisa->id, $Sigma->id, $Zarya->id, $Bastion->id, $Cassidy->id, $Echo->id, $Pharah->id, $Sombra->id, $Kiriko->id, $Brigitte->id, $Lucio->id]);
+        $Sojourn->counteredBy()->attach([$Dva->id, $Sigma->id, $Winston->id, $Zarya->id, $Cassidy->id, $Sojourn->id, $Illari->id]);
+        $Soldado76->counteredBy()->attach([$Dva->id, $Sigma->id, $Winston->id, $Cassidy->id, $Sojourn->id, $Illari->id, $Baptiste->id]);
+        $Sombra->counteredBy()->attach([$Dva->id, $Zarya->id, $Tracer->id, $Sombra->id, $Brigitte->id, $Illari->id]);
+        $Symmetra->counteredBy()->attach([$Winston->id, $Zarya->id, $JunkerQueen->id, $Widowmaker->id, $Ashe->id, $Hanzo->id, $Cassidy->id, $Pharah->id, $Echo->id, $Illari->id, $Baptiste->id]);
+        $Torbjorn->counteredBy()->attach([$Sigma->id, $Zarya->id, $Widowmaker->id, $Hanzo->id, $Ashe->id, $Echo->id, $Pharah->id, $Cassidy->id, $Soldado76->id, $Baptiste->id, $Illari->id, $Kiriko->id, $Zenyatta->id]);
+        $Tracer->counteredBy()->attach([$Zarya->id, $Dva->id, $Tracer->id, $Torbjorn->id, $Cassidy->id, $Brigitte->id, $Illari->id, $Kiriko->id, $Moira->id]);
+        $Widowmaker->counteredBy()->attach([$Dva->id, $Sigma->id, $Winston->id, $WreckingBall->id, $Hanzo->id, $Widowmaker->id, $Genji->id, $Sombra->id, $Kiriko->id, $Zenyatta->id]);
 
         // Imprimir información para verificar
         $this->command->info('Héroes creados y relaciones de counter establecidas:');

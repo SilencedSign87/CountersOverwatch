@@ -94,6 +94,11 @@
             background: rgba(0, 0, 0, 0.5)
         }
 
+        .subtitulo {
+            color: #ffffff;
+            text-shadow:2px 2px 2px rgba(0, 0, 0, 0.212) ;
+        }
+
         /* Responsividad para el diseño de cartas */
         @media (min-width: 1200px) {
             .card-container {
@@ -163,7 +168,17 @@
                 </button>
             </li>
         </ul>
-
+        @if ($selectedFilter)
+            @if ($selectedFilter == 'tank')
+                <h6 class="h5 text-center mt-2 subtitulo">Lista de Counters del rol de tanque</h6>
+            @elseif ($selectedFilter == 'dps')
+                <h6 class="h5 text-center mt-2 subtitulo">Lista de Counters del rol de daño</h6>
+            @elseif ($selectedFilter == 'supp')
+                <h6 class="h5 text-center mt-2 subtitulo">Lista de Counters del rol de apoyo</h6>
+            @else
+                <h6 class="h5 text-center mt-2 subtitulo">Todos los héroes</h6>
+            @endif
+        @endif
         <div class="mt-5 card-container" style="display: grid; gap: 20px;">
             @if ($heroes)
                 @foreach ($heroes as $heroe)
