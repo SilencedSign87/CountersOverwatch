@@ -136,7 +136,9 @@
 
     <div class="container mt-5 mb-5 p-3">
 
+        {{-- Botones de navegación --}}
         <ul class="nav custom-nav-tabs p-2" id="myTab" role="tablist">
+
             <li class="nav-item" role="presentation">
                 <button class="nav-link {{ $selectedFilter == 'all' ? 'active' : '' }}" id="all-tab" type="button"
                     wire:click="todosHeroes" wire:loading.attr="disabled" wire:target="todosHeroes">
@@ -191,19 +193,21 @@
             </li>
         </ul>
 
+        {{-- Subtitulos --}}
         @if ($selectedFilter)
             @if ($selectedFilter == 'tank')
-                <h6 class="h5 text-center mt-2 subtitulo">Lista de Counters del rol de tanque</h6>
+                <h6 class="h5 text-center mt-3 subtitulo">Lista de Counters del rol de tanque</h6>
             @elseif ($selectedFilter == 'dps')
-                <h6 class="h5 text-center mt-2 subtitulo">Lista de Counters del rol de daño</h6>
+                <h6 class="h5 text-center mt-3 subtitulo">Lista de Counters del rol de daño</h6>
             @elseif ($selectedFilter == 'supp')
-                <h6 class="h5 text-center mt-2 subtitulo">Lista de Counters del rol de apoyo</h6>
+                <h6 class="h5 text-center mt-3 subtitulo">Lista de Counters del rol de apoyo</h6>
             @else
-                <h6 class="h5 text-center mt-2 subtitulo">Todos los héroes</h6>
+                <h6 class="h5 text-center mt-3 subtitulo">Todos los héroes</h6>
             @endif
         @endif
 
-        <div class="mt-5 card-container" style="display: grid; gap: 20px;">
+        {{-- Cartas de los Héroes --}}
+        <div class="mt-4 card-container" style="display: grid; gap: 20px;">
             @if ($heroes)
                 @foreach ($heroes as $heroe)
                     <div class="card shadow-lg" style="width: 100%;" wire:click="selectHero({{ $heroe->id }})"
