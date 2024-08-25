@@ -1,7 +1,7 @@
 <div>
     <style>
         .texto-nav {
-            margin-left: 0.5rem;
+            margin-left: 0.25rem;
         }
 
         .nav-link {
@@ -139,41 +139,54 @@
         <ul class="nav custom-nav-tabs p-2" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link {{ $selectedFilter == 'all' ? 'active' : '' }}" id="all-tab" type="button"
-                    wire:click="todosHeroes" wire:loading.attr="disabled">
+                    wire:click="todosHeroes" wire:loading.attr="disabled" wire:target="todosHeroes">
                     <span wire:loading.class="spinner-border spinner-border-sm" wire:target="todosHeroes">
                         <span class="visually-hidden">Cargando...</span>
                     </span>
-                    <span wire:loading.remove>TODOS</span>
+                    <span>TODOS</span>
                 </button>
             </li>
 
             <li class="nav-item" role="presentation">
                 <button class="nav-link {{ $selectedFilter == 'tank' ? 'active' : '' }}" id="tanque-tab" type="button"
-                    wire:click="soloTank" wire:loading.attr="disabled">
+                    wire:click="soloTank" wire:loading.attr="disabled" wire:target="soloTank">
                     <span wire:loading.class="spinner-border spinner-border-sm" wire:target="soloTank">
                         <span class="visually-hidden">Cargando...</span>
                     </span>
-                    <span wire:loading.remove><i class="bi bi-shield-fill"></i> TANQUE</span>
+                    <span wire:loading.remove>
+                        <i class="bi bi-shield-fill"></i>
+                    </span>
+                    <span class="texto-nav">
+                        TANQUE
+                    </span>
                 </button>
             </li>
 
             <li class="nav-item" role="presentation">
                 <button class="nav-link {{ $selectedFilter == 'dps' ? 'active' : '' }}" id="dps-tab" type="button"
-                    wire:click="soloDps" wire:loading.attr="disabled">
+                    wire:click="soloDps" wire:loading.attr="disabled" wire:target="soloDps">
                     <span wire:loading.class="spinner-border spinner-border-sm" wire:target="soloDps">
                         <span class="visually-hidden">Cargando...</span>
                     </span>
-                    <span wire:loading.remove><i class="bi bi-crosshair"></i> DAÑO</span>
+                    <span wire:loading.remove><i class="bi bi-crosshair"></i>
+                    </span>
+                    <span class="texto-nav">
+                        DAÑO
+                    </span>
                 </button>
             </li>
 
             <li class="nav-item" role="presentation">
                 <button class="nav-link {{ $selectedFilter == 'supp' ? 'active' : '' }}" id="soporte-tab" type="button"
-                    wire:click="soloSupp" wire:loading.attr="disabled">
+                    wire:click="soloSupp" wire:loading.attr="disabled" wire:target="soloSupp">
                     <span wire:loading.class="spinner-border spinner-border-sm" wire:target="soloSupp">
                         <span class="visually-hidden">Cargando...</span>
                     </span>
-                    <span wire:loading.remove><i class="bi bi-plus-circle"></i> SOPORTE</span>
+                    <span wire:loading.remove><i class="bi bi-plus-circle"></i>
+                    </span>
+                    <span class="texto-nav">
+                        SOPORTE
+                    </span>
                 </button>
             </li>
         </ul>
@@ -189,6 +202,7 @@
                 <h6 class="h5 text-center mt-2 subtitulo">Todos los héroes</h6>
             @endif
         @endif
+
         <div class="mt-5 card-container" style="display: grid; gap: 20px;">
             @if ($heroes)
                 @foreach ($heroes as $heroe)
@@ -230,7 +244,8 @@
                         <div class="d-flex align-items-center">
                             <img class="img-thumbnail imgHero me-3" src="{{ $selectedHero->img_path ?? '' }}"
                                 alt="Imagen del héroe" style="width: 100px; height: auto;">
-                            <h1 class="modal-title display-4">{{ $selectedHero->nombre ?? '' }}</h1>
+                            <h1 class="modal-title display-4" wire:loading.class="loading-modal-title">
+                                {{ $selectedHero->nombre ?? '' }}</h1>
                         </div>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
