@@ -30,9 +30,9 @@
             border-radius: 5%;
             padding: 10px 15px;
             transition: all 0.3s ease;
-            height: 100%;
+            height: 3rem;
             /* Tamaño de los botones superiores */
-            width: 9.5rem; 
+            width: 9.5rem;
             /* Cambia flex-direction a 'row' */
             display: flex;
             flex-direction: row;
@@ -70,7 +70,7 @@
         }
 
         .nav-item:hover {
-            transform: scale(1.02);
+            transform: scale(1.01);
         }
 
         .card {
