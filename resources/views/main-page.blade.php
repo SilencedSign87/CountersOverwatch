@@ -44,13 +44,10 @@
             /* Ajusta este valor según sea necesario */
         }
 
-        /* .custom-nav-tabs .nav-link img {
-            width: 1.75rem;
-            height: 1.75rem;
-        } */
-
         /* Estilo de los iconos de rol */
         .img_menu {
+            display: flex;
+            align-items: center;
             opacity: 0.50;
             mix-blend-mode: multiply;
             width: 1.75rem;
@@ -225,7 +222,6 @@
                     <span wire:loading.class="spinner-border spinner-border-sm" wire:target="todosHeroes">
                         <span class="visually-hidden">Cargando...</span>
                     </span>
-                    {{-- <span>TODOS</span> --}}
                     TODOS
                 </button>
             </li>
@@ -237,7 +233,6 @@
                         <span class="visually-hidden">Cargando...</span>
                     </span>
                     <span wire:loading.remove>
-                        {{-- <i class="bi bi-shield-fill"></i> --}}
                         <img class="m-0 img_menu"
                             src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/bltcb94e9203be4088a/dark_circle_tank.svg">
                     </span>
@@ -254,7 +249,6 @@
                         <span class="visually-hidden">Cargando...</span>
                     </span>
                     <span wire:loading.remove>
-                        {{-- <i class="bi bi-crosshair"></i> --}}
                         <img class="m-0 img_menu"
                             src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt052e8b02aef879b0/dark_circle_damage.svg" />
                     </span>
@@ -271,7 +265,6 @@
                         <span class="visually-hidden">Cargando...</span>
                     </span>
                     <span wire:loading.remove>
-                        {{-- <i class="bi bi-plus-circle"></i> --}}
                         <img class="m-0 img_menu"
                             src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt8cf279e9b3126ef8/dark_circle_support.svg" />
                     </span>
@@ -307,15 +300,12 @@
                                 <div class="col-2">
                                     <span class="h6">
                                         @if ($heroe->rol == 'tank')
-                                            {{-- <i class="bi bi-shield-fill"></i> --}}
                                             <img class="m-0 img_menu"
                                                 src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/bltcb94e9203be4088a/dark_circle_tank.svg">
                                         @elseif ($heroe->rol == 'dps')
-                                            {{-- <i class="bi bi-crosshair"></i> --}}
                                             <img class="m-0 img_menu"
                                                 src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt052e8b02aef879b0/dark_circle_damage.svg" />
                                         @elseif ($heroe->rol == 'supp')
-                                            {{-- <i class="bi bi-plus-circle"></i> --}}
                                             <img class="m-0 img_menu"
                                                 src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt8cf279e9b3126ef8/dark_circle_support.svg" />
                                         @else
@@ -366,16 +356,18 @@
                                     @foreach ($countersByRol as $rol => $counters)
                                         @if (count($counters) > 0)
                                             <div class="row alert alert-danger mb-1 counters py-2 px-0">
-                                                {{-- <h6>Rol: {{ $rol }}</h6> --}}
                                                 <h6 class="nombre_rol text-uppercase d-flex align-items-center">
                                                     @if ($rol == 'tank')
-                                                        <img class="m-0 img_counters" src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/bltcb94e9203be4088a/dark_circle_tank.svg">
+                                                        <img class="m-0 img_counters"
+                                                            src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/bltcb94e9203be4088a/dark_circle_tank.svg">
                                                         <span class="ms-2">TANK</span>
                                                     @elseif ($rol == 'dps')
-                                                        <img class="m-0 img_counters" src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt052e8b02aef879b0/dark_circle_damage.svg">
+                                                        <img class="m-0 img_counters"
+                                                            src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt052e8b02aef879b0/dark_circle_damage.svg">
                                                         <span class="ms-2">DPS</span>
                                                     @elseif($rol == 'supp')
-                                                        <img class="m-0 img_counters" src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt8cf279e9b3126ef8/dark_circle_support.svg">
+                                                        <img class="m-0 img_counters"
+                                                            src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt8cf279e9b3126ef8/dark_circle_support.svg">
                                                         <span class="ms-2">SUPPORT</span>
                                                     @else
                                                         <span>*</span>
@@ -386,9 +378,6 @@
                                                     <img class="imgSM py-1" src="{{ $counter->img_path }}"
                                                         alt="Imagen de {{ $counter->nombre }}">
                                                 @endforeach
-                                                {{-- @else
-                                                No hay registros --}}
-
                                             </div>
                                         @endif
                                     @endforeach
@@ -402,16 +391,18 @@
                                     @foreach ($countereasByRol as $rol => $countereas)
                                         @if (count($countereas) > 0)
                                             <div class="row alert alert-primary mb-1 counters py-2 px-0">
-                                                {{-- <h6>Rol: {{ $rol }}</h6> --}}
                                                 <h6 class="nombre_rol text-uppercase d-flex align-items-center">
                                                     @if ($rol == 'tank')
-                                                        <img class="m-0 img_counters" src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/bltcb94e9203be4088a/dark_circle_tank.svg">
+                                                        <img class="m-0 img_counters"
+                                                            src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/bltcb94e9203be4088a/dark_circle_tank.svg">
                                                         <span class="ms-2">TANK</span>
                                                     @elseif ($rol == 'dps')
-                                                        <img class="m-0 img_counters" src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt052e8b02aef879b0/dark_circle_damage.svg">
+                                                        <img class="m-0 img_counters"
+                                                            src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt052e8b02aef879b0/dark_circle_damage.svg">
                                                         <span class="ms-2">DPS</span>
                                                     @elseif($rol == 'supp')
-                                                        <img class="m-0 img_counters" src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt8cf279e9b3126ef8/dark_circle_support.svg">
+                                                        <img class="m-0 img_counters"
+                                                            src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt8cf279e9b3126ef8/dark_circle_support.svg">
                                                         <span class="ms-2">SUPPORT</span>
                                                     @else
                                                         <span>*</span>
@@ -422,9 +413,6 @@
                                                     <img class="imgSM py-1" src="{{ $counterea->img_path }}"
                                                         alt="Imagen de {{ $counterea->nombre }}">
                                                 @endforeach
-                                                {{-- @else
-                                                No hay registros --}}
-
                                             </div>
                                         @endif
                                     @endforeach
