@@ -7,6 +7,8 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
+use function PHPUnit\Framework\isEmpty;
+
 #[Title('Lista de Counters')]
 
 class MainPage extends Component
@@ -55,6 +57,8 @@ class MainPage extends Component
         $this->selectedHero = hero::where('id', $id)->first();
         $this->counters = $this->selectedHero->counteredBy;
         $this->countereas = $this->selectedHero->counters;
+        
+        dd($this);
     }
 
     #[On('hidden.bs.modal')]
