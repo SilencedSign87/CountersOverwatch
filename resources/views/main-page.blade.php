@@ -32,7 +32,7 @@
             transition: all 0.3s ease;
             height: 3rem;
             /* Tamaño de los botones superiores */
-            width: 9.5rem;
+            width: 9rem;
             /* Cambia flex-direction a 'row' */
             display: flex;
             flex-direction: row;
@@ -92,7 +92,8 @@
         }
 
         .infoModal {
-            background: rgba(0, 0, 0, 0.5)
+            /* Fondo del modal */
+            background: rgba(0, 0, 0, 0);
         }
 
         .subtitulo {
@@ -106,8 +107,55 @@
             align-items: center;
             height: 100%;
         }
-        .counters{
+
+        .counters {
             justify-content: space-around;
+        }
+
+        /* Nombre del heroe en el modal */
+        .nombreHeroe {
+            font-weight: bold;
+        }
+
+        /* Transparencia del modal */
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.75);
+            /* Fondo semi-transparente */
+            backdrop-filter: blur(2rem);
+            /* Desenfoca el fondo */
+            -webkit-backdrop-filter: blur(2rem);
+            /* Desenfoque para navegadores WebKit */
+            border: none;
+            /* Sin bordes */
+        }
+
+        .modal-header,
+        .modal-footer {
+            border: none;
+            /* Elimina bordes del header y footer */
+            background: rgba(255, 255, 255, 0.4);
+            /* Fondo semi-transparente */
+        }
+
+        /* Alerta del modal */
+        .alert-danger {
+            background-color: rgba(220, 53, 69, 0.25);
+            /* El último valor (0.5) es la transparencia */
+        }
+
+        .alert-success {
+            background-color: rgba(25, 135, 84, 0.25);
+        }
+
+        /* Boton de información */
+        .masInfo {
+            font-weight: bold;
+            color: white;
+            background: #F06414;
+        }
+        .masInfo:hover{
+            background: rgb(255, 120, 41);
         }
 
         /* Responsividad para el diseño de cartas */
@@ -140,9 +188,9 @@
     <div class="container mt-5 mb-5 p-3">
 
         {{-- Botones de navegación --}}
-        <ul class="nav custom-nav-tabs p-2" id="myTab" role="tablist">
+        <ul class="nav custom-nav-tabs p-1" id="myTab" role="tablist">
 
-            <li class="nav-item" role="presentation">
+            <li class="nav-item py-1" role="presentation">
                 <button class="nav-link {{ $selectedFilter == 'all' ? 'active' : '' }}" id="all-tab" type="button"
                     wire:click="todosHeroes" wire:loading.attr="disabled" wire:target="todosHeroes">
                     <span wire:loading.class="spinner-border spinner-border-sm" wire:target="todosHeroes">
@@ -152,7 +200,7 @@
                 </button>
             </li>
 
-            <li class="nav-item" role="presentation">
+            <li class="nav-item py-1" role="presentation">
                 <button class="nav-link {{ $selectedFilter == 'tank' ? 'active' : '' }}" id="tanque-tab" type="button"
                     wire:click="soloTank" wire:loading.attr="disabled" wire:target="soloTank">
                     <span wire:loading.class="spinner-border spinner-border-sm" wire:target="soloTank">
@@ -167,7 +215,7 @@
                 </button>
             </li>
 
-            <li class="nav-item" role="presentation">
+            <li class="nav-item py-1" role="presentation">
                 <button class="nav-link {{ $selectedFilter == 'dps' ? 'active' : '' }}" id="dps-tab" type="button"
                     wire:click="soloDps" wire:loading.attr="disabled" wire:target="soloDps">
                     <span wire:loading.class="spinner-border spinner-border-sm" wire:target="soloDps">
@@ -181,7 +229,7 @@
                 </button>
             </li>
 
-            <li class="nav-item" role="presentation">
+            <li class="nav-item py-1" role="presentation">
                 <button class="nav-link {{ $selectedFilter == 'supp' ? 'active' : '' }}" id="soporte-tab" type="button"
                     wire:click="soloSupp" wire:loading.attr="disabled" wire:target="soloSupp">
                     <span wire:loading.class="spinner-border spinner-border-sm" wire:target="soloSupp">
@@ -251,7 +299,7 @@
                         <div class="d-flex align-items-center">
                             <img class="img-thumbnail imgHero me-3" src="{{ $selectedHero->img_path ?? '' }}"
                                 alt="Imagen del héroe" style="width: 100px; height: auto;">
-                            <h1 class="modal-title display-4" wire:loading.class="loading-modal-title">
+                            <h1 class="modal-title display-4 nombreHeroe" wire:loading.class="loading-modal-title">
                                 {{ $selectedHero->nombre ?? '' }}</h1>
                         </div>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -270,16 +318,33 @@
                                         <h1 class="h5">Counters</h1>
                                         <h6>(Es malo contra:)</h6>
                                     </div>
-                                    <div class="row alert alert-danger p-2 counters">
-                                        @if ($counters)
-                                            @foreach ($counters as $counter)
-                                                <img class="imgSM p-1" src="{{ $counter->img_path }}"
-                                                    alt="Imagen de {{ $counter->nombre }}">
-                                            @endforeach
-                                        @else
-                                            No hay registros
+                                    @foreach ($countersByRol as $rol => $counters)
+                                        @if (count($counters) > 0)
+                                            <div class="row alert alert-danger mb-1 counters">
+                                                {{-- <h6>Rol: {{ $rol }}</h6> --}}
+                                                <h6>
+                                                    @if ($rol == 'tank')
+                                                        <i class="bi bi-shield-fill"></i>
+                                                    @elseif ($rol == 'dps')
+                                                        <i class="bi bi-crosshair"></i>
+                                                    @elseif($rol == 'supp')
+                                                        <i class="bi bi-plus-circle"></i>
+                                                    @else
+                                                        <span>*</span>
+                                                    @endif
+                                                    {{ $rol }}
+                                                </h6>
+
+                                                @foreach ($counters as $counter)
+                                                    <img class="imgSM p-1" src="{{ $counter->img_path }}"
+                                                        alt="Imagen de {{ $counter->nombre }}">
+                                                @endforeach
+                                                {{-- @else
+                                                No hay registros --}}
+
+                                            </div>
                                         @endif
-                                    </div>
+                                    @endforeach
 
                                 </div>
                                 <div class="col-6">
@@ -287,21 +352,39 @@
                                         <h1 class="h5">Es Counter</h1>
                                         <h6>(Es bueno contra:)</h6>
                                     </div>
-                                    <div class="row alert alert-success p-2 counters">
-                                        @if ($countereas)
-                                            @foreach ($countereas as $counterea)
-                                                <img class="imgSM p-1" src="{{ $counterea->img_path }}"
-                                                    alt="Imagen de {{ $counterea->nombre }}">
-                                            @endforeach
-                                        @else
-                                            No hay registros
+                                    @foreach ($countereasByRol as $rol => $countereas)
+                                        @if (count($countereas) > 0)
+                                            <div class="row alert alert-success mb-1 counters">
+                                                {{-- <h6>Rol: {{ $rol }}</h6> --}}
+                                                <h6>
+                                                    @if ($rol == 'tank')
+                                                        <i class="bi bi-shield-fill"></i>
+                                                    @elseif ($rol == 'dps')
+                                                        <i class="bi bi-crosshair"></i>
+                                                    @elseif($rol == 'supp')
+                                                        <i class="bi bi-plus-circle"></i>
+                                                    @else
+                                                        <span>*</span>
+                                                    @endif
+                                                    {{ $rol }}
+                                                </h6>
+
+                                                @foreach ($countereas as $counterea)
+                                                    <img class="imgSM p-1" src="{{ $counterea->img_path }}"
+                                                        alt="Imagen de {{ $counterea->nombre }}">
+                                                @endforeach
+                                                {{-- @else
+                                                No hay registros --}}
+
+                                            </div>
                                         @endif
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn masInfo">Más Información</button>
                         <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
