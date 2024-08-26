@@ -112,6 +112,11 @@
             justify-content: space-around;
         }
 
+        /* Tarjeta de héroe */
+        .tarjeta_heroe {
+            border:none;
+        }
+
         /* Nombre del heroe en el modal */
         .nombreHeroe {
             font-weight: bold;
@@ -154,7 +159,8 @@
             color: white;
             background: #F06414;
         }
-        .masInfo:hover{
+
+        .masInfo:hover {
             background: rgb(255, 120, 41);
         }
 
@@ -261,8 +267,8 @@
         <div class="mt-4 card-container" style="display: grid; gap: 20px;">
             @if ($heroes)
                 @foreach ($heroes as $heroe)
-                    <div class="card shadow-lg" style="width: 100%;" wire:click="selectHero({{ $heroe->id }})"
-                        data-bs-toggle="modal" data-bs-target="#heroInfo">
+                    <div class="card shadow-lg tarjeta_heroe" style="width: 100%;"
+                        wire:click="selectHero({{ $heroe->id }})" data-bs-toggle="modal" data-bs-target="#heroInfo">
                         <img src="{{ $heroe->img_path }}" class="card-img-top" alt="Imagen de {{ $heroe->nombre }}">
                         <div class="card-body">
                             <div class="row items-center">

@@ -6,11 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    {{-- Estilos de livewire --}}
     @livewireStyles()
+
+    {{-- estilos de bootstrap --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    {{-- Titulo dado en el componente --}}
     <title>{{ $title ?? 'Page Title' }}</title>
+
+    {{-- Icono de la parte superior del navegador --}}
+    <link rel="icon" href="https://static.playoverwatch.com/img/favicon-2f5255d1c6.ico" type="image/x-icon">
+    
     <style>
-         html, body {
+        html,
+        body {
             height: 100%;
             margin: 0;
         }
