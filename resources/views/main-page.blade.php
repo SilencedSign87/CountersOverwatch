@@ -121,6 +121,8 @@
         .nombreHeroe {
             font-weight: bold;
         }
+        /
+
 
         /* Transparencia del modal */
 
@@ -151,6 +153,10 @@
 
         .alert-success {
             background-color: rgba(25, 135, 84, 0.25);
+        }
+        /* Texto del modal */
+        .nombre_rol{
+            font-weight: bold;
         }
 
         /* Boton de información */
@@ -328,17 +334,17 @@
                                         @if (count($counters) > 0)
                                             <div class="row alert alert-danger mb-1 counters">
                                                 {{-- <h6>Rol: {{ $rol }}</h6> --}}
-                                                <h6>
+                                                <h6 class="nombre_rol text-uppercase">
                                                     @if ($rol == 'tank')
-                                                        <i class="bi bi-shield-fill"></i>
+                                                        <i class="bi bi-shield-fill"></i> Tanque
                                                     @elseif ($rol == 'dps')
-                                                        <i class="bi bi-crosshair"></i>
+                                                        <i class="bi bi-crosshair"></i> Daño
                                                     @elseif($rol == 'supp')
-                                                        <i class="bi bi-plus-circle"></i>
+                                                        <i class="bi bi-plus-circle"></i> Soporte
                                                     @else
                                                         <span>*</span>
                                                     @endif
-                                                    {{ $rol }}
+                                                    
                                                 </h6>
 
                                                 @foreach ($counters as $counter)
@@ -362,17 +368,17 @@
                                         @if (count($countereas) > 0)
                                             <div class="row alert alert-success mb-1 counters">
                                                 {{-- <h6>Rol: {{ $rol }}</h6> --}}
-                                                <h6>
+                                                <h6 class="nombre_rol text-uppercase">
                                                     @if ($rol == 'tank')
-                                                        <i class="bi bi-shield-fill"></i>
+                                                        <i class="bi bi-shield-fill"></i> Tanque
                                                     @elseif ($rol == 'dps')
-                                                        <i class="bi bi-crosshair"></i>
+                                                        <i class="bi bi-crosshair"></i> Daño
                                                     @elseif($rol == 'supp')
-                                                        <i class="bi bi-plus-circle"></i>
+                                                        <i class="bi bi-plus-circle"></i> Soporte
                                                     @else
                                                         <span>*</span>
                                                     @endif
-                                                    {{ $rol }}
+                                                    
                                                 </h6>
 
                                                 @foreach ($countereas as $counterea)
