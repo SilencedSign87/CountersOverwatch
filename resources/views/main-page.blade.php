@@ -106,6 +106,9 @@
             align-items: center;
             height: 100%;
         }
+        .counters{
+            justify-content: space-around;
+        }
 
         /* Responsividad para el diseño de cartas */
         @media (min-width: 1200px) {
@@ -264,13 +267,13 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="row">
-                                        <h1 class="display-6">Counters</h1>
-                                        <h5>(Es malo contra:)</h5>
+                                        <h1 class="h5">Counters</h1>
+                                        <h6>(Es malo contra:)</h6>
                                     </div>
-                                    <div class="row alert alert-danger p-2">
+                                    <div class="row alert alert-danger p-2 counters">
                                         @if ($counters)
                                             @foreach ($counters as $counter)
-                                                <img class="imgSM" src="{{ $counter->img_path }}"
+                                                <img class="imgSM p-1" src="{{ $counter->img_path }}"
                                                     alt="Imagen de {{ $counter->nombre }}">
                                             @endforeach
                                         @else
@@ -281,13 +284,13 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="row">
-                                        <h1 class="display-6">Hace counter</h1>
-                                        <h5>(Es bueno contra:)</h5>
+                                        <h1 class="h5">Es Counter</h1>
+                                        <h6>(Es bueno contra:)</h6>
                                     </div>
-                                    <div class="row alert alert-success p-2">
+                                    <div class="row alert alert-success p-2 counters">
                                         @if ($countereas)
                                             @foreach ($countereas as $counterea)
-                                                <img class="imgSM" src="{{ $counterea->img_path }}"
+                                                <img class="imgSM p-1" src="{{ $counterea->img_path }}"
                                                     alt="Imagen de {{ $counterea->nombre }}">
                                             @endforeach
                                         @else
