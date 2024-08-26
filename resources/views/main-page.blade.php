@@ -207,8 +207,21 @@
             .card-container {
                 grid-template-columns: repeat(2, 1fr);
             }
-            .card-title {
-                font-size: 1rem;
+            .card-title{
+                text-align: center;
+            }
+
+            .d-flex {
+                flex-direction: column !important;
+            }
+
+            .me-md-2 {
+                margin-right: 0 !important;
+            }
+
+            .mb-2 {
+                margin-bottom: 0.5rem;
+
             }
         }
     </style>
@@ -299,8 +312,8 @@
                         wire:click="selectHero({{ $heroe->id }})" data-bs-toggle="modal" data-bs-target="#heroInfo">
                         <img src="{{ $heroe->img_path }}" class="card-img-top" alt="Imagen de {{ $heroe->nombre }}">
                         <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="me-2">
+                            <div class="d-flex align-items-center flex-column flex-md-row">
+                                <div class="me-md-2 mb-2 mb-md-0">
                                     <span class="h6">
                                         @if ($heroe->rol == 'tank')
                                             <img class="img_menu"
@@ -317,9 +330,7 @@
                                     </span>
                                 </div>
                                 <div>
-                                    <h5 class="card-title text-uppercase mb-0">
-                                        {{ $heroe->nombre }}
-                                    </h5>
+                                    <h5 class="card-title text-uppercase mb-0">{{ $heroe->nombre }}</h5>
                                 </div>
                             </div>
                         </div>
