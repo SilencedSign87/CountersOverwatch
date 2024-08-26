@@ -90,6 +90,8 @@
             width: 10vh;
             height: auto;
             margin: none;
+            background: rgb(255, 255, 255, 0.10);
+            border-radius: 20%;
         }
 
         .infoModal {
@@ -110,53 +112,53 @@
         }
 
         .counters {
-            justify-content: space-around;
+            justify-content: center;
         }
 
         /* Tarjeta de héroe */
         .tarjeta_heroe {
-            border:none;
+            border: none;
+            background: rgb(255, 255, 255, 0.90);
         }
 
         /* Nombre del heroe en el modal */
         .nombreHeroe {
             font-weight: bold;
         }
-        /
 
 
         /* Transparencia del modal */
 
         .modal-content {
-            background: rgba(255, 255, 255, 0.75);
             /* Fondo semi-transparente */
-            backdrop-filter: blur(2rem);
+            background: rgba(255, 255, 255, 0.80);
             /* Desenfoca el fondo */
-            -webkit-backdrop-filter: blur(2rem);
+            backdrop-filter: blur(0.5rem);
             /* Desenfoque para navegadores WebKit */
-            border: none;
+            -webkit-backdrop-filter: blur(0.5rem);
             /* Sin bordes */
+            border: none;
         }
 
         .modal-header,
         .modal-footer {
-            border: none;
             /* Elimina bordes del header y footer */
-            background: rgba(255, 255, 255, 0.4);
+            border: none;
             /* Fondo semi-transparente */
+            background: rgba(255, 255, 255, 0.5);
         }
 
         /* Alerta del modal */
         .alert-danger {
             background-color: rgba(220, 53, 69, 0.25);
-            /* El último valor (0.5) es la transparencia */
         }
 
         .alert-success {
             background-color: rgba(25, 135, 84, 0.25);
         }
+
         /* Texto del modal */
-        .nombre_rol{
+        .nombre_rol {
             font-weight: bold;
         }
 
@@ -293,7 +295,7 @@
                                     </span>
                                 </div>
                                 <div class="col">
-                                    <h5 class="card-title text-left h5">{{ $heroe->nombre }}</h5>
+                                    <h5 class="card-title text-left h5 text-uppercase">{{ $heroe->nombre }}</h5>
                                 </div>
                             </div>
                         </div>
@@ -312,7 +314,7 @@
                         <div class="d-flex align-items-center">
                             <img class="img-thumbnail imgHero me-3" src="{{ $selectedHero->img_path ?? '' }}"
                                 alt="Imagen del héroe" style="width: 100px; height: auto;">
-                            <h1 class="modal-title display-4 nombreHeroe" wire:loading.class="loading-modal-title">
+                            <h1 class="modal-title display-4 nombreHeroe text-uppercase" wire:loading.class="loading-modal-title">
                                 {{ $selectedHero->nombre ?? '' }}</h1>
                         </div>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -345,7 +347,7 @@
                                                     @else
                                                         <span>*</span>
                                                     @endif
-                                                    
+
                                                 </h6>
 
                                                 @foreach ($counters as $counter)
@@ -379,7 +381,7 @@
                                                     @else
                                                         <span>*</span>
                                                     @endif
-                                                    
+
                                                 </h6>
 
                                                 @foreach ($countereas as $counterea)
