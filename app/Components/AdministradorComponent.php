@@ -34,7 +34,7 @@ class AdministradorComponent extends Component
     public function mount()
     {
         if (!auth()->check()) {
-            return redirect('/');
+            return redirect('/login');
         }
     }
     public function render()

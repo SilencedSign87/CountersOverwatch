@@ -10,9 +10,22 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <title>{{ $title ?? 'Page Title' }}</title>
     <style>
-        body {
-            background: linear-gradient(to bottom,rgb(52,127,211),rgb(32,93,163));
+         html, body {
             height: 100%;
+            margin: 0;
+        }
+
+        body {
+            background: linear-gradient(to bottom, rgb(52, 127, 211), rgb(32, 93, 163));
+            background-attachment: fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+        }
+
+        #content {
+            flex: 1;
         }
     </style>
 </head>

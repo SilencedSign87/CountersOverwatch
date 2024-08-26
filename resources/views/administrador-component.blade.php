@@ -1,8 +1,5 @@
 <div>
     <style>
-        .texto-nav {
-            margin-left: 0.5rem;
-        }
 
         .nav-link {
             justify-content: center;
@@ -15,6 +12,7 @@
             border-bottom: none;
             background: rgba(255, 255, 255, 0.178);
             padding: 1%;
+
         }
 
         .custom-nav-tabs .nav-item {
@@ -30,8 +28,8 @@
             border-radius: 5%;
             padding: 10px 15px;
             transition: all 0.3s ease;
-            height: 100%;
-            width: 9rem;
+            height: 3rem;
+            width: 15rem;
             /* Cambia flex-direction a 'row' */
             display: flex;
             flex-direction: row;
@@ -71,49 +69,57 @@
         .nav-item:hover {
             transform: scale(1.02);
         }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
     </style>
 
-    <div class="container">
+    <div class="container mt-5 mb-5 p-3">
+
         <ul class="nav custom-nav-tabs p-2" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link {{ $Modo == 'counters' ? 'active' : '' }}" id="all-tab" type="button"
-                    wire:click="editCounter">
-                    <span>
-                        Editar Counters
-                    </span>
+                    wire:click="editCounter" wire:loading.attr="disabled" wire:target="editCounter">
+                    <span wire:loading wire:target="editCounter" class="spinner-border spinner-border-sm" role="status"
+                        aria-hidden="true"></span>
+                    <span>Editar Counters</span>
                 </button>
             </li>
 
             <li class="nav-item" role="presentation">
                 <button class="nav-link {{ $Modo == 'tierlist' ? 'active' : '' }}" id="tanque-tab" type="button"
-                    wire:click="crearTierlist">
-                    <i class="bi bi-shield-fill"></i>
-                    <span class="texto-nav">
-                        Crear Tierlist
-                    </span>
-                </button>
-            </li>
-
-
-            <li class="nav-item" role="presentation">
-                <button class="nav-link {{ $Modo == 'heroe' ? 'active' : '' }}" id="soporte-tab" type="button"
-                    wire:click="nuevoHeroe">
-                    <i class="bi bi-plus-circle"></i>
-                    <span class="texto-nav">
-                        Añadir héroe
-                    </span>
+                    wire:click="crearTierlist" wire:loading.attr="disabled" wire:target="crearTierlist">
+                    <span wire:loading wire:target="crearTierlist" class="spinner-border spinner-border-sm"
+                        role="status" aria-hidden="true"></span>
+                    <span class="texto-nav">Crear tierlist</span>
                 </button>
             </li>
 
             <li class="nav-item" role="presentation">
-                <button class="nav-link {{ $Modo == 'algo' ? 'active' : '' }}" id="dps-tab" type="button"
-                    wire:click="algo">
-                    <i class="bi bi-crosshair"></i>
-                    <span class="texto-nav">
-                        Cerrar Sesión
-                    </span>
+                <button class="nav-link {{ $Modo == 'heroe' ? 'active' : '' }}" id="dps-tab" type="button"
+                    wire:click="nuevoHeroe" wire:loading.attr="disabled" wire:target="nuevoHeroe">
+                    <span wire:loading wire:target="nuevoHeroe" class="spinner-border spinner-border-sm" role="status"
+                        aria-hidden="true"></span>
+                    <span class="texto-nav">Añadir héroe</span>
+                </button>
+            </li>
+
+            <li class="nav-item" role="presentation">
+                <button class="nav-link {{ $Modo == 'algo' ? 'active' : '' }}" id="soporte-tab" type="button"
+                    wire:click="algo" wire:loading.attr="disabled" wire:target="algo">
+                    <span wire:loading wire:target="algo" class="spinner-border spinner-border-sm" role="status"
+                        aria-hidden="true"></span>
+                    <span class="texto-nav">Salir</span>
                 </button>
             </li>
         </ul>
+
+        <div class="card centro mt-3">
+            {{-- Aquí se mostrarían las distintas páginas seleccionadas --}}
+        </div>
     </div>
 </div>

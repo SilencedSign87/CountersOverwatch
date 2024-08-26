@@ -6,6 +6,7 @@
             align-items: center;
             height: 100vh;
         }
+
         .image-container {
             position: relative;
             width: 100%;
@@ -32,6 +33,7 @@
     </style>
 
     <div class="container center-card">
+
         <div class="card mb-3 p-2" style="max-width: 540px;">
             <div class="row g-0">
                 <div class="col-md-4">
@@ -82,5 +84,7 @@
                 </div>
             </div>
         </div>
+
+
     </div>
 </div>
