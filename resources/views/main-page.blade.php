@@ -211,7 +211,7 @@
                 text-align: center;
             }
 
-            .d-flex {
+            .card-complex {
                 flex-direction: column !important;
             }
 
@@ -312,7 +312,7 @@
                         wire:click="selectHero({{ $heroe->id }})" data-bs-toggle="modal" data-bs-target="#heroInfo">
                         <img src="{{ $heroe->img_path }}" class="card-img-top" alt="Imagen de {{ $heroe->nombre }}">
                         <div class="card-body">
-                            <div class="d-flex align-items-center flex-column flex-md-row">
+                            <div class="d-flex align-items-center flex-column flex-md-row card-complex">
                                 <div class="me-md-2 mb-2 mb-md-0">
                                     <span class="h6">
                                         @if ($heroe->rol == 'tank')
