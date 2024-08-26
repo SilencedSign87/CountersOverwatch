@@ -89,6 +89,7 @@
         .imgSM {
             width: 10vh;
             height: auto;
+            margin: none;
         }
 
         .infoModal {
@@ -332,7 +333,7 @@
                                     </div>
                                     @foreach ($countersByRol as $rol => $counters)
                                         @if (count($counters) > 0)
-                                            <div class="row alert alert-danger mb-1 counters">
+                                            <div class="row alert alert-danger mb-1 counters py-2 px-0">
                                                 {{-- <h6>Rol: {{ $rol }}</h6> --}}
                                                 <h6 class="nombre_rol text-uppercase">
                                                     @if ($rol == 'tank')
@@ -348,7 +349,7 @@
                                                 </h6>
 
                                                 @foreach ($counters as $counter)
-                                                    <img class="imgSM p-1" src="{{ $counter->img_path }}"
+                                                    <img class="imgSM py-1" src="{{ $counter->img_path }}"
                                                         alt="Imagen de {{ $counter->nombre }}">
                                                 @endforeach
                                                 {{-- @else
@@ -366,7 +367,7 @@
                                     </div>
                                     @foreach ($countereasByRol as $rol => $countereas)
                                         @if (count($countereas) > 0)
-                                            <div class="row alert alert-success mb-1 counters">
+                                            <div class="row alert alert-success mb-1 counters py-2 px-0">
                                                 {{-- <h6>Rol: {{ $rol }}</h6> --}}
                                                 <h6 class="nombre_rol text-uppercase">
                                                     @if ($rol == 'tank')
@@ -382,7 +383,7 @@
                                                 </h6>
 
                                                 @foreach ($countereas as $counterea)
-                                                    <img class="imgSM p-1" src="{{ $counterea->img_path }}"
+                                                    <img class="imgSM py-1" src="{{ $counterea->img_path }}"
                                                         alt="Imagen de {{ $counterea->nombre }}">
                                                 @endforeach
                                                 {{-- @else
