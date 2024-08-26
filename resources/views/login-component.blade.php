@@ -30,6 +30,16 @@
             pointer-events: none;
             /* Para que la imagen superior no interfiera con la interacción del usuario */
         }
+        .card{
+            /* Fondo semi-transparente */
+            background: rgba(255, 255, 255, 0.9);
+            /* Desenfoca el fondo */
+            backdrop-filter: blur(0.5rem);
+            /* Desenfoque para navegadores WebKit */
+            -webkit-backdrop-filter: blur(0.5rem);
+            /* Sin bordes */
+            border: none;
+        }
     </style>
 
     <div class="container center-card">
@@ -67,7 +77,7 @@
                                 <label for="Password" class="form-label">Contraseña</label>
                                 <input type="password" class="form-control" id="Password" wire:model='pass'>
                             </div>
-                            <div class="row">
+                            <div class="row form-footer">
                                 <div class="col-auto">
                                     <button type="submit" class="btn btn-outline-primary mb-3">Acceder</button>
                                 </div>

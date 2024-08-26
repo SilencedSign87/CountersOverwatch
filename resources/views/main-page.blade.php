@@ -153,8 +153,8 @@
             background-color: rgba(220, 53, 69, 0.25);
         }
 
-        .alert-success {
-            background-color: rgba(25, 135, 84, 0.25);
+        .alert-primary {
+            background-color: rgba(32, 136, 168, 0.25);
         }
 
         /* Texto del modal */
@@ -369,7 +369,7 @@
                                     </div>
                                     @foreach ($countereasByRol as $rol => $countereas)
                                         @if (count($countereas) > 0)
-                                            <div class="row alert alert-success mb-1 counters py-2 px-0">
+                                            <div class="row alert alert-primary mb-1 counters py-2 px-0">
                                                 {{-- <h6>Rol: {{ $rol }}</h6> --}}
                                                 <h6 class="nombre_rol text-uppercase">
                                                     @if ($rol == 'tank')
