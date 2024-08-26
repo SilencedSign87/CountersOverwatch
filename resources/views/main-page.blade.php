@@ -207,6 +207,9 @@
             .card-container {
                 grid-template-columns: repeat(2, 1fr);
             }
+            .card-title {
+                font-size: 1rem;
+            }
         }
     </style>
 
@@ -296,25 +299,27 @@
                         wire:click="selectHero({{ $heroe->id }})" data-bs-toggle="modal" data-bs-target="#heroInfo">
                         <img src="{{ $heroe->img_path }}" class="card-img-top" alt="Imagen de {{ $heroe->nombre }}">
                         <div class="card-body">
-                            <div class="row items-center">
-                                <div class="col-2">
+                            <div class="d-flex align-items-center">
+                                <div class="me-2">
                                     <span class="h6">
                                         @if ($heroe->rol == 'tank')
-                                            <img class="m-0 img_menu"
+                                            <img class="img_menu"
                                                 src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/bltcb94e9203be4088a/dark_circle_tank.svg">
                                         @elseif ($heroe->rol == 'dps')
-                                            <img class="m-0 img_menu"
+                                            <img class="img_menu"
                                                 src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt052e8b02aef879b0/dark_circle_damage.svg" />
                                         @elseif ($heroe->rol == 'supp')
-                                            <img class="m-0 img_menu"
+                                            <img class="img_menu"
                                                 src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt8cf279e9b3126ef8/dark_circle_support.svg" />
                                         @else
                                             *
                                         @endif
                                     </span>
                                 </div>
-                                <div class="col">
-                                    <h5 class="card-title text-left h5 text-uppercase">{{ $heroe->nombre }}</h5>
+                                <div>
+                                    <h5 class="card-title text-uppercase mb-0">
+                                        {{ $heroe->nombre }}
+                                    </h5>
                                 </div>
                             </div>
                         </div>
