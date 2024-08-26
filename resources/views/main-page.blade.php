@@ -44,10 +44,24 @@
             /* Ajusta este valor según sea necesario */
         }
 
-        .custom-nav-tabs .nav-link img {
-            margin-bottom: 5px;
-            width: 20px;
-            height: 20px;
+        /* .custom-nav-tabs .nav-link img {
+            width: 1.75rem;
+            height: 1.75rem;
+        } */
+
+        /* Estilo de los iconos de rol */
+        .img_menu {
+            opacity: 0.50;
+            mix-blend-mode: multiply;
+            width: 1.75rem;
+            height: 1.75rem;
+        }
+
+        .img_counters {
+            opacity: 0.8;
+            mix-blend-mode: multiply;
+            width: 1.25rem;
+            height: 1.25rem;
         }
 
         .custom-nav-tabs .nav-link.active {
@@ -211,7 +225,8 @@
                     <span wire:loading.class="spinner-border spinner-border-sm" wire:target="todosHeroes">
                         <span class="visually-hidden">Cargando...</span>
                     </span>
-                    <span>TODOS</span>
+                    {{-- <span>TODOS</span> --}}
+                    TODOS
                 </button>
             </li>
 
@@ -222,10 +237,12 @@
                         <span class="visually-hidden">Cargando...</span>
                     </span>
                     <span wire:loading.remove>
-                        <i class="bi bi-shield-fill"></i>
+                        {{-- <i class="bi bi-shield-fill"></i> --}}
+                        <img class="m-0 img_menu"
+                            src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/bltcb94e9203be4088a/dark_circle_tank.svg">
                     </span>
                     <span class="texto-nav">
-                        TANQUE
+                        TANK
                     </span>
                 </button>
             </li>
@@ -236,10 +253,13 @@
                     <span wire:loading.class="spinner-border spinner-border-sm" wire:target="soloDps">
                         <span class="visually-hidden">Cargando...</span>
                     </span>
-                    <span wire:loading.remove><i class="bi bi-crosshair"></i>
+                    <span wire:loading.remove>
+                        {{-- <i class="bi bi-crosshair"></i> --}}
+                        <img class="m-0 img_menu"
+                            src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt052e8b02aef879b0/dark_circle_damage.svg" />
                     </span>
                     <span class="texto-nav">
-                        DAÑO
+                        DPS
                     </span>
                 </button>
             </li>
@@ -250,10 +270,13 @@
                     <span wire:loading.class="spinner-border spinner-border-sm" wire:target="soloSupp">
                         <span class="visually-hidden">Cargando...</span>
                     </span>
-                    <span wire:loading.remove><i class="bi bi-plus-circle"></i>
+                    <span wire:loading.remove>
+                        {{-- <i class="bi bi-plus-circle"></i> --}}
+                        <img class="m-0 img_menu"
+                            src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt8cf279e9b3126ef8/dark_circle_support.svg" />
                     </span>
                     <span class="texto-nav">
-                        SOPORTE
+                        SUPPORT
                     </span>
                 </button>
             </li>
@@ -262,13 +285,13 @@
         {{-- Subtitulos --}}
         @if ($selectedFilter)
             @if ($selectedFilter == 'tank')
-                <h6 class="h5 text-center mt-3 subtitulo">Lista de Counters del rol de tanque</h6>
+                <h6 class="h5 text-center mt-3 subtitulo">Lista de Counters del rol de tank</h6>
             @elseif ($selectedFilter == 'dps')
-                <h6 class="h5 text-center mt-3 subtitulo">Lista de Counters del rol de daño</h6>
+                <h6 class="h5 text-center mt-3 subtitulo">Lista de Counters del rol de dps</h6>
             @elseif ($selectedFilter == 'supp')
-                <h6 class="h5 text-center mt-3 subtitulo">Lista de Counters del rol de apoyo</h6>
+                <h6 class="h5 text-center mt-3 subtitulo">Lista de Counters del rol de supp</h6>
             @else
-                <h6 class="h5 text-center mt-3 subtitulo">Todos los héroes</h6>
+                <h6 class="h5 text-center mt-3 subtitulo">Lista de Counters</h6>
             @endif
         @endif
 
@@ -284,11 +307,17 @@
                                 <div class="col-2">
                                     <span class="h6">
                                         @if ($heroe->rol == 'tank')
-                                            <i class="bi bi-shield-fill"></i>
+                                            {{-- <i class="bi bi-shield-fill"></i> --}}
+                                            <img class="m-0 img_menu"
+                                                src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/bltcb94e9203be4088a/dark_circle_tank.svg">
                                         @elseif ($heroe->rol == 'dps')
-                                            <i class="bi bi-crosshair"></i>
+                                            {{-- <i class="bi bi-crosshair"></i> --}}
+                                            <img class="m-0 img_menu"
+                                                src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt052e8b02aef879b0/dark_circle_damage.svg" />
                                         @elseif ($heroe->rol == 'supp')
-                                            <i class="bi bi-plus-circle"></i>
+                                            {{-- <i class="bi bi-plus-circle"></i> --}}
+                                            <img class="m-0 img_menu"
+                                                src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt8cf279e9b3126ef8/dark_circle_support.svg" />
                                         @else
                                             *
                                         @endif
@@ -314,7 +343,8 @@
                         <div class="d-flex align-items-center">
                             <img class="img-thumbnail imgHero me-3" src="{{ $selectedHero->img_path ?? '' }}"
                                 alt="Imagen del héroe" style="width: 100px; height: auto;">
-                            <h1 class="modal-title display-4 nombreHeroe text-uppercase" wire:loading.class="loading-modal-title">
+                            <h1 class="modal-title display-4 nombreHeroe text-uppercase"
+                                wire:loading.class="loading-modal-title">
                                 {{ $selectedHero->nombre ?? '' }}</h1>
                         </div>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -337,17 +367,19 @@
                                         @if (count($counters) > 0)
                                             <div class="row alert alert-danger mb-1 counters py-2 px-0">
                                                 {{-- <h6>Rol: {{ $rol }}</h6> --}}
-                                                <h6 class="nombre_rol text-uppercase">
+                                                <h6 class="nombre_rol text-uppercase d-flex align-items-center">
                                                     @if ($rol == 'tank')
-                                                        <i class="bi bi-shield-fill"></i> Tanque
+                                                        <img class="m-0 img_counters" src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/bltcb94e9203be4088a/dark_circle_tank.svg">
+                                                        <span class="ms-2">TANK</span>
                                                     @elseif ($rol == 'dps')
-                                                        <i class="bi bi-crosshair"></i> Daño
+                                                        <img class="m-0 img_counters" src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt052e8b02aef879b0/dark_circle_damage.svg">
+                                                        <span class="ms-2">DPS</span>
                                                     @elseif($rol == 'supp')
-                                                        <i class="bi bi-plus-circle"></i> Soporte
+                                                        <img class="m-0 img_counters" src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt8cf279e9b3126ef8/dark_circle_support.svg">
+                                                        <span class="ms-2">SUPPORT</span>
                                                     @else
                                                         <span>*</span>
                                                     @endif
-
                                                 </h6>
 
                                                 @foreach ($counters as $counter)
@@ -371,17 +403,19 @@
                                         @if (count($countereas) > 0)
                                             <div class="row alert alert-primary mb-1 counters py-2 px-0">
                                                 {{-- <h6>Rol: {{ $rol }}</h6> --}}
-                                                <h6 class="nombre_rol text-uppercase">
+                                                <h6 class="nombre_rol text-uppercase d-flex align-items-center">
                                                     @if ($rol == 'tank')
-                                                        <i class="bi bi-shield-fill"></i> Tanque
+                                                        <img class="m-0 img_counters" src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/bltcb94e9203be4088a/dark_circle_tank.svg">
+                                                        <span class="ms-2">TANK</span>
                                                     @elseif ($rol == 'dps')
-                                                        <i class="bi bi-crosshair"></i> Daño
+                                                        <img class="m-0 img_counters" src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt052e8b02aef879b0/dark_circle_damage.svg">
+                                                        <span class="ms-2">DPS</span>
                                                     @elseif($rol == 'supp')
-                                                        <i class="bi bi-plus-circle"></i> Soporte
+                                                        <img class="m-0 img_counters" src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt8cf279e9b3126ef8/dark_circle_support.svg">
+                                                        <span class="ms-2">SUPPORT</span>
                                                     @else
                                                         <span>*</span>
                                                     @endif
-
                                                 </h6>
 
                                                 @foreach ($countereas as $counterea)
