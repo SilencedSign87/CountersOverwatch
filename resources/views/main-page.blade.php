@@ -210,6 +210,9 @@
             .card-title{
                 text-align: center;
             }
+            .nombreHeroe{
+                font-size: 1.5rem;
+            }
 
             .card-complex {
                 flex-direction: column !important;
