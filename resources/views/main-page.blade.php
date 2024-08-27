@@ -85,7 +85,7 @@
         }
 
         .card {
-            transition: transform 0.2s ease;
+            transition: transform 0.2s ease-in;
         }
 
         .card:hover {
@@ -129,12 +129,20 @@
         /* Tarjeta de héroe */
         .tarjeta_heroe {
             border: none;
-            background: rgb(255, 255, 255, 0.90);
+            background: rgba(230, 244, 255, 0.9);
+        }
+
+        .tarjeta_heroe:hover {
+            background: rgba(255, 255, 255, 0.9);
         }
 
         /* Nombre del heroe en el modal */
         .nombreHeroe {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
             font-weight: bold;
+            gap: 1rem;
         }
 
 
@@ -142,7 +150,7 @@
 
         .modal-content {
             /* Fondo semi-transparente */
-            background: rgba(255, 255, 255, 0.80);
+            background: rgba(233, 245, 255, 0.8);
             /* Desenfoca el fondo */
             backdrop-filter: blur(0.5rem);
             /* Desenfoque para navegadores WebKit */
@@ -156,7 +164,7 @@
             /* Elimina bordes del header y footer */
             border: none;
             /* Fondo semi-transparente */
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(233, 245, 255, 0.5);
         }
 
         /* Alerta del modal */
@@ -207,10 +215,12 @@
             .card-container {
                 grid-template-columns: repeat(2, 1fr);
             }
-            .card-title{
+
+            .card-title {
                 text-align: center;
             }
-            .nombreHeroe{
+
+            .nombreHeroe {
                 font-size: 1.5rem;
             }
 
@@ -354,9 +364,23 @@
                                 alt="Imagen del héroe" style="width: 100px; height: auto;">
                             <h1 class="modal-title display-4 nombreHeroe text-uppercase"
                                 wire:loading.class="loading-modal-title">
-                                {{ $selectedHero->nombre ?? '' }}</h1>
+                                @if (!$selectedHero)
+                                    *
+                                @elseif($selectedHero->rol == 'tank')
+                                    <img
+                                        src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/bltcb94e9203be4088a/dark_circle_tank.svg">
+                                @elseif ($selectedHero->rol == 'dps')
+                                    <img
+                                        src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt052e8b02aef879b0/dark_circle_damage.svg" />
+                                @elseif ($selectedHero->rol == 'supp')
+                                    <img
+                                        src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt8cf279e9b3126ef8/dark_circle_support.svg" />
+                                @endif
+                                {{ $selectedHero->nombre ?? '' }}
+                            </h1>
                         </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                     </div>
                     <div class="modal-body" wire:loading.class="loading">
                         <div wire:loading>
