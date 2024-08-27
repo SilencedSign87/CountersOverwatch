@@ -142,7 +142,7 @@
             justify-content: flex-start;
             align-items: center;
             font-weight: bold;
-            gap: 1rem;
+            gap: 0.5rem;
         }
 
 
@@ -214,6 +214,11 @@
         @media (max-width: 767px) {
             .card-container {
                 grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nombreHeroe img {
+                width: 1.25rem;
+                height: auto;
             }
 
             .card-title {
