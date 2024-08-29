@@ -65,6 +65,8 @@ class HeroSeeder extends Seeder
 
 
         // Establecer relaciones de counter
+
+        // TANK
         $Mauga->counteredBy()->attach([$Sigma->id, $Dva->id, $Sojourn->id, $Tracer->id, $Widowmaker->id, $Ana->id, $Zenyatta->id]);
         $Dva->counteredBy()->attach([$Zarya->id, $Mei->id, $Sombra->id, $Symmetra->id, $Zenyatta->id, $Moira->id]);
         $Doomfist->counteredBy()->attach([$JunkerQueen->id, $Orisa->id, $Roadhog->id, $Cassidy->id, $Sombra->id, $Torbjorn->id, $Echo->id, $Ana->id, $Brigitte->id, $Zenyatta->id]);
@@ -78,6 +80,7 @@ class HeroSeeder extends Seeder
         $WreckingBall->counteredBy()->attach([$Orisa->id, $Roadhog->id, $Mauga->id, $Bastion->id, $Cassidy->id, $Sombra->id, $Ana->id, $Brigitte->id, $Lucio->id, $Zenyatta->id]);
         $Zarya->counteredBy()->attach([$Winston->id, $Zarya->id, $Reinhardt->id]);
 
+        // DPS
         $Venture->counteredBy()->attach([$Zarya->id, $Roadhog->id, $Orisa->id, $Cassidy->id, $Venture->id, $Lucio->id, $Kiriko->id, $Moira->id]);
         $Ashe->counteredBy()->attach([$Sigma->id, $Dva->id, $Winston->id, $WreckingBall->id, $Widowmaker->id, $Hanzo->id, $Genji->id, $Kiriko->id, $Zenyatta->id]);
         $Bastion->counteredBy()->attach([$Dva->id, $Sigma->id, $Hanzo->id, $Genji->id, $Junkrat->id, $Illari->id, $Zenyatta->id, $Baptiste->id]);
@@ -96,6 +99,19 @@ class HeroSeeder extends Seeder
         $Torbjorn->counteredBy()->attach([$Sigma->id, $Zarya->id, $Widowmaker->id, $Hanzo->id, $Ashe->id, $Echo->id, $Pharah->id, $Cassidy->id, $Soldado76->id, $Baptiste->id, $Illari->id, $Kiriko->id, $Zenyatta->id]);
         $Tracer->counteredBy()->attach([$Zarya->id, $Dva->id, $Tracer->id, $Torbjorn->id, $Cassidy->id, $Brigitte->id, $Illari->id, $Kiriko->id, $Moira->id]);
         $Widowmaker->counteredBy()->attach([$Dva->id, $Sigma->id, $Winston->id, $WreckingBall->id, $Hanzo->id, $Widowmaker->id, $Genji->id, $Sombra->id, $Kiriko->id, $Zenyatta->id]);
+        
+        // SUPP
+        
+        $Ana->counteredBy()->attach([$Dva->id, $Doomfist->id, $Winston->id, $WreckingBall->id, $Sombra->id, $Tracer->id, $Genji->id, $Kiriko->id, $Lucio->id, $Moira->id]);
+        $Baptiste->counteredBy()->attach([$Dva->id, $Sigma->id, $Genji->id, $Widowmaker->id, $Lucio->id]);
+        $Brigitte->counteredBy()->attach([$Dva->id, $Ramattra->id, $Ashe->id, $Cassidy->id, $Sojourn->id, $Pharah->id, $Echo->id, $Baptiste->id, $Illari->id]);
+        $Illari->counteredBy()->attach([$Dva->id, $Sigma->id, $Winston->id, $Widowmaker->id, $Sojourn->id, $Genji->id, $Kiriko->id, $Lucio->id]);
+        $Lifeweaver->counteredBy()->attach([$Dva->id, $WreckingBall->id, $Winston->id, $Doomfist->id, $Ashe->id, $Sojourn->id, $Tracer->id, $Sombra->id, $Echo->id, $Pharah->id, $Baptiste->id, $Lucio->id, $Illari->id, $Kiriko->id]);
+        $Lucio->counteredBy()->attach([$Dva->id, $Zarya->id, $Winston->id, $Torbjorn->id, $Mei->id, $Pharah->id, $Moira->id, $Brigitte->id]);
+        $Mercy->counteredBy()->attach([$Dva->id, $WreckingBall->id, $Winston->id, $Doomfist->id, $Ashe->id, $Sojourn->id, $Tracer->id, $Sombra->id, $Echo->id, $Pharah->id, $Baptiste->id, $Lucio->id, $Illari->id, $Kiriko->id]);
+        $Moira->counteredBy()->attach([$Orisa->id, $Zarya->id, $Ashe->id, $Cassidy->id, $Torbjorn->id, $Sojourn->id, $Baptiste->id, $Kiriko->id, $Illari->id]);
+        $Zenyatta->counteredBy()->attach([$Dva->id, $Sigma->id, $Sombra->id, $Tracer->id, $Genji->id, $Lucio->id, $Kiriko->id]);
+        $Juno->counteredBy()->attach([$Dva->id, $Winston->id, $WreckingBall->id, $Doomfist->id, $Sombra->id, $Tracer->id, $Genji->id, $Lucio->id, $Moira->id]);
 
         // Imprimir información para verificar
         $this->command->info('Héroes creados y relaciones de counter establecidas:');

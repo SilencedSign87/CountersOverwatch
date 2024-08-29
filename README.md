@@ -22,8 +22,19 @@ El proyecto usa PHP 8.2.12 (Se usó la versión de php que viene en [XAMPP](http
 3. Bootstrap 5.3 (Frontend)
 ### SQLite
 Para almacenar datos y hacer las relaciones se usa SQLite, no debería ser necesario instalarlo ya que esta incluido en Composer. Si se amplía el scope del proyecto tal vez necesitemos la migración a MySQL que debería ser solo cambiar el archivo de entorno.
+#### Migración a MySQL
+Para usar MySQL es necesario cambiar el archivo .env alrededor de la línea 22:
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=Counters
+DB_USERNAME=root
+DB_PASSWORD=
+```
 ### Editor de código
 Desarrollado en VScode
+
 ## Preparar espacio de trabajo
 1. Clonar el repositorio.
 2. Abrir una terminal en el directorio raíz.
