@@ -150,7 +150,7 @@
 
         .modal-content {
             /* Fondo semi-transparente */
-            background: rgba(233, 245, 255, 0.8);
+            background: rgba(233, 245, 255, 0.85);
             /* Desenfoca el fondo */
             backdrop-filter: blur(0.5rem);
             /* Desenfoque para navegadores WebKit */
@@ -164,7 +164,7 @@
             /* Elimina bordes del header y footer */
             border: none;
             /* Fondo semi-transparente */
-            background: rgba(233, 245, 255, 0.5);
+            background: rgba(233, 245, 255, 0.55);
         }
 
         /* Alerta del modal */
@@ -197,17 +197,56 @@
             .card-container {
                 grid-template-columns: repeat(5, 1fr);
             }
+
+            /* Imagenes del modal */
+            .counters {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+            }
+
+            .counters .imgSM {
+                width: calc(100% / 5 - 10px);
+                /* 5 imágenes por fila */
+                margin: 4px;
+            }
         }
 
         @media (max-width: 1199px) and (min-width: 992px) {
             .card-container {
                 grid-template-columns: repeat(4, 1fr);
             }
+
+            /* Imágenes del modal */
+            .counters {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+            }
+
+            .counters .imgSM {
+                width: calc(100% / 4 - 10px);
+                /* 4 imágenes por fila */
+                margin: 4px;
+            }
         }
 
         @media (max-width: 991px) and (min-width: 768px) {
             .card-container {
                 grid-template-columns: repeat(3, 1fr);
+            }
+
+            /* Imágenes del modal */
+            .counters {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+            }
+
+            .counters .imgSM {
+                width: calc(100% / 3 - 10px);
+                /* 3 imágenes por fila */
+                margin: 4px;
             }
         }
 
@@ -240,6 +279,19 @@
             .mb-2 {
                 margin-bottom: 0.5rem;
 
+            }
+
+            /* Imagenes del modal */
+            .counters {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+            }
+
+            .counters .imgSM {
+                width: calc(100% / 2 - 10px);
+                /* 2 imágenes por fila */
+                margin: 4px;
             }
         }
     </style>
@@ -366,11 +418,13 @@
                     <div class="modal-header d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center">
                             <img class="img-thumbnail imgHero me-3" src="{{ $selectedHero->img_path ?? '' }}"
-                                alt="Imagen del héroe" style="width: 100px; height: auto;">
+                                alt="{{$selectedHero->nombre ?? ''}}" style="width: 100px; height: auto;">
                             <h1 class="modal-title display-4 nombreHeroe text-uppercase"
                                 wire:loading.class="loading-modal-title">
                                 @if (!$selectedHero)
-                                    *
+                                    <div class="spinner-border text-primary me-2 border-4" role="status">
+                                        <span class="visually-hidden">Cargando...</span>
+                                    </div>
                                 @elseif($selectedHero->rol == 'tank')
                                     <img
                                         src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/bltcb94e9203be4088a/dark_circle_tank.svg">
@@ -389,10 +443,10 @@
                     </div>
                     <div class="modal-body" wire:loading.class="loading">
                         <div wire:loading>
-                            <div class="spinner-border text-primary" role="status">
+                            <div class="spinner-border text-primary me-2" role="status">
                                 <span class="visually-hidden">Cargando...</span>
                             </div>
-                            <p class="mt-2">Cargando información del héroe...</p>
+                            {{-- <p class="mt-2">Cargando información del héroe...</p> --}}
                         </div>
                         <div wire:loading.remove>
                             <div class="row">
