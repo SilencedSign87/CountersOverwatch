@@ -117,9 +117,11 @@
                 </button>
             </li>
         </ul>
-
-        <div class="card centro mt-3">
-            {{-- Aquí se mostrarían las distintas páginas seleccionadas --}}
-        </div>
     </div>
+
+    @if ($Modo && $Modo=='heroe')
+        @livewire('addHero')    
+    @else
+
+    @endif
 </div>
