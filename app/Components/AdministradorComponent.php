@@ -6,16 +6,11 @@ use Livewire\Component;
 
 class AdministradorComponent extends Component
 {
-    public $Modo = 'counters';
+    public $Modo = 'heroe';
 
     public function editCounter()
     {
         $this->Modo = 'counters';
-    }
-
-    public function crearTierlist()
-    {
-        $this->Modo = 'tierlist';
     }
 
 

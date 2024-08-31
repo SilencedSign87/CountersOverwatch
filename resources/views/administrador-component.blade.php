@@ -1,6 +1,5 @@
 <div>
     <style>
-
         .nav-link {
             justify-content: center;
         }
@@ -29,7 +28,7 @@
             padding: 10px 15px;
             transition: all 0.3s ease;
             height: 3rem;
-            width: 15rem;
+            width: 13rem;
             /* Cambia flex-direction a 'row' */
             display: flex;
             flex-direction: row;
@@ -80,35 +79,28 @@
 
     <div class="container mt-5 mb-5 p-3">
 
-        <ul class="nav custom-nav-tabs p-2" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link {{ $Modo == 'counters' ? 'active' : '' }}" id="all-tab" type="button"
-                    wire:click="editCounter" wire:loading.attr="disabled" wire:target="editCounter">
-                    <span wire:loading wire:target="editCounter" class="spinner-border spinner-border-sm" role="status"
-                        aria-hidden="true"></span>
-                    <span>Editar Counters</span>
-                </button>
-            </li>
-
-            <li class="nav-item" role="presentation">
-                <button class="nav-link {{ $Modo == 'tierlist' ? 'active' : '' }}" id="tanque-tab" type="button"
-                    wire:click="crearTierlist" wire:loading.attr="disabled" wire:target="crearTierlist">
-                    <span wire:loading wire:target="crearTierlist" class="spinner-border spinner-border-sm"
-                        role="status" aria-hidden="true"></span>
-                    <span class="texto-nav">Crear tierlist</span>
-                </button>
-            </li>
-
-            <li class="nav-item" role="presentation">
+        <ul class="nav custom-nav-tabs p-2" id="myTab" role="tablist">            
+            
+            <li class="nav-item py-1" role="presentation">
                 <button class="nav-link {{ $Modo == 'heroe' ? 'active' : '' }}" id="dps-tab" type="button"
                     wire:click="nuevoHeroe" wire:loading.attr="disabled" wire:target="nuevoHeroe">
                     <span wire:loading wire:target="nuevoHeroe" class="spinner-border spinner-border-sm" role="status"
                         aria-hidden="true"></span>
-                    <span class="texto-nav">Añadir héroe</span>
+                    <span class="texto-nav">Editar Héroes</span>
                 </button>
             </li>
 
-            <li class="nav-item" role="presentation">
+            <li class="nav-item py-1" role="presentation">
+                <button class="nav-link {{ $Modo == 'counters' ? 'active' : '' }}" id="all-tab" type="button"
+                    wire:click="editCounter" wire:loading.attr="disabled" wire:target="editCounter">
+                    <span wire:loading wire:target="editCounter" class="spinner-border spinner-border-sm" role="status"
+                        aria-hidden="true"></span>
+                    Editar Counters
+                </button>
+            </li>
+
+
+            <li class="nav-item py-1" role="presentation">
                 <button class="nav-link {{ $Modo == 'algo' ? 'active' : '' }}" id="soporte-tab" type="button"
                     wire:click="algo" wire:loading.attr="disabled" wire:target="algo">
                     <span wire:loading wire:target="algo" class="spinner-border spinner-border-sm" role="status"
@@ -116,12 +108,15 @@
                     <span class="texto-nav">Salir</span>
                 </button>
             </li>
+
         </ul>
+        
     </div>
 
-    @if ($Modo && $Modo=='heroe')
-        @livewire('addHero')    
-    @else
-
+    {{-- llama a los componentes --}}
+    @if ($Modo && $Modo == 'counters')
+        @livewire('EditarCounters')
+    @elseif ($Modo && $Modo == 'heroe')
+        @livewire('AddHero')
     @endif
 </div>
