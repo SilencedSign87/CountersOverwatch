@@ -14,7 +14,7 @@
             justify-content: center;
             border-bottom: none;
 
-            background: rgba(255,255,255,.2);
+            background: rgba(255, 255, 255, .2);
             /* Desenfoque */
             backdrop-filter: blur(0.5rem);
             /* Desenfoque para navegadores WebKit */
@@ -94,7 +94,7 @@
         }
 
         .card {
-            transition: transform 0.2s ease-in;
+            transition: transform 0.2s cubic-bezier(0.34, 1.3, 0.86, 1.12);
         }
 
         .card:hover {
@@ -311,9 +311,9 @@
         {{-- Botones de navegación --}}
         <ul class="nav custom-nav-tabs p-1 sticky-top" id="myTab" role="tablist">
 
-            <li class="nav-item py-1" role="presentation">
-                <button class="nav-link {{ $selectedFilter == 'all' ? 'active' : '' }}" id="all-tab" type="button"
-                    wire:click="todosHeroes" wire:loading.attr="disabled" wire:target="todosHeroes">
+            <li class="nav-item py-1 " role="presentation">
+                <button class="nav-link rounded-3 {{ $selectedFilter == 'all' ? 'active' : '' }}" id="all-tab"
+                    type="button" wire:click="todosHeroes" wire:loading.attr="disabled" wire:target="todosHeroes">
                     <span wire:loading.class="spinner-border spinner-border-sm" wire:target="todosHeroes">
                         <span class="visually-hidden">Cargando...</span>
                     </span>
@@ -321,9 +321,9 @@
                 </button>
             </li>
 
-            <li class="nav-item py-1" role="presentation">
-                <button class="nav-link {{ $selectedFilter == 'tank' ? 'active' : '' }}" id="tanque-tab" type="button"
-                    wire:click="soloTank" wire:loading.attr="disabled" wire:target="soloTank">
+            <li class="nav-item py-1 " role="presentation">
+                <button class="nav-link rounded-3 {{ $selectedFilter == 'tank' ? 'active' : '' }}" id="tanque-tab"
+                    type="button" wire:click="soloTank" wire:loading.attr="disabled" wire:target="soloTank">
                     <span wire:loading.class="spinner-border spinner-border-sm" wire:target="soloTank">
                         <span class="visually-hidden">Cargando...</span>
                     </span>
@@ -337,9 +337,9 @@
                 </button>
             </li>
 
-            <li class="nav-item py-1" role="presentation">
-                <button class="nav-link {{ $selectedFilter == 'dps' ? 'active' : '' }}" id="dps-tab" type="button"
-                    wire:click="soloDps" wire:loading.attr="disabled" wire:target="soloDps">
+            <li class="nav-item py-1 " role="presentation">
+                <button class="nav-link rounded-3 {{ $selectedFilter == 'dps' ? 'active' : '' }}" id="dps-tab"
+                    type="button" wire:click="soloDps" wire:loading.attr="disabled" wire:target="soloDps">
                     <span wire:loading.class="spinner-border spinner-border-sm" wire:target="soloDps">
                         <span class="visually-hidden">Cargando...</span>
                     </span>
@@ -353,9 +353,9 @@
                 </button>
             </li>
 
-            <li class="nav-item py-1" role="presentation">
-                <button class="nav-link {{ $selectedFilter == 'supp' ? 'active' : '' }}" id="soporte-tab" type="button"
-                    wire:click="soloSupp" wire:loading.attr="disabled" wire:target="soloSupp">
+            <li class="nav-item py-1 " role="presentation">
+                <button class="nav-link rounded-3 {{ $selectedFilter == 'supp' ? 'active' : '' }}" id="soporte-tab"
+                    type="button" wire:click="soloSupp" wire:loading.attr="disabled" wire:target="soloSupp">
                     <span wire:loading.class="spinner-border spinner-border-sm" wire:target="soloSupp">
                         <span class="visually-hidden">Cargando...</span>
                     </span>
@@ -387,7 +387,7 @@
         <div class="mt-4 card-container" style="display: grid; gap: 20px;">
             @if ($heroes)
                 @foreach ($heroes as $heroe)
-                    <div class="card shadow-lg tarjeta_heroe" style="width: 100%;"
+                    <div class="card shadow-md tarjeta_heroe" style="width: 100%;"
                         wire:click="selectHero({{ $heroe->id }})" data-bs-toggle="modal" data-bs-target="#heroInfo">
                         <img src="{{ $heroe->img_path }}" class="card-img-top" alt="Imagen de {{ $heroe->nombre }}">
                         <div class="card-body">
@@ -427,7 +427,7 @@
                     <div class="modal-header d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center">
                             <img class="img-thumbnail imgHero me-3" src="{{ $selectedHero->img_path ?? '' }}"
-                                alt="{{$selectedHero->nombre ?? ''}}" style="width: 100px; height: auto;">
+                                alt="{{ $selectedHero->nombre ?? '' }}" style="width: 100px; height: auto;">
                             <h1 class="modal-title display-4 nombreHeroe text-uppercase"
                                 wire:loading.class="loading-modal-title">
                                 @if (!$selectedHero)
