@@ -260,6 +260,11 @@
         }
 
         @media (max-width: 767px) {
+            .container {
+                margin-top: 0rem !important ; 
+                margin-bottom: 1rem !important ;
+            }
+
             .card-container {
                 grid-template-columns: repeat(2, 1fr);
             }
