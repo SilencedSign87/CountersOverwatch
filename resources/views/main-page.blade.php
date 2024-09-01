@@ -13,8 +13,17 @@
             align-items: center;
             justify-content: center;
             border-bottom: none;
-            background: rgba(255, 255, 255, 0.178);
+
+            background: rgba(255,255,255,.2);
+            /* Desenfoque */
+            backdrop-filter: blur(0.5rem);
+            /* Desenfoque para navegadores WebKit */
+            -webkit-backdrop-filter: blur(0.5rem);
+
+            border-radius: calc(var(--bs-border-radius) - 1px);
+
             padding: 1%;
+
         }
 
         .custom-nav-tabs .nav-item {
@@ -300,7 +309,7 @@
     <div class="container mt-5 mb-5 p-3">
 
         {{-- Botones de navegación --}}
-        <ul class="nav custom-nav-tabs p-1" id="myTab" role="tablist">
+        <ul class="nav custom-nav-tabs p-1 sticky-top" id="myTab" role="tablist">
 
             <li class="nav-item py-1" role="presentation">
                 <button class="nav-link {{ $selectedFilter == 'all' ? 'active' : '' }}" id="all-tab" type="button"
