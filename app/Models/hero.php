@@ -12,6 +12,7 @@ class hero extends Model
 
     protected $fillable = [
         'nombre',
+        'nota',
         'rol',
         'img_path'
     ];

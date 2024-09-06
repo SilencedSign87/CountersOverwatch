@@ -189,6 +189,12 @@
         .nombre_rol {
             font-weight: bold;
         }
+        /* Nota del héroe */
+        .alerta-nota{
+            border-color: rgb(255, 120, 41);
+            background: rgba(255, 120, 41, 0.1);
+            color: rgb(197, 79, 11);
+        }
 
         /* Boton de información */
         .masInfo {
@@ -463,6 +469,13 @@
                             {{-- <p class="mt-2">Cargando información del héroe...</p> --}}
                         </div>
                         <div wire:loading.remove>
+                            <div class="row px-3">
+                                {{-- Muestra el texto de ayuda --}}
+                                <div class="alert alert-warning alerta-nota">
+                                    <strong>Nota: </strong>
+                                        {{$selectedHero->nota??''}}
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-6">
                                     <div class="row">
