@@ -1,561 +1,480 @@
 <div>
-    <style>
-        .texto-nav {
-            margin-left: 0.25rem;
-        }
+    {{-- Estilos de la pantalla --}}
+    @push('styles')
+        <style>
+            /* Spinner */
 
-        .nav-link {
-            justify-content: center;
-        }
-
-        .custom-nav-tabs {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-bottom: none;
-
-            background: rgba(255, 255, 255, .2);
-            /* Desenfoque */
-            backdrop-filter: blur(0.5rem);
-            /* Desenfoque para navegadores WebKit */
-            -webkit-backdrop-filter: blur(0.5rem);
-
-            border-radius: calc(var(--bs-border-radius) - 1px);
-
-            padding: 1%;
-
-        }
-
-        .custom-nav-tabs .nav-item {
-            margin: 0 5px;
-        }
-
-        .custom-nav-tabs .nav-link {
-            font-size: 1.25rem;
-            font-weight: bold;
-            border: 0.2rem solid rgb(255, 255, 255);
-            background-color: #ffffffb2;
-            color: rgba(0, 0, 0, 0.548);
-            border-radius: 5%;
-            padding: 10px 15px;
-            transition: all 0.3s ease;
-            height: 3rem;
-            /* Tamaño de los botones superiores */
-            width: 9rem;
-            /* Cambia flex-direction a 'row' */
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            /* Define un ancho mínimo para el elemento */
-            min-width: 100px;
-            /* Ajusta este valor según sea necesario */
-        }
-
-        /* Estilo de los iconos de rol */
-        .img_menu {
-            display: flex;
-            align-items: center;
-            opacity: 0.50;
-            mix-blend-mode: multiply;
-            width: 1.75rem;
-            height: 1.75rem;
-        }
-
-        .img_counters {
-            opacity: 0.8;
-            mix-blend-mode: multiply;
-            width: 1.25rem;
-            height: 1.25rem;
-        }
-
-        .custom-nav-tabs .nav-link.active {
-            background-color: white;
-            color: #3d3d3d;
-            border: 0.2rem solid #ffffff;
-        }
-
-        .custom-nav-tabs .nav-link:hover:not(.active) {
-            background-color: #ececec;
-        }
-
-        .iconRol {
-            height: 1rem;
-            width: auto;
-        }
-
-        .nav-item {
-            transition: transform 0.2s ease;
-        }
-
-        .nav-item:hover {
-            transform: scale(1.01);
-        }
-
-        .card {
-            transition: transform 0.2s cubic-bezier(0.34, 1.3, 0.86, 1.12);
-        }
-
-        .card:hover {
-            transform: scale(1.05);
-        }
-
-        .imgHero {
-            width: 20%;
-            height: auto;
-        }
-
-        .imgSM {
-            width: 10vh;
-            height: auto;
-            margin: none;
-            background: rgb(255, 255, 255, 0.10);
-            border-radius: 20%;
-        }
-
-        .infoModal {
-            /* Fondo del modal */
-            background: rgba(0, 0, 0, 0);
-        }
-
-        .subtitulo {
-            color: #ffffff;
-            text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.212);
-        }
-
-        .loading {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-        }
-
-        .counters {
-            justify-content: center;
-        }
-
-        /* Tarjeta de héroe */
-        .tarjeta_heroe {
-            border: none;
-            background: rgba(230, 244, 255, 0.9);
-        }
-
-        .tarjeta_heroe:hover {
-            background: rgba(255, 255, 255, 0.9);
-        }
-
-        /* Nombre del heroe en el modal */
-        .nombreHeroe {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            font-weight: bold;
-            gap: 0.5rem;
-        }
-
-
-        /* Transparencia del modal */
-
-        .modal-content {
-            /* Fondo semi-transparente */
-            background: rgba(233, 245, 255, 0.85);
-            /* Desenfoca el fondo */
-            backdrop-filter: blur(0.5rem);
-            /* Desenfoque para navegadores WebKit */
-            -webkit-backdrop-filter: blur(0.5rem);
-            /* Sin bordes */
-            border: none;
-        }
-
-        .modal-header,
-        .modal-footer {
-            /* Elimina bordes del header y footer */
-            border: none;
-            /* Fondo semi-transparente */
-            background: rgba(233, 245, 255, 0.55);
-        }
-
-        /* Alerta del modal */
-        .alert-danger {
-            background-color: rgba(220, 53, 69, 0.25);
-        }
-
-        .alert-primary {
-            background-color: rgba(32, 136, 168, 0.25);
-        }
-
-        /* Texto del modal */
-        .nombre_rol {
-            font-weight: bold;
-        }
-        /* Nota del héroe */
-        .alerta-nota{
-            border-color: rgb(255, 120, 41);
-            background: rgba(255, 120, 41, 0.1);
-            color: rgb(197, 79, 11);
-        }
-
-        /* Boton de información */
-        .masInfo {
-            font-weight: bold;
-            color: white;
-            background: #F06414;
-        }
-
-        .masInfo:hover {
-            background: rgb(255, 120, 41);
-        }
-
-        /* Responsividad para el diseño de cartas */
-        @media (min-width: 1200px) {
-            .card-container {
-                grid-template-columns: repeat(5, 1fr);
+            .spinner {
+                border: 2px solid #f3f3f300;
+                /* Color del borde exterior */
+                border-radius: 100%;
+                border-top: 2px solid rgba(0, 0, 0, 0.50);
+                /* Color del borde que indica la carga */
+                width: 30px;
+                height: 30px;
+                animation: spin 0.5s linear infinite;
+                /* Animación spin infinita */
             }
 
-            /* Imagenes del modal */
-            .counters {
+            /* Animación spin */
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+
+            /* Navegación */
+            .navegacion {
+                margin-top: 1rem;
                 display: flex;
+                justify-content: center;
+                align-items: center;
+                height: auto;
+                width: auto;
+                padding: 0.5rem;
+                gap: 1vw;
                 flex-wrap: wrap;
-                justify-content: flex-start;
+                margin-bottom: 1rem;
             }
 
-            .counters .imgSM {
-                width: calc(100% / 5 - 10px);
-                /* 5 imágenes por fila */
-                margin: 4px;
-            }
-        }
-
-        @media (max-width: 1199px) and (min-width: 992px) {
-            .card-container {
-                grid-template-columns: repeat(4, 1fr);
-            }
-
-            /* Imágenes del modal */
-            .counters {
+            .boton_navegacion {
+                /* Tamaño */
+                width: 9rem;
+                height: 3rem;
+                min-width: 6rem;
+                border-radius: 0.25rem;
+                /* Distribución */
                 display: flex;
-                flex-wrap: wrap;
-                justify-content: flex-start;
+                justify-content: center;
+                align-items: center;
+                gap: 0.5rem;
+                /* Texto */
+                font-family: system-ui;
+                text-transform: uppercase;
+                font-weight: bold;
+                font-size: 1.2rem;
+                /* Color */
+                background-color: hsla(0, 0%, 100%, .7);
+                color: hsla(0, 0%, 0%, 0.7);
+                border: 2px solid hsl(0, 0%, 100%);
+                /* Desenfoque*/
+                backdrop-filter: blur(5rem);
+                /* Desenfoque para navegadores WebKit */
+                -webkit-backdrop-filter: blur(5rem);
+                transition: scale 0.2s ease-in-out;
+                /* sombra */
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             }
 
-            .counters .imgSM {
-                width: calc(100% / 4 - 10px);
-                /* 4 imágenes por fila */
-                margin: 4px;
-            }
-        }
-
-        @media (max-width: 991px) and (min-width: 768px) {
-            .card-container {
-                grid-template-columns: repeat(3, 1fr);
+            .boton_navegacion:hover {
+                background-color: hsl(0, 0%, 90%);
+                color: hsl(0, 0%, 0%);
             }
 
-            /* Imágenes del modal */
-            .counters {
+            .boton_navegacion:active {
+                background-color: hsla(0, 0%, 100%, 1);
+                scale: 0.95;
+            }
+
+            .seleccionado {
+                background-color: hsl(0, 0%, 90%);
+                color: hsl(0, 0%, 0%);
+            }
+
+            /* Contenedor de las tarjetas de heroe */
+            .contenedor {
+                display: grid;
+                grid-template-columns: repeat(6, minmax(150px, 250px));
+                gap: 2rem;
+                margin: 0.5rem;
+                max-width: calc(100% - 1rem);
+                justify-content: center;
+                gap: 1vw;
+            }
+
+            .tarjeta {
+                box-sizing: border-box;
+                border: 2px solid hsla(0, 0%, 100%, .7);
+                background: hsla(0, 0%, 100%, .8);
+                border-radius: 0.25rem;
+                aspect-ratio: 9 / 11;
+                overflow: hidden;
                 display: flex;
-                flex-wrap: wrap;
-                justify-content: flex-start;
+                /* Habilita Flexbox en la tarjeta */
+                flex-direction: column;
+                /* Apila los elementos verticalmente */
+
+                /* Transición */
+                transition: scale 0.1s ease-in,
+                    background-color 0.2s ease-in-out;
             }
 
-            .counters .imgSM {
-                width: calc(100% / 3 - 10px);
-                /* 3 imágenes por fila */
-                margin: 4px;
-            }
-        }
-
-        @media (max-width: 767px) {
-            .container {
-                margin-top: 0rem !important ; 
-                margin-bottom: 1rem !important ;
+            .tarjeta:hover {
+                background: hsla(0, 0%, 100%, 0.9);
+                scale: 1.05;
             }
 
-            .card-container {
-                grid-template-columns: repeat(2, 1fr);
+            .tarjeta:active {
+                background: hsla(0, 0%, 100%, 1);
+                scale: 1;
             }
 
-            .nombreHeroe img {
-                width: 1.25rem;
+            .imagen_tarjeta {
+                flex-shrink: 0;
+            }
+
+            .imagen_tarjeta img {
+                display: block;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .nombre {
+                flex-grow: 1;
+                height: fit-content;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                font-size: 1rem;
+                font-weight: bold;
+                text-transform: uppercase;
+                gap: 0.5rem;
+            }
+
+            /* Modal */
+            .titulo_modal {
+                display: flex;
+                justify-content: start;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .titulo_modal img {
+                border: 2px solid hsla(0, 0%, 100%, 0.5);
+                border-radius: 0.5rem;
+                max-width: 6rem;
                 height: auto;
             }
 
-            .card-title {
-                text-align: center;
+            .titulo_modal span {
+                font-size: 1.75rem;
+                font-weight: bold;
             }
 
-            .nombreHeroe {
-                font-size: 1.5rem;
+            .modal-content {
+                background-color: rgba(255, 255, 255, 0.80);
+                /* Desenfoca el fondo */
+                backdrop-filter: blur(0.5rem);
+                /* Desenfoque para navegadores WebKit */
+                -webkit-backdrop-filter: blur(0.5rem);
+                border: 0;
             }
 
-            .card-complex {
-                flex-direction: column !important;
+            .modal-header,
+            .modal-footer {
+                border: 0;
             }
 
-            .me-md-2 {
-                margin-right: 0 !important;
+            .modal-header {
+                background: hsla(0, 0%, 100%, 0.2);
             }
 
-            .mb-2 {
-                margin-bottom: 0.5rem;
-
+            .cuerpo {
+                display: grid;
             }
 
-            /* Imagenes del modal */
-            .counters {
+            .nota {
+                /* Distribución */
+                justify-self: center;
                 display: flex;
-                flex-wrap: wrap;
-                justify-content: flex-start;
+                width: auto;
+                height: auto;
+                justify-content: center;
+                align-items: center;
+                padding-inline: 3rem;
+                padding-block: 0.25rem;
+                border-radius: 0.5rem;
+                gap: 0.5rem;
+                /* Texto */
+                font-size: 1.1rem;
+                font-weight: 500;
+                text-align: center;
+                /* Color */
+                background: rgba(255, 120, 41, 0.15);
+                border: 1px solid rgb(255, 120, 41);
+                color: rgb(197, 79, 11);
             }
 
-            .counters .imgSM {
-                width: calc(100% / 2 - 10px);
-                /* 2 imágenes por fila */
-                margin: 4px;
+            .texto-cuerpo {
+                font-size: 1.5rem;
+                justify-content: center;
+                text-transform: uppercase;
+                margin-bottom: 0.5rem;
             }
-        }
-    </style>
 
+            .contenido-counters {}
 
-    <div class="container mt-5 mb-5 p-3">
+            .imgSM {
 
-        {{-- Botones de navegación --}}
-        <ul class="nav custom-nav-tabs p-1 sticky-top" id="myTab" role="tablist">
+                width: calc(100%/5 - 2px);
+                border-radius: 20%;
+            }
 
-            <li class="nav-item py-1 " role="presentation">
-                <button class="nav-link rounded-3 {{ $selectedFilter == 'all' ? 'active' : '' }}" id="all-tab"
-                    type="button" wire:click="todosHeroes" wire:loading.attr="disabled" wire:target="todosHeroes">
-                    <span wire:loading.class="spinner-border spinner-border-sm" wire:target="todosHeroes">
-                        <span class="visually-hidden">Cargando...</span>
-                    </span>
-                    TODOS
-                </button>
-            </li>
+            .alert-danger {
+                background-color: rgba(220, 53, 69, 0.25);
+            }
 
-            <li class="nav-item py-1 " role="presentation">
-                <button class="nav-link rounded-3 {{ $selectedFilter == 'tank' ? 'active' : '' }}" id="tanque-tab"
-                    type="button" wire:click="soloTank" wire:loading.attr="disabled" wire:target="soloTank">
-                    <span wire:loading.class="spinner-border spinner-border-sm" wire:target="soloTank">
-                        <span class="visually-hidden">Cargando...</span>
-                    </span>
-                    <span wire:loading.remove>
-                        <img class="m-0 img_menu"
-                            src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/bltcb94e9203be4088a/dark_circle_tank.svg">
-                    </span>
-                    <span class="texto-nav">
-                        TANK
-                    </span>
-                </button>
-            </li>
+            .alert-primary {
+                background-color: rgba(32, 136, 168, 0.25);
+            }
 
-            <li class="nav-item py-1 " role="presentation">
-                <button class="nav-link rounded-3 {{ $selectedFilter == 'dps' ? 'active' : '' }}" id="dps-tab"
-                    type="button" wire:click="soloDps" wire:loading.attr="disabled" wire:target="soloDps">
-                    <span wire:loading.class="spinner-border spinner-border-sm" wire:target="soloDps">
-                        <span class="visually-hidden">Cargando...</span>
-                    </span>
-                    <span wire:loading.remove>
-                        <img class="m-0 img_menu"
-                            src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt052e8b02aef879b0/dark_circle_damage.svg" />
-                    </span>
-                    <span class="texto-nav">
-                        DPS
-                    </span>
-                </button>
-            </li>
+            .btn-cerrar {
+                background: #f06414;
+                color: #fff;
+                border: 0;
+                border-radius: 0.25rem;
+                padding: 0.5rem 1rem;
+                font-size: 1rem;
+                cursor: pointer;
+                transition: background 0.2s ease-in-out;
+            }
 
-            <li class="nav-item py-1 " role="presentation">
-                <button class="nav-link rounded-3 {{ $selectedFilter == 'supp' ? 'active' : '' }}" id="soporte-tab"
-                    type="button" wire:click="soloSupp" wire:loading.attr="disabled" wire:target="soloSupp">
-                    <span wire:loading.class="spinner-border spinner-border-sm" wire:target="soloSupp">
-                        <span class="visually-hidden">Cargando...</span>
-                    </span>
-                    <span wire:loading.remove>
-                        <img class="m-0 img_menu"
-                            src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt8cf279e9b3126ef8/dark_circle_support.svg" />
-                    </span>
-                    <span class="texto-nav">
-                        SUPPORT
-                    </span>
-                </button>
-            </li>
-        </ul>
+            .btn-cerrar:hover {
+                background: #ff7424;
+                color: #fff;
+                border: 0;
+                border-radius: 0.25rem;
+                padding: 0.5rem 1rem;
+                font-size: 1rem;
+            }
 
-        {{-- Subtitulos --}}
-        @if ($selectedFilter)
-            @if ($selectedFilter == 'tank')
-                <h6 class="h5 text-center mt-3 subtitulo">Lista de Counters del rol de tank</h6>
-            @elseif ($selectedFilter == 'dps')
-                <h6 class="h5 text-center mt-3 subtitulo">Lista de Counters del rol de dps</h6>
-            @elseif ($selectedFilter == 'supp')
-                <h6 class="h5 text-center mt-3 subtitulo">Lista de Counters del rol de supp</h6>
-            @else
-                <h6 class="h5 text-center mt-3 subtitulo">Lista de Counters</h6>
-            @endif
-        @endif
+            .btn-cerrar:active {
+                scale: 0.95;
+            }
 
-        {{-- Cartas de los Héroes --}}
-        <div class="mt-4 card-container" style="display: grid; gap: 20px;">
-            @if ($heroes)
-                @foreach ($heroes as $heroe)
-                    <div class="card shadow-md tarjeta_heroe" style="width: 100%;"
-                        wire:click="selectHero({{ $heroe->id }})" data-bs-toggle="modal" data-bs-target="#heroInfo">
-                        <img src="{{ $heroe->img_path }}" class="card-img-top" alt="Imagen de {{ $heroe->nombre }}">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center flex-column flex-md-row card-complex">
-                                <div class="me-md-2 mb-2 mb-md-0">
-                                    <span class="h6">
-                                        @if ($heroe->rol == 'tank')
-                                            <img class="img_menu"
-                                                src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/bltcb94e9203be4088a/dark_circle_tank.svg">
-                                        @elseif ($heroe->rol == 'dps')
-                                            <img class="img_menu"
-                                                src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt052e8b02aef879b0/dark_circle_damage.svg" />
-                                        @elseif ($heroe->rol == 'supp')
-                                            <img class="img_menu"
-                                                src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt8cf279e9b3126ef8/dark_circle_support.svg" />
-                                        @else
-                                            *
-                                        @endif
-                                    </span>
-                                </div>
-                                <div>
-                                    <h5 class="card-title text-uppercase mb-0">{{ $heroe->nombre }}</h5>
-                                </div>
-                            </div>
-                        </div>
+            @media (max-width: 1400px) {
+                .contenedor {
+                    grid-template-columns: repeat(5, 1fr);
+
+                }
+
+                .imgSM {
+                    width: calc(100%/4 - 2px);
+                }
+            }
+
+            @media (max-width: 1200px) {
+                .contenedor {
+                    grid-template-columns: repeat(4, 1fr);
+
+                }
+
+                .imgSM {
+                    width: calc(100%/3 - 2px);
+                }
+            }
+
+            @media (max-width: 960px) {
+                .contenedor {
+                    grid-template-columns: repeat(3, 1fr);
+
+                }
+
+                .imgSM {
+                    width: calc(100%/2 - 2px);
+                }
+            }
+
+            @media (max-width: 720px) {
+                .contenedor {
+                    grid-template-columns: repeat(2, 1fr);
+
+                }
+
+                .imgSM {
+                    width: calc(100%/2 - 2px);
+                }
+            }
+
+            /* Estilo del scroll*/
+        </style>
+    @endpush
+    {{-- Componete de la pantalla --}}
+    {{-- Navegación --}}
+    <div class="navegacion sticky-top">
+        <button class="boton_navegacion {{ $selectedFilter === 'all' ? 'seleccionado' : '' }}" wire:click='todosHeroes'>
+            <div class="spinner" wire:loading wire:target='todosHeroes, selectHero'></div>
+            <span>
+                todos
+            </span>
+        </button>
+        <button class="boton_navegacion {{ $selectedFilter === 'tank' ? 'seleccionado' : '' }}" wire:click='soloTank'>
+            <div class="spinner" wire:loading wire:target='soloTank'></div>
+            <img src="/logos/tankLogo.svg" alt="logo de tank" width="30" height="30" wire:loading.remove
+                wire:target='soloTank'>
+            <span>
+                tank
+            </span>
+        </button>
+        <button class="boton_navegacion {{ $selectedFilter === 'dps' ? 'seleccionado' : '' }}" wire:click='soloDps'>
+            <div class="spinner" wire:loading wire:target='soloDps'></div>
+            <img src="/logos/dpsLogo.svg" alt="logo de tank" width="30" height="30" wire:loading.remove
+                wire:target='soloDps'>
+            <span>
+                dps
+            </span>
+        </button>
+        <button class="boton_navegacion {{ $selectedFilter === 'supp' ? 'seleccionado' : '' }}" wire:click='soloSupp'>
+            <div class="spinner" wire:loading wire:target='soloSupp'></div>
+            <img src="/logos/suppLogo.svg" alt="logo de tank" width="30" height="30" wire:loading.remove
+                wire:target='soloSupp'>
+            <span>
+                supp
+            </span>
+        </button>
+    </div>
+
+    {{-- Cartas de pantalla --}}
+    <div class="contenedor" wire:loading.remove wire:target='todosHeroes ,soloTank ,soloDps ,soloSupp'>
+        @foreach ($heroes as $hero)
+            <div class="tarjeta" wire:click="selectHero({{ $hero->id }})" data-bs-toggle="modal"
+                data-bs-target="#heroCounters">
+                <div class="imagen_tarjeta">
+                    <img src="{{ $hero->img_path }}" alt="{{ $hero->nombre }}">
+                </div>
+                <div class="nombre">
+                    @if ($hero->rol === 'tank')
+                        <img src="/logos/tankLogo.svg" alt="logo de tank" width="30" height="30">
+                    @elseif ($hero->rol === 'dps')
+                        <img src="/logos/dpsLogo.svg" alt="logo de tank" width="30" height="30">
+                    @elseif($hero->rol === 'supp')
+                        <img src="/logos/suppLogo.svg" alt="logo de tank" width="30" height="30">
+                    @endif
+                    <span>
+                        {{ $hero->nombre }}
+                    </span>
+                </div>
+            </div>
+        @endforeach
+    </div>
+
+    {{-- Modal --}}
+
+    <div wire:ignore.self class="modal fade" id="heroCounters" tabindex="-1" role="dialog"
+        aria-labelledby="modalTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    {{-- Cabecera --}}
+                    <div class="titulo_modal" wire:loading.remove wire:target='selectHero'>
+                        <img src="{{ $selectedHero->img_path ?? '' }}" alt="{{ $selectedHero->nombre ?? '' }}">
+                        <span>{{ $selectedHero->nombre ?? '' }}</span>
                     </div>
-                @endforeach
-            @endif
-        </div>
+                    <div class="head-load" wire:loading wire:target='selectHero, reiniciar'>
+                        <div class="spinner"></div>
+                        <span>Cargando...</span>
+                    </div>
 
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="cuerpo modal-body" wire:loading.remove wire:target='selectHero'>
+                    {{-- Cuerpo --}}
+                    <div class="nota">
+                        <i class="bi bi-info-circle"></i>
+                        <span>
+                            {{ $selectedHero->nota ?? 'llamen a dios' }}
+                        </span>
+                    </div>
+                    <div class="row contenido-counters">
+                        <div class="col-6">
+                            <div class="row texto-cuerpo">
+                                Counters
+                            </div>
+                            @foreach ($countersByRol as $rol => $counters)
+                                @if (count($counters) > 0)
+                                    <div class="row alert alert-danger mb-1 counters py-2 px-0">
+                                        <h6 class="nombre_rol text-uppercase d-flex align-items-center">
+                                            @if ($rol == 'tank')
+                                                <img class="m-0 img_counters"
+                                                    src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/bltcb94e9203be4088a/dark_circle_tank.svg">
+                                                <span class="ms-2">TANK</span>
+                                            @elseif ($rol == 'dps')
+                                                <img class="m-0 img_counters"
+                                                    src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt052e8b02aef879b0/dark_circle_damage.svg">
+                                                <span class="ms-2">DPS</span>
+                                            @elseif($rol == 'supp')
+                                                <img class="m-0 img_counters"
+                                                    src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt8cf279e9b3126ef8/dark_circle_support.svg">
+                                                <span class="ms-2">SUPPORT</span>
+                                            @else
+                                                <span>*</span>
+                                            @endif
+                                        </h6>
 
-        {{-- Modal de información --}}
-        <div wire:ignore.self class="modal fade infoModal" id="heroInfo" tabindex="-1" aria-labelledby="heroInfoLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
-                <div class="modal-content">
-                    <div class="modal-header d-flex justify-content-between align-items-center">
-                        <div class="d-flex align-items-center">
-                            <img class="img-thumbnail imgHero me-3" src="{{ $selectedHero->img_path ?? '' }}"
-                                alt="{{ $selectedHero->nombre ?? '' }}" style="width: 100px; height: auto;">
-                            <h1 class="modal-title display-4 nombreHeroe text-uppercase"
-                                wire:loading.class="loading-modal-title">
-                                @if (!$selectedHero)
-                                    <div class="spinner-border text-primary me-2 border-4" role="status">
-                                        <span class="visually-hidden">Cargando...</span>
+                                        @foreach ($counters as $counter)
+                                            <img class="imgSM py-1" src="{{ $counter->img_path }}"
+                                                alt="Imagen de {{ $counter->nombre }}">
+                                        @endforeach
                                     </div>
-                                @elseif($selectedHero->rol == 'tank')
-                                    <img
-                                        src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/bltcb94e9203be4088a/dark_circle_tank.svg">
-                                @elseif ($selectedHero->rol == 'dps')
-                                    <img
-                                        src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt052e8b02aef879b0/dark_circle_damage.svg" />
-                                @elseif ($selectedHero->rol == 'supp')
-                                    <img
-                                        src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt8cf279e9b3126ef8/dark_circle_support.svg" />
                                 @endif
-                                {{ $selectedHero->nombre ?? '' }}
-                            </h1>
+                            @endforeach
+
                         </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body" wire:loading.class="loading">
-                        <div wire:loading>
-                            <div class="spinner-border text-primary me-2" role="status">
-                                <span class="visually-hidden">Cargando...</span>
+                        <div class="col-6">
+                            <div class="row texto-cuerpo">
+                                es Counter
                             </div>
-                            {{-- <p class="mt-2">Cargando información del héroe...</p> --}}
-                        </div>
-                        <div wire:loading.remove>
-                            <div class="row px-3">
-                                {{-- Muestra el texto de ayuda --}}
-                                <div class="alert alert-warning alerta-nota">
-                                    <strong>Nota: </strong>
-                                        {{$selectedHero->nota??''}}
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="row">
-                                        <h1 class="h5">Counters</h1>
-                                        <h6>(Es malo contra:)</h6>
+                            @foreach ($countereasByRol as $rol => $countereas)
+                                @if (count($countereas) > 0)
+                                    <div class="row alert alert-primary mb-1 counters py-2 px-0">
+                                        <h6 class="nombre_rol text-uppercase d-flex align-items-center">
+                                            @if ($rol == 'tank')
+                                                <img class="m-0 img_counters"
+                                                    src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/bltcb94e9203be4088a/dark_circle_tank.svg">
+                                                <span class="ms-2">TANK</span>
+                                            @elseif ($rol == 'dps')
+                                                <img class="m-0 img_counters"
+                                                    src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt052e8b02aef879b0/dark_circle_damage.svg">
+                                                <span class="ms-2">DPS</span>
+                                            @elseif($rol == 'supp')
+                                                <img class="m-0 img_counters"
+                                                    src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt8cf279e9b3126ef8/dark_circle_support.svg">
+                                                <span class="ms-2">SUPPORT</span>
+                                            @else
+                                                <span>*</span>
+                                            @endif
+                                        </h6>
+
+                                        @foreach ($countereas as $counterea)
+                                            <img class="imgSM py-1" src="{{ $counterea->img_path }}"
+                                                alt="Imagen de {{ $counterea->nombre }}">
+                                        @endforeach
                                     </div>
-                                    @foreach ($countersByRol as $rol => $counters)
-                                        @if (count($counters) > 0)
-                                            <div class="row alert alert-danger mb-1 counters py-2 px-0">
-                                                <h6 class="nombre_rol text-uppercase d-flex align-items-center">
-                                                    @if ($rol == 'tank')
-                                                        <img class="m-0 img_counters"
-                                                            src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/bltcb94e9203be4088a/dark_circle_tank.svg">
-                                                        <span class="ms-2">TANK</span>
-                                                    @elseif ($rol == 'dps')
-                                                        <img class="m-0 img_counters"
-                                                            src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt052e8b02aef879b0/dark_circle_damage.svg">
-                                                        <span class="ms-2">DPS</span>
-                                                    @elseif($rol == 'supp')
-                                                        <img class="m-0 img_counters"
-                                                            src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt8cf279e9b3126ef8/dark_circle_support.svg">
-                                                        <span class="ms-2">SUPPORT</span>
-                                                    @else
-                                                        <span>*</span>
-                                                    @endif
-                                                </h6>
+                                @endif
+                            @endforeach
 
-                                                @foreach ($counters as $counter)
-                                                    <img class="imgSM py-1" src="{{ $counter->img_path }}"
-                                                        alt="Imagen de {{ $counter->nombre }}">
-                                                @endforeach
-                                            </div>
-                                        @endif
-                                    @endforeach
-
-                                </div>
-                                <div class="col-6">
-                                    <div class="row">
-                                        <h1 class="h5">Es Counter</h1>
-                                        <h6>(Es bueno contra:)</h6>
-                                    </div>
-                                    @foreach ($countereasByRol as $rol => $countereas)
-                                        @if (count($countereas) > 0)
-                                            <div class="row alert alert-primary mb-1 counters py-2 px-0">
-                                                <h6 class="nombre_rol text-uppercase d-flex align-items-center">
-                                                    @if ($rol == 'tank')
-                                                        <img class="m-0 img_counters"
-                                                            src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/bltcb94e9203be4088a/dark_circle_tank.svg">
-                                                        <span class="ms-2">TANK</span>
-                                                    @elseif ($rol == 'dps')
-                                                        <img class="m-0 img_counters"
-                                                            src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt052e8b02aef879b0/dark_circle_damage.svg">
-                                                        <span class="ms-2">DPS</span>
-                                                    @elseif($rol == 'supp')
-                                                        <img class="m-0 img_counters"
-                                                            src="https://images.blz-contentstack.com/v3/assets/blt9c12f249ac15c7ec/blt8cf279e9b3126ef8/dark_circle_support.svg">
-                                                        <span class="ms-2">SUPPORT</span>
-                                                    @else
-                                                        <span>*</span>
-                                                    @endif
-                                                </h6>
-
-                                                @foreach ($countereas as $counterea)
-                                                    <img class="imgSM py-1" src="{{ $counterea->img_path }}"
-                                                        alt="Imagen de {{ $counterea->nombre }}">
-                                                @endforeach
-                                            </div>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn masInfo">Más Información</button>
-                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    {{-- Boton --}}
+                    <button type="button" class="btn-cerrar" data-bs-dismiss="modal">
+                        Cerrar
+                    </button>
                 </div>
             </div>
         </div>
-
     </div>
+
+
+    {{-- Javascript de la pantalla --}}
+    @push('scripts')
+        <script></script>
+    @endpush
 </div>

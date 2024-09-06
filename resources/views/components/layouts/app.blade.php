@@ -17,7 +17,7 @@
 
     {{-- Icono de la parte superior del navegador --}}
     <link rel="icon" href="https://static.playoverwatch.com/img/favicon-2f5255d1c6.ico" type="image/x-icon">
-    
+
     <style>
         html,
         body {
@@ -37,7 +37,30 @@
         #content {
             flex: 1;
         }
+
+        /* Estilo del scroll*/
+        ::-webkit-scrollbar {
+            width: 8px;
+            /* Tamaño del scroll */
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.25);
+            /* Color del fondo del scroll */
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgb(194, 194, 194);
+            /* Color del scroll */
+            border-radius: 1rem;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgb(165, 165, 165);
+            /* Color del scroll al pasar el ratón */
+        }
     </style>
+    @stack('styles')
 </head>
 
 <body>
