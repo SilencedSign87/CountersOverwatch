@@ -191,7 +191,7 @@
                   /* Fin de las animaciones */
                   .dialogo-modal {
                       width: 100vw;
-                      height: 100vh;
+                      height: 93vh;
 
                       border-radius: 0.5rem;
                       /* padding: 0.5rem; */
@@ -392,6 +392,8 @@
                       padding: 0;
                       background: none;
                       border: none;
+                      width: 2rem;
+                      height: 2rem;
                   }
 
                   .boton-cerrar {
