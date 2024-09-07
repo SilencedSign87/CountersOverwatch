@@ -27,6 +27,11 @@
                 }
             }
 
+            /* Desactiva el scroll al abrir el modal */
+            .overflow-hidden {
+                overflow: hidden;
+            }
+
             /* Navegación */
             .navegacion {
                 margin-top: 1rem;
@@ -36,7 +41,7 @@
                 height: auto;
                 width: auto;
                 padding: 0.5rem;
-                gap: 1vw;
+                gap: 0.75rem;
                 flex-wrap: wrap;
                 margin-bottom: 1rem;
             }
@@ -58,14 +63,14 @@
                 font-weight: bold;
                 font-size: 1.2rem;
                 /* Color */
-                background-color: hsla(0, 0%, 100%, .7);
+                background-color: hsla(0, 0%, 100%, .75);
                 color: hsla(0, 0%, 0%, 0.7);
                 border: 2px solid hsl(0, 0%, 100%);
                 /* Desenfoque*/
-                backdrop-filter: blur(5rem);
+                backdrop-filter: blur(1rem);
                 /* Desenfoque para navegadores WebKit */
-                -webkit-backdrop-filter: blur(5rem);
-                transition: scale 0.2s ease-in-out;
+                -webkit-backdrop-filter: blur(1rem);
+                transition: scale 0.1s ease-in;
                 /* sombra */
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             }
@@ -81,7 +86,7 @@
             }
 
             .seleccionado {
-                background-color: hsl(0, 0%, 90%);
+                background-color: hsl(0, 0%, 100%);
                 color: hsl(0, 0%, 0%);
             }
 
@@ -147,6 +152,73 @@
                 gap: 0.5rem;
             }
 
+            /* Base modal */
+            .modal {
+                display: none;
+                /* Oculta el modal por defecto */
+                position: fixed;
+                z-index: 1050;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background-color: rgba(0, 0, 0, 0.5);
+                /* Fondo oscuro */
+                transition: opacity 0.4s ease;
+            }
+
+            .modal.show {
+                display: block;
+                /* Mostrar modal cuando esté activo */
+                opacity: 1;
+                /* Completamente visible */
+                transition: opacity 0.4s ease;
+                /* Mantiene la transición */
+            }
+
+            .modal-dialog {
+                position: relative;
+                width: 100vw;
+                height: 100vh;
+                max-width: 1000px;
+                /* Ajusta el ancho máximo */
+                max-height: 800px;
+                /* Ajusta la altura máxima */
+                border-radius: 0.5rem;
+                padding: 0.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin:0;
+            }
+
+            .modal-body {
+                max-height: 70vh;
+                /* Ajusta la altura máxima del contenido */
+                overflow-y: auto;
+                /* Habilita el desplazamiento vertical */
+                padding: 1rem;
+                /* Espaciado interno */
+            }
+
+            .modal-header,
+            .modal-footer {
+                background: hsla(0, 0%, 100%, 0.2);
+                border-bottom: none;
+                border-top: none;
+            }
+
+            .modal-content {
+                background-color: rgba(255, 255, 255, 0.80);
+                /* Desenfoca el fondo */
+                backdrop-filter: blur(0.5rem);
+                /* Desenfoque para navegadores WebKit */
+                -webkit-backdrop-filter: blur(0.5rem);
+                border: 0;
+            }
+
+
             /* Modal */
             .titulo_modal {
                 display: flex;
@@ -165,15 +237,6 @@
             .titulo_modal span {
                 font-size: 1.75rem;
                 font-weight: bold;
-            }
-
-            .modal-content {
-                background-color: rgba(255, 255, 255, 0.80);
-                /* Desenfoca el fondo */
-                backdrop-filter: blur(0.5rem);
-                /* Desenfoque para navegadores WebKit */
-                -webkit-backdrop-filter: blur(0.5rem);
-                border: 0;
             }
 
             .modal-header,
@@ -215,15 +278,22 @@
                 font-size: 1.5rem;
                 justify-content: center;
                 text-transform: uppercase;
-                margin-bottom: 0.5rem;
+                margin-block: 0.5rem;
             }
-
-            .contenido-counters {}
 
             .imgSM {
 
                 width: calc(100%/5 - 2px);
                 border-radius: 20%;
+            }
+
+            .img_counters {
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+
+            .nombre_rol span {
+                font-weight: bold;
             }
 
             .alert-danger {
@@ -343,8 +413,7 @@
     {{-- Cartas de pantalla --}}
     <div class="contenedor" wire:loading.remove wire:target='todosHeroes ,soloTank ,soloDps ,soloSupp'>
         @foreach ($heroes as $hero)
-            <div class="tarjeta" wire:click="selectHero({{ $hero->id }})" data-bs-toggle="modal"
-                data-bs-target="#heroCounters">
+            <div class="tarjeta" wire:click="selectHero({{ $hero->id }})" onclick="openModal('heroCounters')">
                 <div class="imagen_tarjeta">
                     <img src="{{ $hero->img_path }}" alt="{{ $hero->nombre }}">
                 </div>
@@ -381,12 +450,11 @@
                         <span>Cargando...</span>
                     </div>
 
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" onclick="closeModal('heroCounters')"></button>
                 </div>
                 <div class="cuerpo modal-body" wire:loading.remove wire:target='selectHero'>
                     {{-- Cuerpo --}}
                     <div class="nota">
-                        <i class="bi bi-info-circle"></i>
                         <span>
                             {{ $selectedHero->nota ?? 'llamen a dios' }}
                         </span>
@@ -464,7 +532,7 @@
                 </div>
                 <div class="modal-footer">
                     {{-- Boton --}}
-                    <button type="button" class="btn-cerrar" data-bs-dismiss="modal">
+                    <button type="button" class="btn-cerrar" onclick="closeModal('heroCounters')">
                         Cerrar
                     </button>
                 </div>
@@ -475,6 +543,41 @@
 
     {{-- Javascript de la pantalla --}}
     @push('scripts')
-        <script></script>
+        <script>
+            // function openModal(modalId) {
+            //     document.getElementById(modalId).classList.add('show');
+            //     document.body.classList.add('overflow-hidden');
+            // }
+            function openModal(modalId) {
+                const modal = document.getElementById(modalId);
+                modal.style.display = 'block'; // Asegura que el modal esté en pantalla
+                setTimeout(() => modal.classList.add('show'), 10); // Añade la clase de fade-in después de un pequeño retraso
+                document.body.classList.add('overflow-hidden');
+            }
+
+            // function closeModal(modalId) {
+            //     document.getElementById(modalId).classList.remove('show');
+            //     document.body.classList.remove('overflow-hidden');
+
+            //     // Emite un evento para que Livewire se reinicie
+            //     window.dispatchEvent(new Event('modalClosed'));
+            // }
+            function closeModal(modalId) {
+                const modal = document.getElementById(modalId);
+                // Emite un evento para que Livewire se reinicie
+                window.dispatchEvent(new Event('modalClosed'));
+                modal.classList.remove('show'); // Remueve la clase de fade-out
+                document.body.classList.remove('overflow-hidden');
+
+                setTimeout(() => modal.style.display = 'none', 400); // Oculta el modal después de que termine la transición
+            }
+
+            // Si hace click fuera del modal, se cierra
+            window.onclick = function(event) {
+                if (event.target.classList.contains('modal')) {
+                    closeModal('heroCounters');
+                }
+            }
+        </script>
     @endpush
 </div>
