@@ -3,20 +3,15 @@
     @push('styles')
         <style>
             /* Spinner */
-
             .spinner {
-                border: 2px solid #f3f3f300;
-                /* Color del borde exterior */
+                border: 2px solid transparent;
                 border-radius: 100%;
                 border-top: 2px solid rgba(0, 0, 0, 0.50);
-                /* Color del borde que indica la carga */
                 width: 30px;
                 height: 30px;
                 animation: spin 0.5s linear infinite;
-                /* Animación spin infinita */
             }
 
-            /* Animación spin */
             @keyframes spin {
                 0% {
                     transform: rotate(0deg);
@@ -27,51 +22,41 @@
                 }
             }
 
-            /* Desactiva el scroll al abrir el modal */
+            /* General styles */
             .overflow-hidden {
                 overflow: hidden;
             }
 
-            /* Navegación */
+            /* Navigation styles */
             .navegacion {
-                margin-top: 1rem;
+                margin: 1rem 0;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                height: auto;
-                width: auto;
                 padding: 0.5rem;
                 gap: 0.75rem;
                 flex-wrap: wrap;
-                margin-bottom: 1rem;
             }
 
             .boton_navegacion {
-                /* Tamaño */
                 width: 9rem;
                 height: 3rem;
                 min-width: 6rem;
                 border-radius: 0.25rem;
-                /* Distribución */
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 gap: 0.5rem;
-                /* Texto */
                 font-family: system-ui;
                 text-transform: uppercase;
                 font-weight: bold;
                 font-size: 1.2rem;
-                /* Color */
-                background-color: hsla(0, 0%, 100%, .75);
+                background-color: hsla(0, 0%, 100%, 0.75);
                 color: hsla(0, 0%, 0%, 0.7);
                 border: 2px solid hsl(0, 0%, 100%);
-                /* Desenfoque*/
                 backdrop-filter: blur(1rem);
-                /* Desenfoque para navegadores WebKit */
                 -webkit-backdrop-filter: blur(1rem);
-                transition: scale 0.1s ease-in;
-                /* sombra */
+                transition: background-color 0.2s ease-in, color 0.2s ease-in, scale 0.1s ease-in;
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             }
 
@@ -90,17 +75,17 @@
                 color: hsl(0, 0%, 0%);
             }
 
-            /* Contenedor de las tarjetas de heroe */
+            /* Grid container styles */
             .contenedor {
                 display: grid;
                 grid-template-columns: repeat(6, minmax(150px, 250px));
-                gap: 2rem;
+                gap: 1vw;
                 margin: 0.5rem;
                 max-width: calc(100% - 1rem);
                 justify-content: center;
-                gap: 1vw;
             }
 
+            /* Card styles */
             .tarjeta {
                 box-sizing: border-box;
                 border: 2px solid hsla(0, 0%, 100%, .7);
@@ -109,13 +94,8 @@
                 aspect-ratio: 9 / 11;
                 overflow: hidden;
                 display: flex;
-                /* Habilita Flexbox en la tarjeta */
                 flex-direction: column;
-                /* Apila los elementos verticalmente */
-
-                /* Transición */
-                transition: scale 0.1s ease-in,
-                    background-color 0.2s ease-in-out;
+                transition: scale 0.1s ease-in, background-color 0.2s ease-in-out;
             }
 
             .tarjeta:hover {
@@ -128,10 +108,6 @@
                 scale: 1;
             }
 
-            .imagen_tarjeta {
-                flex-shrink: 0;
-            }
-
             .imagen_tarjeta img {
                 display: block;
                 width: 100%;
@@ -141,7 +117,6 @@
 
             .nombre {
                 flex-grow: 1;
-                height: fit-content;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -152,74 +127,57 @@
                 gap: 0.5rem;
             }
 
-            /* Base modal */
+            /* Modal styles */
             .modal {
                 display: none;
-                /* Oculta el modal por defecto */
                 position: fixed;
                 z-index: 1050;
                 left: 0;
                 top: 0;
                 width: 100%;
                 height: 100%;
-                overflow: hidden;
                 background-color: rgba(0, 0, 0, 0.5);
-                /* Fondo oscuro */
-                transition: opacity 0.4s ease;
+                transition: opacity 0.2s linear;
             }
 
             .modal.show {
                 display: block;
-                /* Mostrar modal cuando esté activo */
                 opacity: 1;
-                /* Completamente visible */
-                transition: opacity 0.4s ease;
-                /* Mantiene la transición */
             }
 
             .modal-dialog {
                 position: relative;
                 width: 100vw;
-                height: 100vh;
+                height: 90vh;
                 max-width: 1000px;
-                /* Ajusta el ancho máximo */
                 max-height: 800px;
-                /* Ajusta la altura máxima */
                 border-radius: 0.5rem;
                 padding: 0.5rem;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                margin:0;
+                margin: auto;
             }
 
             .modal-body {
                 max-height: 70vh;
-                /* Ajusta la altura máxima del contenido */
                 overflow-y: auto;
-                /* Habilita el desplazamiento vertical */
                 padding: 1rem;
-                /* Espaciado interno */
             }
 
             .modal-header,
             .modal-footer {
                 background: hsla(0, 0%, 100%, 0.2);
-                border-bottom: none;
-                border-top: none;
+                border: 0;
             }
 
             .modal-content {
                 background-color: rgba(255, 255, 255, 0.80);
-                /* Desenfoca el fondo */
                 backdrop-filter: blur(0.5rem);
-                /* Desenfoque para navegadores WebKit */
                 -webkit-backdrop-filter: blur(0.5rem);
                 border: 0;
             }
 
-
-            /* Modal */
             .titulo_modal {
                 display: flex;
                 justify-content: start;
@@ -239,36 +197,22 @@
                 font-weight: bold;
             }
 
-            .modal-header,
-            .modal-footer {
-                border: 0;
-            }
-
-            .modal-header {
-                background: hsla(0, 0%, 100%, 0.2);
-            }
-
             .cuerpo {
                 display: grid;
             }
 
             .nota {
-                /* Distribución */
                 justify-self: center;
                 display: flex;
-                width: auto;
-                height: auto;
                 justify-content: center;
                 align-items: center;
                 padding-inline: 3rem;
                 padding-block: 0.25rem;
                 border-radius: 0.5rem;
                 gap: 0.5rem;
-                /* Texto */
                 font-size: 1.1rem;
                 font-weight: 500;
                 text-align: center;
-                /* Color */
                 background: rgba(255, 120, 41, 0.15);
                 border: 1px solid rgb(255, 120, 41);
                 color: rgb(197, 79, 11);
@@ -282,8 +226,7 @@
             }
 
             .imgSM {
-
-                width: calc(100%/5 - 2px);
+                width: calc(100% / 5 - 2px);
                 border-radius: 20%;
             }
 
@@ -317,11 +260,6 @@
 
             .btn-cerrar:hover {
                 background: #ff7424;
-                color: #fff;
-                border: 0;
-                border-radius: 0.25rem;
-                padding: 0.5rem 1rem;
-                font-size: 1rem;
             }
 
             .btn-cerrar:active {
@@ -331,48 +269,42 @@
             @media (max-width: 1400px) {
                 .contenedor {
                     grid-template-columns: repeat(5, 1fr);
-
                 }
 
                 .imgSM {
-                    width: calc(100%/4 - 2px);
+                    width: calc(100% / 4 - 2px);
                 }
             }
 
             @media (max-width: 1200px) {
                 .contenedor {
                     grid-template-columns: repeat(4, 1fr);
-
                 }
 
                 .imgSM {
-                    width: calc(100%/3 - 2px);
+                    width: calc(100% / 3 - 2px);
                 }
             }
 
             @media (max-width: 960px) {
                 .contenedor {
                     grid-template-columns: repeat(3, 1fr);
-
                 }
 
                 .imgSM {
-                    width: calc(100%/2 - 2px);
+                    width: calc(100% / 2 - 2px);
                 }
             }
 
             @media (max-width: 720px) {
                 .contenedor {
                     grid-template-columns: repeat(2, 1fr);
-
                 }
 
                 .imgSM {
-                    width: calc(100%/2 - 2px);
+                    width: calc(100% / 2 - 2px);
                 }
             }
-
-            /* Estilo del scroll*/
         </style>
     @endpush
     {{-- Componete de la pantalla --}}
@@ -532,7 +464,8 @@
                 </div>
                 <div class="modal-footer">
                     {{-- Boton --}}
-                    <button type="button" class="btn-cerrar" onclick="closeModal('heroCounters')">
+                    <button type="button" class="btn-cerrar" onclick="closeModal('heroCounters')"
+                        aria-label="Close" aria-hidden="true">
                         Cerrar
                     </button>
                 </div>
