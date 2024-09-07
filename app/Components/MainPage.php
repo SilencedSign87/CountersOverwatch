@@ -82,7 +82,7 @@ class MainPage extends Component
         }
     }
 
-    #[On('modalClosed')]
+    #[On('modalCerrado')]
     public function reiniciar()
     {
         $this->selectedHero = null;
