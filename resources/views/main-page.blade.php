@@ -189,16 +189,7 @@
                   }
 
                   /* Fin de las animaciones */
-
-
-
-
                   .dialogo-modal {
-                      /* width: 100vw;
-                                  height: 90vh;
-                                  max-width: 1000px;
-                                  max-height: 800px; */
-
                       width: 100vw;
                       height: 100vh;
 
@@ -215,13 +206,17 @@
                   }
 
                   .head-load {
-                      padding: 1rem;
-                      display: flex;
-                      flex-direction: column;
-                      /* Alinea verticalmente */
-                      justify-content: center;
-                      align-items: center;
-                      /* Centra horizontalmente */
+                      margin: auto;
+                      display: grid;
+                      gap: 0.5rem;
+                  }
+
+                  .head-load .cargador {
+                      margin: auto;
+                  }
+
+                  .head-load span {
+                      margin: auto;
                   }
 
                   .cabecera-modal {
@@ -229,21 +224,30 @@
                       display: flex;
                       justify-content: space-between;
                       align-items: center;
+                      flex-grow: 0;
+                      /* No crece */
                   }
 
                   .cuerpo-modal {
                       padding-top: 0.25rem;
-                      max-height: 75%;
+                      /* max-height: 75%; */
                       overflow-y: auto;
+                      flex-grow: 1;
+                      /* Crece para ocupar el espacio disponible */
+                      overflow-y: auto;
+                      /* Agrega una barra de desplazamiento si es necesario */
                   }
 
                   .pie-modal {
-                      max-height: 15%;
+                      /* max-height: 15%; */
                       display: flex;
                       justify-content: flex-end;
                       align-items: center;
                       position: sticky;
                       bottom: 0;
+
+                      flex-grow: 0;
+                      /* No crece */
                   }
 
                   .cabecera-modal,
@@ -262,7 +266,6 @@
                       -webkit-backdrop-filter: blur(0.5rem);
                       border: 0;
                       width: 100%;
-                      height: 100%;
                       max-height: 800px;
                       max-width: 1000px;
 
@@ -271,6 +274,13 @@
                       overflow: hidden;
 
                       position: relative;
+
+                      display: flex;
+                      /* Habilita Flexbox */
+                      flex-direction: column;
+                      /* Alinea los elementos verticalmente */
+                      height: 100%;
+                      /* Ocupa toda la altura disponible */
                   }
 
                   .contenido-counters {
@@ -284,7 +294,7 @@
                       width: 50%;
                       display: flex;
                       flex-direction: column;
-                      gap: 1rem;
+                      gap: 2px;
                   }
 
                   .titulo-modal {
@@ -444,7 +454,6 @@
                   }
               </style>
           @endpush
-          {{-- Componete de la pantalla --}}
           {{-- Navegación --}}
           <div class="barra-navegacion">
               <button class="boton-navegacion {{ $selectedFilter === 'all' ? 'filtro-seleccionado' : '' }}"
@@ -482,7 +491,6 @@
                   </span>
               </button>
           </div>
-
           {{-- Cartas de pantalla --}}
           <div class="rejilla-contenedor" wire:loading.remove wire:target='todosHeroes ,soloTank ,soloDps ,soloSupp'>
               @foreach ($heroes as $hero)
@@ -506,13 +514,10 @@
                   </div>
               @endforeach
           </div>
-
           {{-- Modal --}}
-
           <div wire:ignore.self class="ventana-modal" id="contadoresHeroe" tabindex="-1" role="dialog"
               aria-labelledby="modalTitleId" aria-hidden="true">
               <div class="dialogo-modal" role="document">
-
                   <div class="contenido-modal">
                       <div class="head-load" wire:loading wire:target='selectHero, reiniciar'>
                           <div class="cargador"></div>
@@ -568,7 +573,6 @@
                                                       <span>*</span>
                                                   @endif
                                               </div>
-
                                               @foreach ($counters as $counter)
                                                   <img class="imagen-pequena" src="{{ $counter->img_path }}"
                                                       alt="Imagen de {{ $counter->nombre }}">
@@ -576,7 +580,6 @@
                                           </div>
                                       @endif
                                   @endforeach
-
                               </div>
                               <div class="columna-contenido">
                                   <div class=" texto-cuerpo">
@@ -610,7 +613,6 @@
                                           </div>
                                       @endif
                                   @endforeach
-
                               </div>
                           </div>
                       </div>
@@ -624,8 +626,6 @@
                   </div>
               </div>
           </div>
-
-
           {{-- Javascript de la pantalla --}}
           @push('scripts')
               <script>
@@ -635,8 +635,8 @@
                       setTimeout(() => modal.classList.add('show'), 10);
                       document.querySelector('#' + idModal + ' .boton-cerrar').setAttribute('aria-hidden', 'false');
                       document.body.classList.add('desbordamiento-oculto');
-                  }
 
+                  }
 
                   function cerrarModal(idModal) {
                       const modal = document.getElementById(idModal);
@@ -649,12 +649,8 @@
                           modal.classList.remove('fade-out');
                           modal.style.display = 'none';
                       }, 300);
-                  }
-                  // Cerrar el modal al hacer click fuera del contenido del modal
-                  window.onclick = function(event) {
-                      if (event.target.classList.contains('ventana-modal')) {
-                          cerrarModal('contadoresHeroe');
-                      }
+
+
                   }
               </script>
           @endpush
