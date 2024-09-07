@@ -36,6 +36,9 @@
                 padding: 0.5rem;
                 gap: 0.75rem;
                 flex-wrap: wrap;
+                position:sticky;
+                top:0;
+                z-index: 10;
             }
 
             .boton_navegacion {
@@ -309,7 +312,7 @@
     @endpush
     {{-- Componete de la pantalla --}}
     {{-- Navegación --}}
-    <div class="navegacion sticky-top">
+    <div class="navegacion">
         <button class="boton_navegacion {{ $selectedFilter === 'all' ? 'seleccionado' : '' }}" wire:click='todosHeroes'>
             <div class="spinner" wire:loading wire:target='todosHeroes, selectHero'></div>
             <span>
