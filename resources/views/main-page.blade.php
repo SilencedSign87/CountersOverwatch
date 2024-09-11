@@ -211,8 +211,8 @@
                       border: 0;
                       height: 100%;
                       width: 100%;
-                      max-height: 700px;
-                      max-width: 1000px;
+                      max-height: 850px;
+                      max-width: 1100px;
 
                       border-radius: 1rem;
 
@@ -310,10 +310,11 @@
                       display: flex;
                       justify-content: start;
                       align-items: center;
-                      gap: 1rem;
+                      gap: 0.5rem;
                   }
 
                   .titulo-modal img {
+                    box-sizing: border-box;
                       border: 2px solid hsla(0, 0%, 100%, 0.5);
                       border-radius: 0.5rem;
                       max-width: 6rem;
@@ -335,7 +336,7 @@
                       justify-content: center;
                       align-items: center;
                       padding-inline: 3rem;
-                      padding-block: 0.3rem;
+                      padding-block: 0.25rem;
                       border-radius: 0.5rem;
                       gap: 0.5rem;
                       font-size: 1.1rem;
@@ -344,36 +345,6 @@
                       background: rgba(255, 120, 41, 0.15);
                       border: 1px solid rgb(255, 120, 41);
                       color: rgb(197, 79, 11);
-                  }
-
-                  .texto-cuerpo {
-                      font-size: 1.25rem;
-                      text-align: center;
-                      text-transform: uppercase;
-                      margin-block: 0.25rem;
-                  }
-
-                  .imagen-pequena {
-                      
-                      width: calc(100% / 5 - 4px);
-                      border-radius: 20%;
-                  }
-
-                  .imagen-contador {
-                      width: 1.5rem;
-                      height: 1.5rem;
-                  }
-
-                  .nombre-rol {
-                      display: flex;
-                      justify-content: flex-start;
-                      align-items: center;
-                      gap: 0.5rem;
-                      height: 3rem;
-                  }
-
-                  .nombre-rol span {
-                      font-weight: bold;
                   }
 
                   .alerta-peligro {
@@ -390,6 +361,50 @@
                       border: 1px solid rgb(32, 136, 168);
                       border-radius: 0.5rem;
                       padding: 0.25rem;
+                  }
+
+                  .texto-cuerpo {
+                      font-size: 1.5rem;
+                      font-weight: 500;
+                      text-align: center;
+                      text-transform: uppercase;
+                      margin-block: 0.5rem;
+                  }
+                  .texto-cuerpo span{
+                    opacity: 0.7;
+                    font-size: 0.9rem;
+                  }
+
+                  .texto-cuerpo.counters {
+                      color: rgb(220, 53, 53);
+                  }
+
+                  .texto-cuerpo.counter {
+                      color: rgb(32, 136, 168);
+                  }
+
+                  .imagen-pequena {
+
+                      width: calc(100% / 5 - 4px);
+                      border-radius: 20%;
+                  }
+
+                  .imagen-contador {
+                      width: 1.5rem;
+                      height: 1.5rem;
+                  }
+
+                  .nombre-rol {
+                      display: flex;
+                      justify-content: flex-start;
+                      align-items: center;
+                      gap: 0.5rem;
+                      height: 3rem;
+                      margin-left: 5px;
+                  }
+
+                  .nombre-rol span {
+                      font-weight: bold;
                   }
 
                   .btn-close {
@@ -547,6 +562,13 @@
                           {{-- Cabecera --}}
                           <div class="titulo-modal">
                               <img src="{{ $selectedHero->img_path ?? '' }}" alt="{{ $selectedHero->nombre ?? '' }}">
+                              @if($selectedHero && $selectedHero->rol === 'tank')
+                                  <img style="border: none;" src="/logos/tankLogo.svg" alt="logo de tank" width="30" height="30">
+                              @elseif($selectedHero && $selectedHero->rol === 'dps')
+                                  <img style="border: none;" src="/logos/dpsLogo.svg" alt="logo de tank" width="30" height="30">
+                              @elseif($selectedHero && $selectedHero->rol === 'supp')
+                                  <img style="border: none;" src="/logos/suppLogo.svg" alt="logo de tank" width="30" height="30">
+                              @endif
                               <span>{{ $selectedHero->nombre ?? '' }}</span>
                           </div>
 
@@ -579,8 +601,9 @@
                           </div>
                           <div class=" contenido-counters">
                               <div class="columna-contenido">
-                                  <div class=" texto-cuerpo">
-                                      Counters
+                                  <div class="texto-cuerpo counters">
+                                      Counters <br>
+                                      <span>Es malo contra:</span>
                                   </div>
                                   @foreach ($countersByRol as $rol => $counters)
                                       @if (count($counters) > 0)
@@ -611,8 +634,9 @@
                                   @endforeach
                               </div>
                               <div class="columna-contenido">
-                                  <div class=" texto-cuerpo">
-                                      es Counter
+                                  <div class="texto-cuerpo counter">
+                                      Es Counter <br>
+                                      <span>Es bueno contra:</span>
                                   </div>
                                   @foreach ($countereasByRol as $rol => $countereas)
                                       @if (count($countereas) > 0)
