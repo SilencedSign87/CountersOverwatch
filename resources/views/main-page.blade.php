@@ -96,7 +96,7 @@
                   /* Grid container styles */
                   .rejilla-contenedor {
                       display: grid;
-                      grid-template-columns: repeat(6, minmax(150px, 200px));
+                      grid-template-columns: repeat(6, minmax(150px, 225px));
                       gap: 1vw;
                       margin: 0.5rem;
                       max-width: calc(100% - 1rem);
@@ -354,6 +354,7 @@
                   }
 
                   .imagen-pequena {
+                      
                       width: calc(100% / 5 - 4px);
                       border-radius: 20%;
                   }
@@ -454,7 +455,7 @@
                       }
 
                       .imagen-pequena {
-                          width: calc(100% / 2 - 4p);
+                          width: calc(100% / 2 - 4px);
                       }
                   }
 
@@ -462,9 +463,11 @@
                       .rejilla-contenedor {
                           grid-template-columns: repeat(2, 1fr);
                       }
+
                       .contenido-modal {
                           max-height: 100%;
                       }
+
                       .imagen-pequena {
                           width: calc(100% / 2 - 4px);
                       }
