@@ -39,6 +39,20 @@
                       position: sticky;
                       top: 0;
                       z-index: 10;
+
+                      animation: blur linear both;
+                      animation-timeline: scroll();
+                      animation-range: 0 400px;
+                  }
+
+                  @keyframes blur {
+                      to {
+                          box-shadow:
+                              0px 5px 50px -5px rgba(49, 120, 201, 0.1),
+                              0px 0px 0 1px rgba(49, 120, 201, 0.1);
+                          background-color: rgba(49, 120, 201, 0.3);
+                          backdrop-filter: blur(10px);
+                      }
                   }
 
                   .boton-navegacion {
@@ -81,7 +95,7 @@
                   /* Grid container styles */
                   .rejilla-contenedor {
                       display: grid;
-                      grid-template-columns: repeat(6, minmax(150px, 250px));
+                      grid-template-columns: repeat(6, minmax(150px, 200px));
                       gap: 1vw;
                       margin: 0.5rem;
                       max-width: calc(100% - 1rem);
@@ -190,8 +204,9 @@
 
                   /* Fin de las animaciones */
                   .dialogo-modal {
-                      width: 100vw;
-                      height: 93vh;
+
+                      width: 100%;
+                      height: 100%;
 
                       border-radius: 0.5rem;
                       /* padding: 0.5rem; */
@@ -199,9 +214,6 @@
 
                       align-items: center;
                       justify-content: center;
-
-                      margin: auto;
-
                       position: relative;
                   }
 
@@ -266,7 +278,7 @@
                       -webkit-backdrop-filter: blur(0.5rem);
                       border: 0;
                       width: 100%;
-                      max-height: 800px;
+                      max-height: 90%;
                       max-width: 1000px;
 
                       border-radius: 1rem;
