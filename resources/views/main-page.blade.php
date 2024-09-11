@@ -39,6 +39,7 @@
                       position: sticky;
                       top: 0;
                       z-index: 10;
+                      background: transparent;
 
                       animation: blur linear both;
                       animation-timeline: scroll();
@@ -203,6 +204,28 @@
                   }
 
                   /* Fin de las animaciones */
+                  .contenido-modal {
+                      background-color: rgba(255, 255, 255, 0.80);
+                      backdrop-filter: blur(0.5rem);
+                      -webkit-backdrop-filter: blur(0.5rem);
+                      border: 0;
+                      height: 100%;
+                      width: 100%;
+                      max-height: 700px;
+                      max-width: 1000px;
+
+                      border-radius: 1rem;
+
+                      overflow: hidden;
+
+                      position: relative;
+
+                      display: flex;
+                      /* Habilita Flexbox */
+                      flex-direction: column;
+                      /* Alinea los elementos verticalmente */
+                  }
+
                   .dialogo-modal {
 
                       width: 100%;
@@ -267,32 +290,6 @@
                       padding: 1rem;
                       background: hsla(0, 0%, 100%, 0.2);
                       border: 0;
-                  }
-
-                  .contenido-modal {
-                      inset: 0;
-                      margin: auto;
-
-                      background-color: rgba(255, 255, 255, 0.80);
-                      backdrop-filter: blur(0.5rem);
-                      -webkit-backdrop-filter: blur(0.5rem);
-                      border: 0;
-                      width: 100%;
-                      max-height: 90%;
-                      max-width: 1000px;
-
-                      border-radius: 1rem;
-
-                      overflow: hidden;
-
-                      position: relative;
-
-                      display: flex;
-                      /* Habilita Flexbox */
-                      flex-direction: column;
-                      /* Alinea los elementos verticalmente */
-                      height: 100%;
-                      /* Ocupa toda la altura disponible */
                   }
 
                   .contenido-counters {
@@ -452,6 +449,10 @@
                           grid-template-columns: repeat(3, 1fr);
                       }
 
+                      .contenido-modal {
+                          max-height: 100%;
+                      }
+
                       .imagen-pequena {
                           width: calc(100% / 2 - 4p);
                       }
@@ -461,7 +462,9 @@
                       .rejilla-contenedor {
                           grid-template-columns: repeat(2, 1fr);
                       }
-
+                      .contenido-modal {
+                          max-height: 100%;
+                      }
                       .imagen-pequena {
                           width: calc(100% / 2 - 4px);
                       }
@@ -531,8 +534,8 @@
           {{-- Modal --}}
           <div wire:ignore.self class="ventana-modal" id="contadoresHeroe" tabindex="-1" role="dialog"
               aria-labelledby="modalTitleId" aria-hidden="true">
-              <div class="dialogo-modal" role="document">
-                  <div class="contenido-modal">
+              <div class="dialogo-modal" id="dialogo-modal" role="document">
+                  <div id="contenido-modal" class="contenido-modal">
                       <div class="head-load" wire:loading wire:target='selectHero, reiniciar'>
                           <div class="cargador"></div>
                           <span>Cargando...</span>
@@ -657,6 +660,7 @@
                       modal.style.display = 'block';
                       setTimeout(() => modal.classList.add('show'), 10);
                       document.querySelector('#' + idModal + ' .boton-cerrar').setAttribute('aria-hidden', 'false');
+                      document.getElementById('contadoresHeroe').setAttribute('aria-hidden', 'false');
                       document.body.classList.add('desbordamiento-oculto');
 
                   }
@@ -666,6 +670,7 @@
                       window.dispatchEvent(new Event('modalCerrado'));
                       modal.classList.add('fade-out');
                       document.querySelector('#' + idModal + ' .boton-cerrar').setAttribute('aria-hidden', 'true');
+                      document.getElementById('contadoresHeroe').setAttribute('aria-hidden', 'true');
                       document.body.classList.remove('desbordamiento-oculto');
 
                       setTimeout(() => {
@@ -675,6 +680,15 @@
 
 
                   }
+                  const modalbg = document.getElementById('contadoresHeroe');
+                  const modalCo = document.getElementById('contenido-modal');
+                  //detectar click fuera de de la ventana modal
+                  modalbg.addEventListener('click', (e) => {
+                      //   console.log(e.target);
+                      if (e.target.id == 'dialogo-modal') {
+                          cerrarModal('contadoresHeroe');
+                      }
+                  });
               </script>
           @endpush
       </div>
