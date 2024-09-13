@@ -371,6 +371,7 @@
                       text-align: center;
                       text-transform: uppercase;
                       margin-block: 2px;
+                      line-height: 1;
                   }
 
                   .texto-cuerpo span {
@@ -389,7 +390,7 @@
                   .imagen-pequena {
 
                       width: calc(100% / 5 - 4px);
-                      border-radius: 20%;
+                      border-radius: 10%;
                   }
 
                   .imagen-contador {
