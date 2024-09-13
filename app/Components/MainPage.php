@@ -7,8 +7,6 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-use function PHPUnit\Framework\isEmpty;
-
 #[Title('Lista de Counters')]
 
 class MainPage extends Component
@@ -34,38 +32,24 @@ class MainPage extends Component
     public function mount()
     {
         $this->selectedFilter = 'all';
-        $this->todosHeroes();
+        $this->filtrarHeroes();
     }
 
-    public function todosHeroes()
+    public function filtrarHeroes($rol = 'all')
     {
         $this->reset();
-        $this->selectedFilter = 'all';
-        $this->heroes = hero::orderBy('nombre', 'asc')->get();
-    }
+        $this->selectedFilter = $rol;
 
-    public function soloTank()
-    {
-        $this->reset();
-        $this->selectedFilter = 'tank';
-        $this->heroes = hero::where('rol', 'tank')->orderBy('nombre', 'asc')->get();
-    }
-    public function soloDps()
-    {
-        $this->reset();
-        $this->selectedFilter = 'dps';
-        $this->heroes = hero::where('rol', 'dps')->orderBy('nombre', 'asc')->get();
-    }
-    public function soloSupp()
-    {
-        $this->reset();
-        $this->selectedFilter = 'supp';
-        $this->heroes = hero::where('rol', 'supp')->orderBy('nombre', 'asc')->get();
+        if ($rol === 'all') {
+            $this->heroes = hero::orderBy('nombre', 'asc')->get();
+        } else {
+            $this->heroes = hero::where('rol', $rol)->orderBy('nombre', 'asc')->get();
+        }
     }
 
     public function selectHero($id)
     {
-        $this->selectedHero = hero::where('id', $id)->first();
+        $this->selectedHero = hero::find($id);
         $this->counters = $this->selectedHero->counteredBy;
         $this->countereas = $this->selectedHero->counters;
 
@@ -85,8 +69,7 @@ class MainPage extends Component
     #[On('modalCerrado')]
     public function reiniciar()
     {
-        $this->selectedHero = null;
-        $this->reset('counters','countereas','countersByRol','countereasByRol');
+        $this->reset('selectedHero', 'counters', 'countereas', 'countersByRol', 'countereasByRol');
     }
 
     public function render()

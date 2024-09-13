@@ -492,42 +492,42 @@
           {{-- Navegación --}}
           <div class="barra-navegacion">
               <button class="boton-navegacion {{ $selectedFilter === 'all' ? 'filtro-seleccionado' : '' }}"
-                  wire:click='todosHeroes'>
-                  <div class="cargador" wire:loading wire:target='todosHeroes, selectHero'></div>
+                  wire:click='filtrarHeroes()'>
+                  <div class="cargador" wire:loading wire:target='filtrarHeroes, selectHero'></div>
                   <span>
                       todos
                   </span>
               </button>
               <button class="boton-navegacion {{ $selectedFilter === 'tank' ? 'filtro-seleccionado' : '' }}"
-                  wire:click='soloTank'>
-                  <div class="cargador" wire:loading wire:target='soloTank'></div>
+                  wire:click='filtrarHeroes("tank")'>
+                  <div class="cargador" wire:loading wire:target='filtrarHeroes'></div>
                   <img src="/logos/tankLogo.svg" alt="logo de tank" width="30" height="30" wire:loading.remove
-                      wire:target='soloTank'>
+                      wire:target='filtrarHeroes'>
                   <span>
                       tank
                   </span>
               </button>
               <button class="boton-navegacion {{ $selectedFilter === 'dps' ? 'filtro-seleccionado' : '' }}"
-                  wire:click='soloDps'>
-                  <div class="cargador" wire:loading wire:target='soloDps'></div>
+                  wire:click='filtrarHeroes("dps")'>
+                  <div class="cargador" wire:loading wire:target='filtrarHeroes'></div>
                   <img src="/logos/dpsLogo.svg" alt="logo de tank" width="30" height="30" wire:loading.remove
-                      wire:target='soloDps'>
+                      wire:target='filtrarHeroes'>
                   <span>
                       dps
                   </span>
               </button>
               <button class="boton-navegacion {{ $selectedFilter === 'supp' ? 'filtro-seleccionado' : '' }}"
-                  wire:click='soloSupp'>
-                  <div class="cargador" wire:loading wire:target='soloSupp'></div>
+                  wire:click='filtrarHeroes("supp")'>
+                  <div class="cargador" wire:loading wire:target='filtrarHeroes'></div>
                   <img src="/logos/suppLogo.svg" alt="logo de tank" width="30" height="30" wire:loading.remove
-                      wire:target='soloSupp'>
+                      wire:target='filtrarHeroes'>
                   <span>
                       supp
                   </span>
               </button>
           </div>
           {{-- Cartas de pantalla --}}
-          <div class="rejilla-contenedor" wire:loading.remove wire:target='todosHeroes ,soloTank ,soloDps ,soloSupp'>
+          <div class="rejilla-contenedor" wire:loading.remove wire:target='filtrarHeroes'>
               @foreach ($heroes as $hero)
                   <div class="tarjeta-heroe" wire:click="selectHero({{ $hero->id }})"
                       onclick="abrirModal('contadoresHeroe')">
