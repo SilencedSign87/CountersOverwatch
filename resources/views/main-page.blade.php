@@ -314,7 +314,7 @@
                   }
 
                   .titulo-modal img {
-                    box-sizing: border-box;
+                      box-sizing: border-box;
                       border: 2px solid hsla(0, 0%, 100%, 0.5);
                       border-radius: 0.5rem;
                       max-width: 6rem;
@@ -331,6 +331,7 @@
                   }
 
                   .nota-heroe {
+                      text-transform: initial;
                       justify-self: center;
                       display: flex;
                       justify-content: center;
@@ -342,9 +343,10 @@
                       font-size: 1.1rem;
                       font-weight: 500;
                       text-align: center;
-                      background: rgba(255, 120, 41, 0.15);
+                      background: rgba(236, 203, 186, 0.99);
                       border: 1px solid rgb(255, 120, 41);
                       color: rgb(197, 79, 11);
+                      z-index: 10;
                   }
 
                   .alerta-peligro {
@@ -365,14 +367,15 @@
 
                   .texto-cuerpo {
                       font-size: 1.5rem;
-                      font-weight: 500;
+                      font-weight: 600;
                       text-align: center;
                       text-transform: uppercase;
-                      margin-block: 0.5rem;
+                      margin-block: 2px;
                   }
-                  .texto-cuerpo span{
-                    opacity: 0.7;
-                    font-size: 0.9rem;
+
+                  .texto-cuerpo span {
+                      opacity: 0.7;
+                      font-size: 0.9rem;
                   }
 
                   .texto-cuerpo.counters {
@@ -532,7 +535,7 @@
                   <div class="tarjeta-heroe" wire:click="selectHero({{ $hero->id }})"
                       onclick="abrirModal('contadoresHeroe')">
                       <div class="imagen-tarjeta">
-                          <img src="{{ $hero->img_path }}" alt="{{ $hero->nombre }}">
+                          <img src="{{ $hero->img_path }}" alt="{{ $hero->nombre }}" aspect-ratio="1">
                       </div>
                       <div class="nombre-heroe">
                           @if ($hero->rol === 'tank')
@@ -562,12 +565,15 @@
                           {{-- Cabecera --}}
                           <div class="titulo-modal">
                               <img src="{{ $selectedHero->img_path ?? '' }}" alt="{{ $selectedHero->nombre ?? '' }}">
-                              @if($selectedHero && $selectedHero->rol === 'tank')
-                                  <img style="border: none;" src="/logos/tankLogo.svg" alt="logo de tank" width="30" height="30">
+                              @if ($selectedHero && $selectedHero->rol === 'tank')
+                                  <img style="border: none;" src="/logos/tankLogo.svg" alt="logo de tank" width="30"
+                                      height="30">
                               @elseif($selectedHero && $selectedHero->rol === 'dps')
-                                  <img style="border: none;" src="/logos/dpsLogo.svg" alt="logo de tank" width="30" height="30">
+                                  <img style="border: none;" src="/logos/dpsLogo.svg" alt="logo de tank" width="30"
+                                      height="30">
                               @elseif($selectedHero && $selectedHero->rol === 'supp')
-                                  <img style="border: none;" src="/logos/suppLogo.svg" alt="logo de tank" width="30" height="30">
+                                  <img style="border: none;" src="/logos/suppLogo.svg" alt="logo de tank" width="30"
+                                      height="30">
                               @endif
                               <span>{{ $selectedHero->nombre ?? '' }}</span>
                           </div>
@@ -586,9 +592,9 @@
                       <div class="cuerpo-contenido cuerpo-modal" wire:loading.remove wire:target='selectHero'>
                           {{-- Cuerpo --}}
                           <div class="nota-heroe">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 24 24"
-                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                  stroke-linejoin="round"
+                              <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem"
+                                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                  stroke-linecap="round" stroke-linejoin="round"
                                   class="icon icon-tabler icons-tabler-outline icon-tabler-exclamation-circle">
                                   <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                   <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
@@ -603,7 +609,7 @@
                               <div class="columna-contenido">
                                   <div class="texto-cuerpo counters">
                                       Counters <br>
-                                      <span>Es malo contra:</span>
+                                      <span>Es malo(a) contra:</span>
                                   </div>
                                   @foreach ($countersByRol as $rol => $counters)
                                       @if (count($counters) > 0)
@@ -627,7 +633,7 @@
                                               </div>
                                               @foreach ($counters as $counter)
                                                   <img class="imagen-pequena" src="{{ $counter->img_path }}"
-                                                      alt="Imagen de {{ $counter->nombre }}">
+                                                      alt="Imagen de {{ $counter->nombre }}" aspect-ratio="1">
                                               @endforeach
                                           </div>
                                       @endif
@@ -636,7 +642,7 @@
                               <div class="columna-contenido">
                                   <div class="texto-cuerpo counter">
                                       Es Counter <br>
-                                      <span>Es bueno contra:</span>
+                                      <span>Es bueno(a) contra:</span>
                                   </div>
                                   @foreach ($countereasByRol as $rol => $countereas)
                                       @if (count($countereas) > 0)
