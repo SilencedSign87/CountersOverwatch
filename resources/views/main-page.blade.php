@@ -29,7 +29,7 @@
 
                   /* Navigation styles */
                   .barra-navegacion {
-                      margin: 1rem 0;
+                      margin: 0.5rem 0;
                       display: flex;
                       justify-content: center;
                       align-items: center;
@@ -75,7 +75,7 @@
                       backdrop-filter: blur(1rem);
                       -webkit-backdrop-filter: blur(1rem);
                       transition: background-color 0.2s ease-in, color 0.2s ease-in, scale 0.1s ease-in;
-                      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                      /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
                   }
 
                   .boton-navegacion:hover {
@@ -96,8 +96,8 @@
                   /* Grid container styles */
                   .rejilla-contenedor {
                       display: grid;
-                      grid-template-columns: repeat(6, minmax(150px, 225px));
-                      gap: 1vw;
+                      grid-template-columns: repeat(6, minmax(100px, 207px));
+                      gap: 13px;
                       margin: 0.5rem;
                       max-width: calc(100% - 1rem);
                       justify-content: center;
@@ -109,11 +109,11 @@
                       border: 2px solid hsla(0, 0%, 100%, .7);
                       background: hsla(0, 0%, 100%, .8);
                       border-radius: 0.25rem;
-                      aspect-ratio: 9 / 11;
+                      aspect-ratio: 9 / 12;
                       overflow: hidden;
                       display: flex;
                       flex-direction: column;
-                      transition: scale 0.1s ease-in, background-color 0.2s ease-in-out;
+                      transition: scale 0.15s ease-in, background-color 0.2s ease-in-out;
                   }
 
                   .tarjeta-heroe:hover {
@@ -123,14 +123,17 @@
 
                   .tarjeta-heroe:active {
                       background: hsla(0, 0%, 100%, 1);
-                      scale: 1;
+                      scale: 0.9;
                   }
 
                   .imagen-tarjeta img {
                       display: block;
-                      width: 100%;
-                      height: 100%;
-                      object-fit: cover;
+                      width: 110%;
+                      /* centra la imagen */
+                      margin-left: -5%;
+                      margin-top: -5%;
+                      /* height: 100%; */
+                      /* object-fit: cover; */
                   }
 
                   .nombre-heroe {
@@ -371,7 +374,7 @@
                       font-weight: 600;
                       text-align: center;
                       text-transform: uppercase;
-                      margin-block: 2px;
+                      margin-block: 5px;
                       line-height: 1;
                   }
 
@@ -389,7 +392,6 @@
                   }
 
                   .imagen-pequena {
-
                       width: calc(100% / 5 - 4px);
                       border-radius: 10%;
                   }
@@ -451,7 +453,7 @@
                       }
 
                       .imagen-pequena {
-                          width: calc(100% / 4 - 4px);
+                          width: calc(100% / 5 - 4px);
                       }
                   }
 
@@ -461,11 +463,11 @@
                       }
 
                       .imagen-pequena {
-                          width: calc(100% / 3 - 4px);
+                          width: calc(100% / 4 - 4px);
                       }
                   }
 
-                  @media (max-width: 960px) {
+                  @media (max-width: 760px) {
                       .rejilla-contenedor {
                           grid-template-columns: repeat(3, 1fr);
                       }
@@ -475,11 +477,11 @@
                       }
 
                       .imagen-pequena {
-                          width: calc(100% / 2 - 4px);
+                          width: calc(100% / 3 - 4px);
                       }
                   }
 
-                  @media (max-width: 720px) {
+                  @media (max-width: 480px) {
                       .rejilla-contenedor {
                           grid-template-columns: repeat(2, 1fr);
                       }
@@ -495,7 +497,7 @@
               </style>
           @endpush
           {{-- Navegación --}}
-          <div class="barra-navegacion">
+          <nav class="barra-navegacion">
               <button class="boton-navegacion {{ $selectedFilter === 'all' ? 'filtro-seleccionado' : '' }}"
                   wire:click='filtrarHeroes()'>
                   <div class="cargador" wire:loading wire:target='filtrarHeroes, selectHero'></div>
@@ -530,11 +532,11 @@
                       supp
                   </span>
               </button>
-          </div>
+          </nav>
           {{-- Cartas de pantalla --}}
-          <div class="rejilla-contenedor" wire:loading.remove wire:target='filtrarHeroes'>
+          <article class="rejilla-contenedor" wire:loading.remove wire:target='filtrarHeroes'>
               @foreach ($heroes as $hero)
-                  <div class="tarjeta-heroe" wire:click="selectHero({{ $hero->id }})"
+                  <section class="tarjeta-heroe" wire:click="selectHero({{ $hero->id }})"
                       onclick="abrirModal('contadoresHeroe')">
                       <div class="imagen-tarjeta">
                           <img src="{{ $hero->img_path }}" alt="{{ $hero->nombre }}" aspect-ratio="1">
@@ -551,11 +553,11 @@
                               {{ $hero->nombre }}
                           </span>
                       </div>
-                  </div>
+                  </section>
               @endforeach
-          </div>
+          </article>
           {{-- Modal --}}
-          <div wire:ignore.self class="ventana-modal" id="contadoresHeroe" tabindex="-1" role="dialog"
+          <aside wire:ignore.self class="ventana-modal" id="contadoresHeroe" tabindex="-1" role="dialog"
               aria-labelledby="modalTitleId" aria-hidden="true">
               <div class="dialogo-modal" id="dialogo-modal" role="document">
                   <div id="contenido-modal" class="contenido-modal">
@@ -563,7 +565,7 @@
                           <div class="cargador"></div>
                           <span>Cargando...</span>
                       </div>
-                      <div class="cabecera-modal" wire:loading.remove wire:target='selectHero'>
+                      <header class="cabecera-modal" wire:loading.remove wire:target='selectHero'>
                           {{-- Cabecera --}}
                           <div class="titulo-modal">
                               <img src="{{ $selectedHero->img_path ?? '' }}" alt="{{ $selectedHero->nombre ?? '' }}">
@@ -590,8 +592,8 @@
                                       stroke-linecap="round" />
                               </svg>
                           </button>
-                      </div>
-                      <div class="cuerpo-modal" wire:loading.remove wire:target='selectHero'>
+                      </header>
+                      <article class="cuerpo-modal" wire:loading.remove wire:target='selectHero'>
                           {{-- Cuerpo --}}
                           <div class="nota-heroe">
                               <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem"
@@ -615,7 +617,7 @@
                                   </div>
                                   @foreach ($countersByRol as $rol => $counters)
                                       @if (count($counters) > 0)
-                                          <div class=" alerta-peligro counters">
+                                          <section class=" alerta-peligro counters">
                                               <div class="nombre-rol">
                                                   @if ($rol == 'tank')
                                                       <img class="m-0 imagen-contador"
@@ -635,9 +637,10 @@
                                               </div>
                                               @foreach ($counters as $counter)
                                                   <img class="imagen-pequena" src="{{ $counter->img_path }}"
-                                                      alt="Imagen de {{ $counter->nombre }}" title="{{ $counter->nombre }}">
+                                                      alt="Imagen de {{ $counter->nombre }}"
+                                                      title="{{ $counter->nombre }}">
                                               @endforeach
-                                          </div>
+                                          </section>
                                       @endif
                                   @endforeach
                               </div>
@@ -648,7 +651,7 @@
                                   </div>
                                   @foreach ($countereasByRol as $rol => $countereas)
                                       @if (count($countereas) > 0)
-                                          <div class=" alerta-primario counters">
+                                          <section class=" alerta-primario counters">
                                               <div class="nombre-rol">
                                                   @if ($rol == 'tank')
                                                       <img class="m-0 imagen-contador"
@@ -669,24 +672,25 @@
 
                                               @foreach ($countereas as $counterea)
                                                   <img class="imagen-pequena" src="{{ $counterea->img_path }}"
-                                                      alt="Imagen de {{ $counterea->nombre }}" title="{{ $counterea->nombre }}">
+                                                      alt="Imagen de {{ $counterea->nombre }}"
+                                                      title="{{ $counterea->nombre }}">
                                               @endforeach
-                                          </div>
+                                          </section>
                                       @endif
                                   @endforeach
                               </div>
                           </div>
-                      </div>
-                      <div class="pie-modal" wire:loading.remove wire:target='selectHero'>
+                      </article>
+                      <footer class="pie-modal" wire:loading.remove wire:target='selectHero'>
                           {{-- Boton --}}
                           <button type="button" class="boton-cerrar" onclick="cerrarModal('contadoresHeroe')"
                               aria-label="Close" aria-hidden="true">
                               Cerrar
                           </button>
-                      </div>
+                      </footer>
                   </div>
               </div>
-          </div>
+          </aside>
           {{-- Javascript de la pantalla --}}
           @push('scripts')
               <script>
