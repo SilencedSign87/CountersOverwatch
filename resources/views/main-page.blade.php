@@ -264,6 +264,9 @@
                   }
 
                   .cuerpo-modal {
+                      display: grid;
+                      grid-template-rows: auto 1fr;
+
                       padding-top: 0.25rem;
                       /* max-height: 75%; */
                       overflow-y: auto;
@@ -326,13 +329,10 @@
                       font-weight: bold;
                   }
 
-                  .cuerpo-contenido {
-                      display: grid;
-                  }
-
                   .nota-heroe {
                       text-transform: initial;
                       justify-self: center;
+                      align-self: center;
                       display: flex;
                       justify-content: center;
                       align-items: center;
@@ -347,6 +347,7 @@
                       border: 1px solid rgb(255, 120, 41);
                       color: rgb(197, 79, 11);
                       z-index: 10;
+                      height: fit-content;
                   }
 
                   .alerta-peligro {
@@ -590,7 +591,7 @@
                               </svg>
                           </button>
                       </div>
-                      <div class="cuerpo-contenido cuerpo-modal" wire:loading.remove wire:target='selectHero'>
+                      <div class="cuerpo-modal" wire:loading.remove wire:target='selectHero'>
                           {{-- Cuerpo --}}
                           <div class="nota-heroe">
                               <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem"
@@ -634,7 +635,7 @@
                                               </div>
                                               @foreach ($counters as $counter)
                                                   <img class="imagen-pequena" src="{{ $counter->img_path }}"
-                                                      alt="Imagen de {{ $counter->nombre }}" aspect-ratio="1">
+                                                      alt="Imagen de {{ $counter->nombre }}" title="{{ $counter->nombre }}">
                                               @endforeach
                                           </div>
                                       @endif
@@ -668,7 +669,7 @@
 
                                               @foreach ($countereas as $counterea)
                                                   <img class="imagen-pequena" src="{{ $counterea->img_path }}"
-                                                      alt="Imagen de {{ $counterea->nombre }}">
+                                                      alt="Imagen de {{ $counterea->nombre }}" title="{{ $counterea->nombre }}">
                                               @endforeach
                                           </div>
                                       @endif

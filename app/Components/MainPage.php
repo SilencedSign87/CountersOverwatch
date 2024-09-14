@@ -53,8 +53,6 @@ class MainPage extends Component
         $this->counters = $this->selectedHero->counteredBy;
         $this->countereas = $this->selectedHero->counters;
 
-        // dd($this);
-
         // Separar los counters por rol
         foreach ($this->counters as $counter) {
             $this->countersByRol[$counter->rol][] = $counter;
