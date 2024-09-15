@@ -157,8 +157,9 @@
                       top: 0;
                       width: 100%;
                       height: 100%;
-                      background-color: rgba(0, 0, 0, 0.5);
-                      transition: opacity 0.5s ease;
+                      background-color: rgba(0, 71, 129, 0.3);
+                      backdrop-filter: blur(11px);
+                      transition: opacity 0.5s ease, backdrop-filter 0.5s ease;
                   }
 
                   .ventana-modal.show {
@@ -180,11 +181,13 @@
                   @keyframes slideIn {
                       0% {
                           transform: translateY(-100%);
+                          backdrop-filter: blur(0);
                           opacity: 0;
                       }
 
                       100% {
                           transform: translateY(0);
+                          backdrop-filter: blur(11px);
                           opacity: 1;
                       }
                   }
@@ -197,11 +200,13 @@
                   @keyframes slideOut {
                       0% {
                           transform: translateY(0);
+                          backdrop-filter: blur(11px);
                           opacity: 1;
                       }
 
                       100% {
                           transform: translateY(-100%);
+                          backdrop-filter: blur(0);
                           opacity: 0;
                       }
                   }
@@ -209,8 +214,8 @@
                   /* Fin de las animaciones */
                   .contenido-modal {
                       background-color: rgba(255, 255, 255, 0.80);
-                      backdrop-filter: blur(0.5rem);
-                      -webkit-backdrop-filter: blur(0.5rem);
+                      /* backdrop-filter: blur(0.5rem);
+                      -webkit-backdrop-filter: blur(0.5rem); */
                       border: 0;
                       height: 100%;
                       width: 100%;
@@ -539,7 +544,8 @@
                   <section class="tarjeta-heroe" wire:click="selectHero({{ $hero->id }})"
                       onclick="abrirModal('contadoresHeroe')">
                       <div class="imagen-tarjeta">
-                          <img src="{{ $hero->img_path }}" alt="{{ $hero->nombre }}" aspect-ratio="1">
+                          <img src="{{ $hero->img_path }}" alt="{{ $hero->nombre }}" aspect-ratio="1"
+                              class="lazy-imagen">
                       </div>
                       <div class="nombre-heroe">
                           @if ($hero->rol === 'tank')
@@ -728,6 +734,8 @@
                           cerrarModal('contadoresHeroe');
                       }
                   });
+
+
               </script>
           @endpush
       </div>
