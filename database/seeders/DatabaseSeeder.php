@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
+        $this->call(TierlistSeeder::class);
         $this->call(HeroSeeder::class);
         
     }
