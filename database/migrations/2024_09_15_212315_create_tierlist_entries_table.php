@@ -12,9 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tierlist_entries', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('tierlist_id')->constrained('tierlists')->onDelete('cascade');
-            $table->foreignId('hero_id')->constrained('heroes')->onDelete('cascade');
+            $table->uuid('id')->primary(); // UUID en lugar de id incremental
+            $table->uuid('tierlist_id'); // Relación con tierlists usando UUID
+            $table->foreign('tierlist_id')->references('id')->on('tierlists')->onDelete('cascade');
+
+            $table->uuid('hero_id'); // Relación con heroes usando UUID
+            $table->foreign('hero_id')->references('id')->on('heroes')->onDelete('cascade');
+
             $table->integer('tier');
             $table->timestamps();
         });

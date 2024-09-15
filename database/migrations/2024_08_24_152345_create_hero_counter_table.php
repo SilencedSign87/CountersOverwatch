@@ -12,9 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('hero_counter', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('hero_id');
-            $table->unsignedBigInteger('counter_id');
+            $table->uuid('hero_id'); // UUID para hero_id
+            $table->uuid('counter_id'); // UUID para counter_id
             $table->timestamps();
 
             $table->foreign('hero_id')->references('id')->on('heroes')->onDelete('cascade');

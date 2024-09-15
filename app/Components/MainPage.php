@@ -49,6 +49,7 @@ class MainPage extends Component
 
     public function selectHero($id)
     {
+        
         $this->selectedHero = hero::find($id);
         $this->counters = $this->selectedHero->counteredBy;
         $this->countereas = $this->selectedHero->counters;

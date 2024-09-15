@@ -12,12 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('heroes', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary(); // UUID en lugar de id incremental
             $table->string('nombre');
             $table->text('nota')->nullable();
-            $table->string('rol'); //1 tanque, 2 dps, 3 supp
-            $table->string('img_path')->nullable(); //path de su imagen
-
+            $table->string('rol'); // 1 tanque, 2 dps, 3 supp
+            $table->string('img_path')->nullable();
             $table->timestamps();
         });
     }

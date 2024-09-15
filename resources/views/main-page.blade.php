@@ -541,7 +541,7 @@
           {{-- Cartas de pantalla --}}
           <article class="rejilla-contenedor" wire:loading.remove wire:target='filtrarHeroes'>
               @foreach ($heroes as $hero)
-                  <section class="tarjeta-heroe" wire:click="selectHero({{ $hero->id }})"
+                  <section class="tarjeta-heroe" wire:click="selectHero('{{ $hero->id }}')"
                       onclick="abrirModal('contadoresHeroe')">
                       <div class="imagen-tarjeta">
                           <img src="{{ $hero->img_path }}" alt="{{ $hero->nombre }}" aspect-ratio="1"
