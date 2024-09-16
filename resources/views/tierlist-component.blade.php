@@ -115,6 +115,18 @@
                 color: wheat;
             }
 
+            .tier-row-head {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .tier-row-content {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1px;
+            }
+
             .tier-row-content img {
                 max-height: 5rem;
             }
