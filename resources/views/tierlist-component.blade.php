@@ -152,15 +152,16 @@
         <article class="tierlist">
             @if ($modo === 'verTierlist')
                 {{-- Rellenar los tiers --}}
-                @foreach ($tierlistGrouped as $tier => $heroes)
-                    {{-- Título del tier --}}
-                    <div class="tier-row-head">
-                        Tier {{ $tier }}
+                @foreach ($tierlistGrouped as $tier)
+                    {{-- Título del tier con color --}}
+                    <div class="tier-row-head" style="background-color: {{ $tier->color }}">
+                        {{ $tier->nombre ?? 'Tier ' . $tier->posicion }}
                     </div>
+                    
                     {{-- Contenido del tier: Imágenes de los héroes --}}
                     <div class="tier-row-content">
-                        @foreach ($heroes as $hero)
-                            <img src="{{ $hero->img_path }}" alt="{{ $hero->nombre }}" class="hero-img">
+                        @foreach ($tier->entries as $entry)
+                            <img src="{{ $entry->hero->img_path }}" alt="{{ $entry->hero->nombre }}" class="hero-img">
                         @endforeach
                     </div>
                 @endforeach

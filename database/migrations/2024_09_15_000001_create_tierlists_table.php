@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('tierlists', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('nombre');
-            $table->string('descripcion');
+            $table->string('descripcion')->nullable();
+            $table->integer('num_tiers');
             $table->timestamps();
         });
     }

@@ -2,32 +2,31 @@
 
 namespace App\Models;
 
-use App\Models\hero;
-use App\Models\tierlist_tier;
+use App\Models\tierlist;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Str;
 
-
-class tierlist_entry extends Model
+class tierlist_tier extends Model
 {
     use HasFactory;
     public $incrementing = false; // Deshabilitar el incremento automático
     protected $keyType = 'string'; // El tipo de la llave primaria será string
 
     protected $fillable = [
-        'tierlist_tier_id',
-        'hero_id'
+        'tierlist_id',
+        'posicion',
+        'nombre',
+        'color'
     ];
 
-    // obtener el heroes que aparecen en la tierlist
-    public function hero() {
-        return $this->belongsTo(hero::class,'hero_id');
+    // el tier row pertenece a la tierlist
+    public function tierlist() {
+        return $this->belongsTo(tierlist::class, 'tierlist_id');
     }
 
-    // obtener la tierlist_row a la que pertenece
-    public function row() {
-        return $this->belongsTo(tierlist_tier::class, 'tierlist_tier_id');
+    public function entries() {
+        return $this->hasMany(tierlist_entry::class);
     }
 
     protected static function boot()

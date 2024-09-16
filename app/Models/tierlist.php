@@ -14,12 +14,13 @@ class tierlist extends Model
 
     protected $fillable = [
         'nombre',
-        'descripcion'
+        'descripcion',
+        'num_tiers'
     ];
 
     // Entradas de la tierlist
-    public function entradas() {
-        return $this->hasMany(tierlist_entry::class);
+    public function tiers() {
+        return $this->hasMany(tierlist_tier::class);
     }
 
     protected static function boot()

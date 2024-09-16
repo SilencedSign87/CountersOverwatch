@@ -11,29 +11,25 @@ class tierlistComponent extends Component
 
     public $heroes;
     public $modo;
-    public $currentTierlist, $tierlistGrouped;
+    public $tierlistGrouped;
 
     public function mount()
     {
         $this->heroes = hero::all();
         $this->modo = 'verTierlist';
         $this->dispatch('cargaTierlist');
-        
-        $tierlist = Tierlist::where('nombre', 'Season 12')->first();
-    
+
+        // Obtener la tierlist específica por nombre (Season 12)
+        $tierlist = tierlist::where('nombre', 'Season 12')->first();
+
         if ($tierlist) {
-            $this->currentTierlist = $tierlist->entradas()->with('hero')->orderBy('tier', 'asc')->get();
-            
-            // Crear un array estructurado que agrupe por tier
-            $this->tierlistGrouped = [];
-            
-            foreach ($this->currentTierlist as $entry) {
-                $this->tierlistGrouped[$entry->tier][] = $entry->hero;
-            }
+            // Obtener todos los tiers de la tierlist, con sus entries y héroes
+            $this->tierlistGrouped = $tierlist->tiers()->with('entries.hero')->orderBy('posicion', 'asc')->get();
         }
     }
 
-    public function cambiarModo($nuevoModo = 'verTierlist'){
+    public function cambiarModo($nuevoModo = 'verTierlist')
+    {
         $this->modo = $nuevoModo;
         if ($nuevoModo === 'verTierlist') {
             $this->dispatch('cargaTierlist');
