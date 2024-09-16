@@ -88,6 +88,36 @@
                 background-color: hsl(0, 0%, 100%);
                 color: hsl(0, 0%, 0%);
             }
+
+            /* Contenddor tierlist */
+            .tier-contenedor {
+                display: flex;
+                position: relative;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .tierlist {
+                width: 100%;
+                max-width: 1200px;
+                border-radius: 5px;
+                background-color: hsla(220, 100%, 12%, 0.5);
+                display: grid;
+                grid-template-columns: minmax(2rem, 1fr) 6fr;
+                padding: 1%;
+            }
+
+            .tier-row-head,
+            .tier-row-content {
+                background-color: hsla(0, 0%, 0%, 0.7);
+                border: 2px solid #f06414;
+                border-radius: 5px;
+                color: wheat;
+            }
+
+            .tier-row-content img {
+                max-height: 5rem;
+            }
         </style>
     @endpush
 
@@ -107,7 +137,27 @@
     </header>
 
     <main class="tier-contenedor">
-
+        <article class="tierlist">
+            @if ($modo === 'verTierlist')
+                {{-- Rellenar los tiers --}}
+                @foreach ($tierlistGrouped as $tier => $heroes)
+                    {{-- Título del tier --}}
+                    <div class="tier-row-head">
+                        Tier {{ $tier }}
+                    </div>
+                    {{-- Contenido del tier: Imágenes de los héroes --}}
+                    <div class="tier-row-content">
+                        @foreach ($heroes as $hero)
+                            <img src="{{ $hero->img_path }}" alt="{{ $hero->nombre }}" class="hero-img">
+                        @endforeach
+                    </div>
+                @endforeach
+            @else
+                {{-- Tiers vacíos --}}
+                <div class="tier-row-head"></div>
+                <div class="tier-row-content"></div>
+            @endif
+        </article>
     </main>
 
     @if ($modo === 'hacerTierlist')
@@ -120,7 +170,7 @@
         <script>
             function cargarTierlist() {
                 // console.log('cargando tierlist');
-                
+
             }
             window.addEventListener('cargaTierlist', cargarTierlist);
         </script>

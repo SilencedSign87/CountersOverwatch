@@ -22,13 +22,13 @@ class tierlist_entry extends Model
     ];
 
     // Heroes que aparecen en la tierlist
-    public function heroe() {
-        return $this->belongsTo(hero::class);
+    public function hero() {
+        return $this->belongsTo(hero::class,'hero_id');
     }
 
     // Tierlist que aparece en la entrada
     public function tierlist() {
-        return $this->belongsTo(tierlist::class);
+        return $this->belongsTo(tierlist::class, 'tierlist_id');
     }
 
     protected static function boot()

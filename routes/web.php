@@ -1,8 +1,8 @@
 <?php
 
 use App\Components\MainPage;
-use App\Components\Tierlist;
+use App\Components\tierlistComponent;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', MainPage::class);
-Route::get('/tierlist', Tierlist::class);
+Route::get('/tierlist', tierlistComponent::class);
