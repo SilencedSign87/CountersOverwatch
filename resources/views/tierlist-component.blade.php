@@ -89,12 +89,63 @@
                 color: hsl(0, 0%, 0%);
             }
 
+
+
             /* Contenddor tierlist */
             .tier-contenedor {
                 display: flex;
-                position: relative;
-                justify-content: center;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
                 width: 100%;
+                position: relative;
+            }
+
+            /* Header */
+            .cabecera-tierlist {
+                font-size: 1rem;
+                color: rgb(255, 255, 255);
+
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                width: 100%;
+                max-width: 1200px;
+            }
+            .cabecera-tierlist h1{
+                margin-block: 10px;
+            }
+
+            .filtro-navegacion {
+                display: flex;
+                flex-wrap: wrap;
+                /* Permite que los elementos se distribuyan en múltiples filas */
+                justify-content: center;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 10px;
+                width: 100%;
+
+            }
+
+            .filtro-navegacion button {
+                padding: 5px;
+                font-size: 1rem;
+                width: 7rem;
+                flex: 1 1 1 calc(25% - 1rem);
+                /* Cada botón ocupa un 25% del ancho con un pequeño margen */
+                background-color: hsla(0, 0%, 100%, 0.6);
+                color: hsla(0, 0%, 0%, 0.7);
+                border: 2px solid hsl(0, 0%, 100%);
+                border-radius: 5px;
+                text-align: center;
+                text-transform: uppercase;
+            }
+
+            .filtro-navegacion button:hover {
+                background-color: hsl(0, 0%, 90%);
+                color: hsl(0, 0%, 0%);
             }
 
             .tierlist {
@@ -103,22 +154,25 @@
                 border-radius: 5px;
                 background-color: hsla(220, 100%, 12%, 0.5);
                 display: grid;
-                grid-template-columns: minmax(2rem, 1fr) 6fr;
+                grid-template-columns: minmax(2rem, 1fr) 8fr;
                 padding: 1%;
             }
 
             .tier-row-head,
             .tier-row-content {
                 background-color: hsla(0, 0%, 0%, 0.7);
-                border: 2px solid #f06414;
-                border-radius: 5px;
-                color: wheat;
+                /* border: 2px solid hsl(0, 0%, 34%); */
+                border-bottom: 10px solid hsl(225, 11%, 44%);
+
             }
 
             .tier-row-head {
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                color: #000000;
+                font-weight: bold;
+                font-size: 1.5rem;
             }
 
             .tier-row-content {
@@ -128,7 +182,13 @@
             }
 
             .tier-row-content img {
-                max-height: 5rem;
+                max-height: 100px;
+            }
+            .filtro-t-selected {
+                background-color: #f06414 !important;
+                border: 2px solid #f06414 !important;
+                color: hsl(0, 0%, 100%) !important;
+                font-weight: bold;
             }
         </style>
     @endpush
@@ -149,26 +209,44 @@
     </header>
 
     <main class="tier-contenedor">
+        <header class="cabecera-tierlist">
+            <h1>Tierlist {{ $tierlist->nombre ?? '' }}</h1>
+            <nav class="filtro-navegacion">
+                <button wire:click="filtrarPorRol(null)"
+                    class="{{ $filtroR == null ? 'filtro-t-selected' : '' }}">Todos</button>
+                <button wire:click="filtrarPorRol('tank')"
+                    class="{{ $filtroR == 'tank' ? 'filtro-t-selected' : '' }}">Tank</button>
+                <button wire:click="filtrarPorRol('dps')"
+                    class="{{ $filtroR == 'dps' ? 'filtro-t-selected' : '' }}">DPS</button>
+                <button wire:click="filtrarPorRol('supp')"
+                    class="{{ $filtroR == 'supp' ? 'filtro-t-selected' : '' }}">Support</button>
+            </nav>
+        </header>
         <article class="tierlist">
             @if ($modo === 'verTierlist')
                 {{-- Rellenar los tiers --}}
                 @foreach ($tierlistGrouped as $tier)
                     {{-- Título del tier con color --}}
-                    <div class="tier-row-head" style="background-color: {{ $tier->color }}">
+                    <div class="tier-row-head" style="background-color: {{ $tier->color }};">
                         {{ $tier->nombre ?? 'Tier ' . $tier->posicion }}
                     </div>
-                    
+
                     {{-- Contenido del tier: Imágenes de los héroes --}}
                     <div class="tier-row-content">
                         @foreach ($tier->entries as $entry)
-                            <img src="{{ $entry->hero->img_path }}" alt="{{ $entry->hero->nombre }}" class="hero-img">
+                            <img src="{{ $entry->hero->img_path }}" alt="{{ $entry->hero->nombre }}" class="hero-img"
+                                title="{{ $entry->hero->nombre }}">
                         @endforeach
                     </div>
                 @endforeach
             @else
                 {{-- Tiers vacíos --}}
-                <div class="tier-row-head"></div>
-                <div class="tier-row-content"></div>
+                <div class="tier-row-head">
+                    
+                </div>
+                <div class="tier-row-content" style="text-align: center; color: #f06414;">
+                    En construcción 🧑‍💻
+                </div>
             @endif
         </article>
     </main>

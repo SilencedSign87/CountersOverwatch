@@ -127,31 +127,31 @@ class HeroSeeder extends Seeder
             'tierlist_id' => $tierlist->id,
             'posicion' => 1,
             'nombre' => 'S',
-            'color' => '#FF0000'
+            'color' => '#ff7f80'
         ]);
         $A = tierlist_tier::create([
             'tierlist_id' => $tierlist->id,
             'posicion' => 2,
             'nombre' => 'A',
-            'color' => '#FF00FF'
+            'color' => '#ffc07f'
         ]);
         $B = tierlist_tier::create([
             'tierlist_id' => $tierlist->id,
             'posicion' => 3,
             'nombre' => 'B',
-            'color' => '#FFFF00'
+            'color' => '#ffdf80'
         ]);
         $C = tierlist_tier::create([
             'tierlist_id' => $tierlist->id,
             'posicion' => 4,
             'nombre' => 'C',
-            'color' => '#00FF00'
+            'color' => '#ffff7f'
         ]);
         $D = tierlist_tier::create([
             'tierlist_id' => $tierlist->id,
             'posicion' => 5,
             'nombre' => 'D',
-            'color' => '#00FFFF'
+            'color' => '#bfff7f'
         ]);
 
 
