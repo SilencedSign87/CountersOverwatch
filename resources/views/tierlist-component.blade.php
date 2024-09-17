@@ -23,7 +23,6 @@
 
             /* Barra de navegación */
             .barra-navegacion {
-                margin: 0.5rem 0;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -133,6 +132,7 @@
                 padding: 5px;
                 font-size: 1rem;
                 width: 7rem;
+                height: 2rem;
                 flex: 1 1 1 calc(25% - 1rem);
                 /* Cada botón ocupa un 25% del ancho con un pequeño margen */
                 background-color: hsla(0, 0%, 100%, 0.6);
@@ -147,6 +147,9 @@
                 background-color: hsl(0, 0%, 90%);
                 color: hsl(0, 0%, 0%);
             }
+            .filtro-navegacion button:active {
+                scale: 0.95;
+            }
 
             .tierlist {
                 width: 100%;
@@ -160,9 +163,9 @@
 
             .tier-row-head,
             .tier-row-content {
-                background-color: hsla(0, 0%, 0%, 0.7);
+                background-color: hsla(0, 0%, 0%, 0.5);
                 /* border: 2px solid hsl(0, 0%, 34%); */
-                border-bottom: 10px solid hsl(225, 11%, 44%);
+                border-bottom: 10px solid hsl(226, 31%, 47%);
 
             }
 
@@ -181,14 +184,35 @@
                 gap: 1px;
             }
 
-            .tier-row-content img {
-                max-height: 100px;
+            .hero-img {
+                max-height: 85px;
+                border-radius: 5px;
             }
             .filtro-t-selected {
                 background-color: #f06414 !important;
                 border: 2px solid #f06414 !important;
                 color: hsl(0, 0%, 100%) !important;
                 font-weight: bold;
+            }
+            /* Crear Tierlist */
+            .tier-imagenes{
+                margin: 0 auto;
+                display: flex;
+                justify-content: flex-start;
+                width: fit-content;
+                max-width: 1200px;
+                flex-wrap: wrap;
+                background: hsla(0, 0%, 0%, 0.5);
+                height: fit-content;
+                padding: 10px;
+            }
+            /* Imagenes de los heroes en el footer */
+            .imagen-footer img{
+                width: 90px;
+                height: 90px;
+            }
+            .imagen-footer span{
+                display: none;
             }
         </style>
     @endpush
@@ -222,7 +246,8 @@
                     class="{{ $filtroR == 'supp' ? 'filtro-t-selected' : '' }}">Support</button>
             </nav>
         </header>
-        <article class="tierlist">
+        <div class="cargador" style="border-top-color:#ffffff8d;" wire:loading wire:target='filtrarPorRol'></div>
+        <article class="tierlist" wire:loading.remove wire:target='filtrarPorRol'>
             @if ($modo === 'verTierlist')
                 {{-- Rellenar los tiers --}}
                 @foreach ($tierlistGrouped as $tier)
@@ -253,7 +278,12 @@
 
     @if ($modo === 'hacerTierlist')
         <footer class="tier-imagenes">
-
+            @foreach ($heroes as $hero)
+                <div class="imagen-footer" id={{ $hero->id }}>
+                    <img src="{{ $hero->img_path }}" alt="{{ $hero->nombre }}">
+                    <span>{{ $hero->nombre }}</span>
+                </div>
+            @endforeach
         </footer>
     @endif
 
