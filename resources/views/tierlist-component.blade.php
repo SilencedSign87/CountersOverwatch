@@ -112,7 +112,8 @@
                 width: 100%;
                 max-width: 1200px;
             }
-            .cabecera-tierlist h1{
+
+            .cabecera-tierlist h1 {
                 margin-block: 10px;
             }
 
@@ -147,6 +148,7 @@
                 background-color: hsl(0, 0%, 90%);
                 color: hsl(0, 0%, 0%);
             }
+
             .filtro-navegacion button:active {
                 scale: 0.95;
             }
@@ -166,6 +168,7 @@
                 background-color: hsla(0, 0%, 0%, 0.5);
                 /* border: 2px solid hsl(0, 0%, 34%); */
                 border-bottom: 10px solid hsl(226, 31%, 47%);
+                min-height: 80px;
 
             }
 
@@ -185,17 +188,20 @@
             }
 
             .hero-img {
-                max-height: 85px;
+                height: 80px;
+                width: 80px;
                 border-radius: 5px;
             }
+
             .filtro-t-selected {
                 background-color: #f06414 !important;
                 border: 2px solid #f06414 !important;
                 color: hsl(0, 0%, 100%) !important;
                 font-weight: bold;
             }
+
             /* Crear Tierlist */
-            .tier-imagenes{
+            .tier-imagenes {
                 margin: 0 auto;
                 display: flex;
                 justify-content: flex-start;
@@ -206,12 +212,28 @@
                 height: fit-content;
                 padding: 10px;
             }
-            /* Imagenes de los heroes en el footer */
-            .imagen-footer img{
-                width: 90px;
-                height: 90px;
+            .make{
+                box-sizing: border-box;
+                padding: 5px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
-            .imagen-footer span{
+            .input-tier {
+                width: 25%;
+                background-color:transparent;
+                border: none;
+                font-size: 1rem;
+                font-weight: bold;
+            }
+
+            /* Imagenes de los heroes en el footer */
+            .imagen-footer img {
+                width: 80px;
+                height: 80px;
+            }
+
+            .imagen-footer span {
                 display: none;
             }
         </style>
@@ -266,12 +288,20 @@
                 @endforeach
             @else
                 {{-- Tiers vacíos --}}
-                <div class="tier-row-head">
-                    
-                </div>
-                <div class="tier-row-content" style="text-align: center; color: #f06414;">
-                    En construcción 🧑‍💻
-                </div>
+                @foreach ($tiers as $index => $tier)
+                    <div class="tier-row-head make" style="background-color: {{ $tier['color'] }};">
+                        <input class="input-tier" type="text" wire:model="tiers.{{ $index }}.nombre">
+                        <input class="input-tier" type="color" wire:model="tiers.{{ $index }}.color">
+                    </div>
+
+                    <div class="tier-row-content" x-data
+                        @drop="event.preventDefault(); let heroId = event.dataTransfer.getData('heroId'); $wire.addHeroToTier(heroId, {{ $index }})"
+                        @dragover="event.preventDefault()">
+                        @foreach ($tier['entries'] as $hero)
+                            <img src="{{ $hero['img_path'] }}" alt="{{ $hero['nombre'] }}" class="hero-img">
+                        @endforeach
+                    </div>
+                @endforeach
             @endif
         </article>
     </main>
@@ -279,9 +309,9 @@
     @if ($modo === 'hacerTierlist')
         <footer class="tier-imagenes">
             @foreach ($heroes as $hero)
-                <div class="imagen-footer" id={{ $hero->id }}>
+                <div class="imagen-footer" x-data="{ heroId: {{ $hero->id }} }" draggable="true"
+                    @dragstart="event.dataTransfer.setData('heroId', heroId)">
                     <img src="{{ $hero->img_path }}" alt="{{ $hero->nombre }}">
-                    <span>{{ $hero->nombre }}</span>
                 </div>
             @endforeach
         </footer>

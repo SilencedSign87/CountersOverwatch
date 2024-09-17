@@ -10,12 +10,26 @@ class tierlistComponent extends Component
 {
 
     public $heroes;
+    // Modo de la pantalla y filtro de rol
     public $modo, $filtroR;
+    // Tierlist de la base de datos
     public $tierlistGrouped, $tierlist;
+
+    // Tierlist vacia para crear
+    // Tiers predefinidos
+    public $tiers = [];
 
     public function mount()
     {
         $this->modo = 'verTierlist';
+        // Carga tiers predefinidos
+        $this->tiers = [
+            ['nombre' => 'S', 'color' => '#ff7f80', 'entries' => []],  // Dorado
+            ['nombre' => 'A', 'color' => '#ffc07f', 'entries' => []],  // Plateado
+            ['nombre' => 'B', 'color' => '#ffdf80', 'entries' => []],  // Bronce
+            ['nombre' => 'C', 'color' => '#ffff7f', 'entries' => []],  // Tomate
+            ['nombre' => 'D', 'color' => '#bfff7f', 'entries' => []],  // Azul acero
+        ];
         $this->cargarTierlistActual();
     }
 
@@ -83,6 +97,50 @@ class tierlistComponent extends Component
             $dps = Hero::where('rol', 'dps')->orderBy('nombre')->get();
             $supp = Hero::where('rol', 'supp')->orderBy('nombre')->get();
             $this->heroes = $tank->concat($dps)->concat($supp);
+        }
+    }
+
+    // Añadir heroes al tier
+    public function addHeroToTier($heroId, $tierIndex)
+    {
+        dd($heroId, $tierIndex);
+        $hero = Hero::find($heroId);
+
+        // Evitar duplicados
+        foreach ($this->tiers as &$tier) {
+            $tier['entries'] = array_filter($tier['entries'], function ($entry) use ($heroId) {
+                return $entry['id'] != $heroId;
+            });
+        }
+
+        // Añadir el héroe al tier seleccionado
+        $this->tiers[$tierIndex]['entries'][] = [
+            'id' => $hero->id,
+            'nombre' => $hero->nombre,
+            'img_path' => $hero->img_path,
+        ];
+    }
+
+    // Guardar Tierlist
+    public function guardarTierlist($nombre, $descripcion)
+    {
+        $tierlist = Tierlist::create([
+            'nombre' => $nombre,
+            'descripcion' => $descripcion,
+        ]);
+
+        foreach ($this->tiers as $tierIndex => $tier) {
+            $newTier = $tierlist->tiers()->create([
+                'nombre' => $tier['nombre'],
+                'color' => $tier['color'],
+                'posicion' => $tierIndex,
+            ]);
+
+            foreach ($tier['entries'] as $entry) {
+                $newTier->entries()->create([
+                    'hero_id' => $entry['id'],
+                ]);
+            }
         }
     }
 
