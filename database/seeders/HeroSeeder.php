@@ -120,6 +120,7 @@ class HeroSeeder extends Seeder
         $tierlist = tierlist::create([
             'nombre' => 'Season 12',
             'descripcion' => '',
+            'fecha'=>'2024-08-24',
             'num_tiers' => 5
         ]);
 

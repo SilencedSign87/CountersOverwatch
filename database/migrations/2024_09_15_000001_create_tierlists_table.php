@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('nombre');
             $table->string('descripcion')->nullable();
+            $table->date('fecha')->nullable();
             $table->integer('num_tiers');
             $table->timestamps();
         });

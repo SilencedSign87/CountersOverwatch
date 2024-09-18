@@ -15,6 +15,7 @@ class tierlist extends Model
     protected $fillable = [
         'nombre',
         'descripcion',
+        'fecha',
         'num_tiers'
     ];
 

@@ -90,7 +90,9 @@
 
         .tier-header,
         .tier-contenedor {
-            width: 100vw;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 1500px;
         }
 
         .tier-contenedor {
@@ -327,7 +329,7 @@
             @endforeach
         </article>
         <footer class="tier-footer">
-            <p>{{ $tierlist->descripcion ?? '' }}</p>
+            <p>Creado el: {{ $tierlist->fecha ?? '' }}</p>
         </footer>
     </main>
 </div>
