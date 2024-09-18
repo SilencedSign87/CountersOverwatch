@@ -18,7 +18,7 @@ return new class extends Migration
 
             $table->uuid('hero_id'); // Relación con heroes usando UUID
             $table->foreign('hero_id')->references('id')->on('heroes')->onDelete('cascade');
-
+            $table->integer('posicion')->default(0);
             $table->timestamps();
         });
     }

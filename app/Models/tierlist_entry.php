@@ -17,7 +17,8 @@ class tierlist_entry extends Model
 
     protected $fillable = [
         'tierlist_tier_id',
-        'hero_id'
+        'hero_id',
+        'posicion'
     ];
 
     // obtener el heroes que aparecen en la tierlist

@@ -318,10 +318,10 @@
                 <div class="tier-row-head" style="background-color: {{ $tier->color }};">
                     {{ $tier->nombre ?? 'Tier ' . $tier->posicion }}
                 </div>
-
-                {{-- Contenido del tier: Imágenes de los héroes --}}
+        
+                {{-- Contenido del tier: Imágenes de los héroes, ordenados por su posición y de derecha a izquierda --}}
                 <div class="tier-row-content">
-                    @foreach ($tier->entries as $entry)
+                    @foreach ($tier->entries->sortBy('posicion') as $entry)
                         <img src="{{ $entry->hero->img_path }}" alt="{{ $entry->hero->nombre }}" class="hero-img"
                             title="{{ $entry->hero->nombre }}">
                     @endforeach

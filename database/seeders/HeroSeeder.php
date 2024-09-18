@@ -120,10 +120,11 @@ class HeroSeeder extends Seeder
         $tierlist = tierlist::create([
             'nombre' => 'Season 12',
             'descripcion' => '',
-            'fecha'=>'2024-08-24',
+            'fecha' => '2024-08-24',
             'num_tiers' => 5
         ]);
 
+        // Crea los tier entries
         $S = tierlist_tier::create([
             'tierlist_id' => $tierlist->id,
             'posicion' => 1,
@@ -155,61 +156,53 @@ class HeroSeeder extends Seeder
             'color' => '#bfff7f'
         ]);
 
-
+        // Crea los tiers items
         if ($tierlist) {
-            tierlist_entry::create(['tierlist_tier_id' => $S->id, 'hero_id' => $Winston->id,]);
-            tierlist_entry::create(['tierlist_tier_id' => $S->id, 'hero_id' => $Ashe->id,]);
-            tierlist_entry::create(['tierlist_tier_id' => $S->id, 'hero_id' => $Kiriko->id,]);
-            tierlist_entry::create(['tierlist_tier_id' => $S->id, 'hero_id' => $Tracer->id,]);
-            tierlist_entry::create(['tierlist_tier_id' => $S->id, 'hero_id' => $Lucio->id,]);
-            tierlist_entry::create(['tierlist_tier_id' => $S->id, 'hero_id' => $Ana->id,]);
+            tierlist_entry::create(['posicion' => 0, 'tierlist_tier_id' => $S->id, 'hero_id' => $Winston->id,]);
+            tierlist_entry::create(['posicion' => 1, 'tierlist_tier_id' => $S->id, 'hero_id' => $Ashe->id,]);
+            tierlist_entry::create(['posicion' => 3, 'tierlist_tier_id' => $S->id, 'hero_id' => $Kiriko->id,]);
+            tierlist_entry::create(['posicion' => 4, 'tierlist_tier_id' => $S->id, 'hero_id' => $Tracer->id,]);
+            tierlist_entry::create(['posicion' => 5, 'tierlist_tier_id' => $S->id, 'hero_id' => $Lucio->id,]);
+            tierlist_entry::create(['posicion' => 6, 'tierlist_tier_id' => $S->id, 'hero_id' => $Ana->id,]);
 
-            tierlist_entry::create(['tierlist_tier_id' => $A->id, 'hero_id' => $Dva->id,]);
-            tierlist_entry::create(['tierlist_tier_id' => $A->id, 'hero_id' => $Sigma->id,]);
-            tierlist_entry::create(['tierlist_tier_id' => $A->id, 'hero_id' => $Ramattra->id,]);
-            tierlist_entry::create(['tierlist_tier_id' => $A->id, 'hero_id' => $Widowmaker->id,]);
-            tierlist_entry::create(['tierlist_tier_id' => $A->id, 'hero_id' => $Venture->id,]);
-            tierlist_entry::create(['tierlist_tier_id' => $A->id, 'hero_id' => $Echo->id,]);
-            tierlist_entry::create(['tierlist_tier_id' => $A->id, 'hero_id' => $Brigitte->id,]);
-            tierlist_entry::create(['tierlist_tier_id' => $A->id, 'hero_id' => $Juno->id,]);
-            tierlist_entry::create(['tierlist_tier_id' => $A->id, 'hero_id' => $Baptiste->id,]);
+            tierlist_entry::create(['posicion' => 0, 'tierlist_tier_id' => $A->id, 'hero_id' => $Dva->id,]);
+            tierlist_entry::create(['posicion' => 1, 'tierlist_tier_id' => $A->id, 'hero_id' => $Sigma->id,]);
+            tierlist_entry::create(['posicion' => 2, 'tierlist_tier_id' => $A->id, 'hero_id' => $Ramattra->id,]);
+            tierlist_entry::create(['posicion' => 3, 'tierlist_tier_id' => $A->id, 'hero_id' => $Widowmaker->id,]);
+            tierlist_entry::create(['posicion' => 4, 'tierlist_tier_id' => $A->id, 'hero_id' => $Venture->id,]);
+            tierlist_entry::create(['posicion' => 5, 'tierlist_tier_id' => $A->id, 'hero_id' => $Echo->id,]);
+            tierlist_entry::create(['posicion' => 6, 'tierlist_tier_id' => $A->id, 'hero_id' => $Brigitte->id,]);
+            tierlist_entry::create(['posicion' => 7, 'tierlist_tier_id' => $A->id, 'hero_id' => $Juno->id,]);
+            tierlist_entry::create(['posicion' => 8, 'tierlist_tier_id' => $A->id, 'hero_id' => $Baptiste->id,]);
 
-            tierlist_entry::create(['tierlist_tier_id' => $B->id,  'hero_id' => $WreckingBall->id]);
-            tierlist_entry::create(['tierlist_tier_id' => $B->id, 'hero_id' => $Doomfist->id]);
-            tierlist_entry::create(['tierlist_tier_id' => $B->id, 'hero_id' => $Zarya->id]);
-            tierlist_entry::create(['tierlist_tier_id' => $B->id,  'hero_id' => $JunkerQueen->id]);
-            tierlist_entry::create(['tierlist_tier_id' => $B->id,  'hero_id' => $Cassidy->id]);
-            tierlist_entry::create(['tierlist_tier_id' => $B->id,  'hero_id' => $Hanzo->id]);
-            tierlist_entry::create(['tierlist_tier_id' => $B->id,   'hero_id' => $Pharah->id]);
-            tierlist_entry::create(['tierlist_tier_id' => $B->id,   'hero_id' => $Genji->id]);
-            tierlist_entry::create(['tierlist_tier_id' => $B->id,   'hero_id' => $Sojourn->id]);
-            tierlist_entry::create(['tierlist_tier_id' => $B->id,   'hero_id' => $Sombra->id]);
-            tierlist_entry::create(['tierlist_tier_id' => $B->id,   'hero_id' => $Mercy->id]);
-            tierlist_entry::create(['tierlist_tier_id' => $B->id,   'hero_id' => $Illari->id]);
+            tierlist_entry::create(['posicion' => 0, 'tierlist_tier_id' => $B->id,  'hero_id' => $WreckingBall->id]);
+            tierlist_entry::create(['posicion' => 1, 'tierlist_tier_id' => $B->id, 'hero_id' => $Doomfist->id]);
+            tierlist_entry::create(['posicion' => 2, 'tierlist_tier_id' => $B->id, 'hero_id' => $Zarya->id]);
+            tierlist_entry::create(['posicion' => 3, 'tierlist_tier_id' => $B->id,  'hero_id' => $JunkerQueen->id]);
+            tierlist_entry::create(['posicion' => 4, 'tierlist_tier_id' => $B->id,  'hero_id' => $Cassidy->id]);
+            tierlist_entry::create(['posicion' => 5, 'tierlist_tier_id' => $B->id,  'hero_id' => $Hanzo->id]);
+            tierlist_entry::create(['posicion' => 6, 'tierlist_tier_id' => $B->id,   'hero_id' => $Pharah->id]);
+            tierlist_entry::create(['posicion' => 7, 'tierlist_tier_id' => $B->id,   'hero_id' => $Genji->id]);
+            tierlist_entry::create(['posicion' => 8, 'tierlist_tier_id' => $B->id,   'hero_id' => $Sojourn->id]);
+            tierlist_entry::create(['posicion' => 9, 'tierlist_tier_id' => $B->id,   'hero_id' => $Sombra->id]);
+            tierlist_entry::create(['posicion' => 10, 'tierlist_tier_id' => $B->id,   'hero_id' => $Mercy->id]);
+            tierlist_entry::create(['posicion' => 11, 'tierlist_tier_id' => $B->id,   'hero_id' => $Illari->id]);
 
-            tierlist_entry::create(['tierlist_tier_id' => $C->id,   'hero_id' => $Roadhog->id]);
-            tierlist_entry::create(['tierlist_tier_id' => $C->id,   'hero_id' => $Mauga->id]);
-            tierlist_entry::create(['tierlist_tier_id' => $C->id,   'hero_id' => $Reinhardt->id]);
-            tierlist_entry::create(['tierlist_tier_id' => $C->id,   'hero_id' => $Junkrat->id]);
-            tierlist_entry::create(['tierlist_tier_id' => $C->id,   'hero_id' => $Mei->id]);
-            tierlist_entry::create(['tierlist_tier_id' => $C->id,   'hero_id' => $Reaper->id]);
-            tierlist_entry::create(['tierlist_tier_id' => $C->id,   'hero_id' => $Soldado76->id]);
-            tierlist_entry::create(['tierlist_tier_id' => $C->id,   'hero_id' => $Symmetra->id]);
-            tierlist_entry::create(['tierlist_tier_id' => $C->id,  'hero_id' => $Moira->id]);
-            tierlist_entry::create(['tierlist_tier_id' => $C->id,  'hero_id' => $Lifeweaver->id]);
+            tierlist_entry::create(['posicion' => 0, 'tierlist_tier_id' => $C->id,   'hero_id' => $Roadhog->id]);
+            tierlist_entry::create(['posicion' => 1, 'tierlist_tier_id' => $C->id,   'hero_id' => $Mauga->id]);
+            tierlist_entry::create(['posicion' => 2, 'tierlist_tier_id' => $C->id,   'hero_id' => $Reinhardt->id]);
+            tierlist_entry::create(['posicion' => 3, 'tierlist_tier_id' => $C->id,   'hero_id' => $Junkrat->id]);
+            tierlist_entry::create(['posicion' => 4, 'tierlist_tier_id' => $C->id,   'hero_id' => $Mei->id]);
+            tierlist_entry::create(['posicion' => 5, 'tierlist_tier_id' => $C->id,   'hero_id' => $Reaper->id]);
+            tierlist_entry::create(['posicion' => 6, 'tierlist_tier_id' => $C->id,   'hero_id' => $Soldado76->id]);
+            tierlist_entry::create(['posicion' => 7, 'tierlist_tier_id' => $C->id,   'hero_id' => $Symmetra->id]);
+            tierlist_entry::create(['posicion' => 8, 'tierlist_tier_id' => $C->id,  'hero_id' => $Moira->id]);
+            tierlist_entry::create(['posicion' => 9, 'tierlist_tier_id' => $C->id,  'hero_id' => $Lifeweaver->id]);
 
-            tierlist_entry::create(['tierlist_tier_id' => $D->id,   'hero_id' => $Orisa->id]);
-            tierlist_entry::create(['tierlist_tier_id' => $D->id,   'hero_id' => $Bastion->id]);
-            tierlist_entry::create(['tierlist_tier_id' => $D->id,   'hero_id' => $Torbjorn->id]);
-            tierlist_entry::create(['tierlist_tier_id' => $D->id,   'hero_id' => $Zenyatta->id]);
+            tierlist_entry::create(['posicion' => 0, 'tierlist_tier_id' => $D->id,   'hero_id' => $Orisa->id]);
+            tierlist_entry::create(['posicion' => 1, 'tierlist_tier_id' => $D->id,   'hero_id' => $Bastion->id]);
+            tierlist_entry::create(['posicion' => 2, 'tierlist_tier_id' => $D->id,   'hero_id' => $Torbjorn->id]);
+            tierlist_entry::create(['posicion' => 3, 'tierlist_tier_id' => $D->id,   'hero_id' => $Zenyatta->id]);
         }
-
-        // // Imprimir información para verificar
-        // $this->command->info('Héroes creados y relaciones de counter establecidas:');
-        // hero::all()->each(function ($hero) {
-        //     $this->command->info("{$hero->nombre} contrarresta a: " . $hero->counters->pluck('nombre')->implode(', '));
-        //     $this->command->info("{$hero->nombre} es contrarrestado por: " . $hero->counteredBy->pluck('nombre')->implode(', '));
-        //     $this->command->info('---');
-        // });
     }
 }
