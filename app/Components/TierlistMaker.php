@@ -52,8 +52,8 @@ class TierlistMaker extends Component
                 return $tier;
             }, $this->tiers);
             // Filtrar los héroes en el footer
-            $this->renderHeroesDisponibles = array_filter($this->heroesDisponibles, function ($hero) use ($filtro) {
-                return $hero['rol'] === $filtro;
+            $this->renderHeroesDisponibles = $this->heroesDisponibles->filter(function ($hero) use ($filtro) {
+                return $hero->rol === $filtro;
             });
         }
     }
