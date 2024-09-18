@@ -13,7 +13,7 @@ class TierlistSeeder extends Seeder
      */
     public function run(): void
     {
-        tierlist::create(
+        $tier=tierlist::create(
             [
                 'nombre' => 'Season 12',
                 'descripcion' => 'Tier 12 de la temporada'

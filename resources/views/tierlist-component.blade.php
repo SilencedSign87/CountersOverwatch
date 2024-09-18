@@ -90,7 +90,7 @@
 
         .tier-header,
         .tier-contenedor {
-            width: 100%;
+            width: 100vw;
         }
 
         .tier-contenedor {
@@ -126,7 +126,7 @@
             justify-content: center;
             align-items: center;
             gap: 0.5rem;
-            padding: 10px;
+            padding-block: 10px;
             width: 100%;
         }
 
@@ -156,8 +156,8 @@
 
         .tierlist {
             box-sizing: border-box;
-            width: calc(100vw - 10px);
-            max-width: 1200px;
+            width: 100%;
+            max-width: 1427px;
             border-radius: 5px;
             background-color: hsla(220, 100%, 12%, 0.5);
             display: grid;
@@ -267,6 +267,11 @@
         .imagen-footer span {
             display: none;
         }
+        .tier-footer{
+            color:rgba(255, 255, 255, 0.507);
+            /* cursiva*/
+            font-style: italic;
+        }
     </style>
 
     <header class="tier-header">
@@ -286,7 +291,7 @@
             <label class="buscar-label" for="buscar-tierlist">Seleccione una tierlist:</label>
             <select class="buscar-tierlist" id="buscar-tierlist" name="buscar-tierlist"
                 wire:change="seleccionarTierlist($event.target.value)">
-                <option value="">-- Ultima Tierlist --</option>
+                <option value="">última tierlist</option>
                 @foreach ($tierlistNames as $id => $nombre)
                     <option value="{{ $id }}">{{ $nombre }}</option>
                 @endforeach
@@ -321,5 +326,8 @@
                 </div>
             @endforeach
         </article>
+        <footer class="tier-footer">
+            <p>{{ $tierlist->descripcion ?? '' }}</p>
+        </footer>
     </main>
 </div>
