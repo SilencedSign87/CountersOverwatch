@@ -1,262 +1,297 @@
 <div>
-    @push('styles')
-        <style>
-            /* Spinner */
-            .cargador {
-                border: 2px solid transparent;
-                border-radius: 100%;
-                border-top: 2px solid rgba(0, 0, 0, 0.50);
-                width: 30px;
-                height: 30px;
-                animation: girar 0.5s linear infinite;
+    <style>
+        /* Spinner */
+        .cargador {
+            border: 2px solid transparent;
+            border-radius: 100%;
+            border-top: 2px solid rgba(0, 0, 0, 0.50);
+            width: 30px;
+            height: 30px;
+            animation: girar 0.5s linear infinite;
+        }
+
+        @keyframes girar {
+            0% {
+                transform: rotate(0deg);
             }
 
-            @keyframes girar {
-                0% {
-                    transform: rotate(0deg);
-                }
-
-                100% {
-                    transform: rotate(360deg);
-                }
+            100% {
+                transform: rotate(360deg);
             }
+        }
 
-            /* Barra de navegación */
-            .barra-navegacion {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 0.5rem;
-                gap: 0.75rem;
-                flex-wrap: wrap;
-                position: sticky;
-                top: 0;
-                z-index: 10;
-                background: transparent;
+        /* Barra de navegación */
+        .barra-navegacion {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 0.5rem;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: transparent;
 
-                animation: blur linear both;
-                animation-timeline: scroll();
-                animation-range: 0 400px;
+            animation: blur linear both;
+            animation-timeline: scroll();
+            animation-range: 0 400px;
+        }
+
+        @keyframes blur {
+            to {
+                box-shadow:
+                    0px 5px 50px -5px rgba(49, 120, 201, 0.1),
+                    0px 0px 0 1px rgba(49, 120, 201, 0.1);
+                background-color: rgba(49, 120, 201, 0.3);
+                backdrop-filter: blur(10px);
             }
+        }
 
-            @keyframes blur {
-                to {
-                    box-shadow:
-                        0px 5px 50px -5px rgba(49, 120, 201, 0.1),
-                        0px 0px 0 1px rgba(49, 120, 201, 0.1);
-                    background-color: rgba(49, 120, 201, 0.3);
-                    backdrop-filter: blur(10px);
-                }
-            }
+        .boton-navegacion {
+            width: fit-content;
+            height: 3rem;
+            min-width: 6rem;
+            border-radius: 0.25rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: system-ui;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 1.2rem;
+            background-color: hsla(0, 0%, 100%, 0.75);
+            color: hsla(0, 0%, 0%, 0.7);
+            border: 2px solid hsl(0, 0%, 100%);
+            backdrop-filter: blur(1rem);
+            -webkit-backdrop-filter: blur(1rem);
+            transition: background-color 0.2s ease-in, color 0.2s ease-in, scale 0.1s ease-in;
+        }
 
-            .boton-navegacion {
-                width: fit-content;
-                height: 3rem;
-                min-width: 6rem;
-                border-radius: 0.25rem;
-                padding-left: 1rem;
-                padding-right: 1rem;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                gap: 0.5rem;
-                font-family: system-ui;
-                text-transform: uppercase;
-                font-weight: bold;
-                font-size: 1.2rem;
-                background-color: hsla(0, 0%, 100%, 0.75);
-                color: hsla(0, 0%, 0%, 0.7);
-                border: 2px solid hsl(0, 0%, 100%);
-                backdrop-filter: blur(1rem);
-                -webkit-backdrop-filter: blur(1rem);
-                transition: background-color 0.2s ease-in, color 0.2s ease-in, scale 0.1s ease-in;
-                /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
-            }
+        .boton-navegacion:hover {
+            background-color: hsl(0, 0%, 90%);
+            color: hsl(0, 0%, 0%);
+        }
 
-            .boton-navegacion:hover {
-                background-color: hsl(0, 0%, 90%);
-                color: hsl(0, 0%, 0%);
-            }
+        .boton-navegacion:active {
+            background-color: hsla(0, 0%, 100%, 1);
+            scale: 0.95;
+        }
 
-            .boton-navegacion:active {
-                background-color: hsla(0, 0%, 100%, 1);
-                scale: 0.95;
-            }
+        .filtro-seleccionado {
+            background-color: hsl(0, 0%, 100%);
+            color: hsl(0, 0%, 0%);
+        }
 
-            .filtro-seleccionado {
-                background-color: hsl(0, 0%, 100%);
-                color: hsl(0, 0%, 0%);
-            }
+        /* Contenddor tierlist */
 
+        .tier-header,
+        .tier-contenedor {
+            width: 100%;
+        }
 
+        .tier-contenedor {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            position: relative;
+        }
 
-            /* Contenddor tierlist */
-            .tier-contenedor {
-                display: flex;
-                flex-direction: column;
-                justify-content: flex-start;
-                align-items: center;
-                width: 100%;
-                position: relative;
-            }
+        /* Header */
+        .cabecera-tierlist {
+            font-size: 1rem;
+            color: rgb(255, 255, 255);
 
-            /* Header */
-            .cabecera-tierlist {
-                font-size: 1rem;
-                color: rgb(255, 255, 255);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+        }
 
-                display: flex;
-                flex-direction: column;
-                justify-content: flex-start;
-                align-items: center;
-                width: 100%;
-                max-width: 1200px;
-            }
+        .cabecera-tierlist h1 {
+            margin-block: 10px;
+            text-align: center;
+        }
 
-            .cabecera-tierlist h1 {
-                margin-block: 10px;
-            }
+        .filtro-navegacion {
+            display: flex;
+            flex-wrap: wrap;
+            /* Permite que los elementos se distribuyan en múltiples filas */
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 10px;
+            width: 100%;
+        }
 
-            .filtro-navegacion {
-                display: flex;
-                flex-wrap: wrap;
-                /* Permite que los elementos se distribuyan en múltiples filas */
-                justify-content: center;
-                align-items: center;
-                gap: 0.5rem;
-                padding: 10px;
-                width: 100%;
+        .filtro-navegacion button {
+            padding: 5px;
+            font-size: 1rem;
+            width: 7rem;
+            height: 2rem;
+            flex: 1 1 1 calc(25% - 1rem);
+            /* Cada botón ocupa un 25% del ancho con un pequeño margen */
+            background-color: hsla(0, 0%, 100%, 0.6);
+            color: hsla(0, 0%, 0%, 0.7);
+            border: 2px solid hsl(0, 0%, 100%);
+            border-radius: 5px;
+            text-align: center;
+            text-transform: uppercase;
+        }
 
-            }
+        .filtro-navegacion button:hover {
+            background-color: hsl(0, 0%, 90%);
+            color: hsl(0, 0%, 0%);
+        }
 
-            .filtro-navegacion button {
-                padding: 5px;
-                font-size: 1rem;
-                width: 7rem;
-                height: 2rem;
-                flex: 1 1 1 calc(25% - 1rem);
-                /* Cada botón ocupa un 25% del ancho con un pequeño margen */
-                background-color: hsla(0, 0%, 100%, 0.6);
-                color: hsla(0, 0%, 0%, 0.7);
-                border: 2px solid hsl(0, 0%, 100%);
-                border-radius: 5px;
-                text-align: center;
-                text-transform: uppercase;
-            }
+        .filtro-navegacion button:active {
+            scale: 0.95;
+        }
 
-            .filtro-navegacion button:hover {
-                background-color: hsl(0, 0%, 90%);
-                color: hsl(0, 0%, 0%);
-            }
+        .tierlist {
+            box-sizing: border-box;
+            width: calc(100vw - 10px);
+            max-width: 1200px;
+            border-radius: 5px;
+            background-color: hsla(220, 100%, 12%, 0.5);
+            display: grid;
+            grid-template-columns: minmax(60px, 1fr) 11fr;
+            padding: 1%;
+        }
 
-            .filtro-navegacion button:active {
-                scale: 0.95;
-            }
+        .tier-row-head,
+        .tier-row-content {
+            background-color: hsla(0, 0%, 0%, 0.5);
+            border-bottom: 10px solid hsl(226, 31%, 47%);
+            min-height: 80px;
+        }
 
-            .tierlist {
-                width: 100%;
-                max-width: 1200px;
-                border-radius: 5px;
-                background-color: hsla(220, 100%, 12%, 0.5);
-                display: grid;
-                grid-template-columns: minmax(2rem, 1fr) 8fr;
-                padding: 1%;
-            }
+        .tier-row-head {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #000000;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
 
-            .tier-row-head,
-            .tier-row-content {
-                background-color: hsla(0, 0%, 0%, 0.5);
-                /* border: 2px solid hsl(0, 0%, 34%); */
-                border-bottom: 10px solid hsl(226, 31%, 47%);
-                min-height: 80px;
+        .tier-row-content {
+            display: flex;
+            flex-wrap: wrap;
+        }
 
-            }
+        .hero-img {
+            width: 33%;
+            max-width: 106px;
+            height: auto;
+            border-radius: 5px;
+        }
 
-            .tier-row-head {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                color: #000000;
-                font-weight: bold;
-                font-size: 1.5rem;
-            }
+        .filtro-t-selected {
+            background-color: #f06414 !important;
+            border: 2px solid #f06414 !important;
+            color: hsl(0, 0%, 100%) !important;
+            font-weight: bold;
+        }
 
-            .tier-row-content {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 1px;
-            }
+        /* Crear Tierlist */
+        .tier-imagenes {
+            margin: 0 auto;
+            display: flex;
+            justify-content: flex-start;
+            width: fit-content;
+            max-width: 1200px;
+            flex-wrap: wrap;
+            background: hsla(0, 0%, 0%, 0.5);
+            height: fit-content;
+            padding: 10px;
+        }
 
-            .hero-img {
-                height: 80px;
-                width: 80px;
-                border-radius: 5px;
-            }
+        .buscar-label {
+            font-size: 1rem;
+        }
 
-            .filtro-t-selected {
-                background-color: #f06414 !important;
-                border: 2px solid #f06414 !important;
-                color: hsl(0, 0%, 100%) !important;
-                font-weight: bold;
-            }
+        .buscar-tierlist {
+            height: 1.75rem;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 5px;
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 1rem;
+            font-weight: bold;
+            background-color: #f06414;
+            color: white;
+        }
+        .buscar-tierlist:focus-visible{
+            outline: none;
+            border: 1px solid #ffffff;
+        }
 
-            /* Crear Tierlist */
-            .tier-imagenes {
-                margin: 0 auto;
-                display: flex;
-                justify-content: flex-start;
-                width: fit-content;
-                max-width: 1200px;
-                flex-wrap: wrap;
-                background: hsla(0, 0%, 0%, 0.5);
-                height: fit-content;
-                padding: 10px;
-            }
-            .make{
-                box-sizing: border-box;
-                padding: 5px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-            .input-tier {
-                width: 25%;
-                background-color:transparent;
-                border: none;
-                font-size: 1rem;
-                font-weight: bold;
-            }
+        .buscar-tierlist option{
+            font-size: 1rem;
+            padding: 5px;
+            font-weight: normal;
+            color: #000000;
+            background-color: rgb(255, 255, 255);
+        }
 
-            /* Imagenes de los heroes en el footer */
-            .imagen-footer img {
-                width: 80px;
-                height: 80px;
-            }
+        .make {
+            box-sizing: border-box;
+            padding: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-            .imagen-footer span {
-                display: none;
-            }
-        </style>
-    @endpush
+        .input-tier {
+            width: 25%;
+            background-color: transparent;
+            border: none;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        /* Imagenes de los heroes en el footer */
+        .imagen-footer img {
+            width: 80px;
+            height: 80px;
+        }
+
+        .imagen-footer span {
+            display: none;
+        }
+    </style>
 
     <header class="tier-header">
         <nav class="barra-navegacion">
-            <button class="boton-navegacion {{ $modo === 'verTierlist' ? 'filtro-seleccionado' : '' }}"
-                wire:click="cambiarModo('verTierlist')">
-                <div class="cargador" wire:loading wire:target='cambiarModo'></div>
+            <button class="boton-navegacion filtro-seleccionado" wire:navigate.hover href="/tierlist">
                 Ver Tierlist
             </button>
-            <button class="boton-navegacion {{ $modo === 'hacerTierlist' ? 'filtro-seleccionado' : '' }}"
-                wire:click="cambiarModo('hacerTierlist')">
-                <div class="cargador" wire:loading wire:target='cambiarModo'></div>
+            <button class="boton-navegacion" wire:navigate.hover href="/tierlist-maker">
                 Hacer Tierlist
             </button>
         </nav>
     </header>
-
     <main class="tier-contenedor">
         <header class="cabecera-tierlist">
             <h1>Tierlist {{ $tierlist->nombre ?? '' }}</h1>
+            {{-- buscar --}}
+            <label class="buscar-label" for="buscar-tierlist">Seleccione una tierlist:</label>
+            <select class="buscar-tierlist" id="buscar-tierlist" name="buscar-tierlist"
+                wire:change="seleccionarTierlist($event.target.value)">
+                <option value="">-- Ultima Tierlist --</option>
+                @foreach ($tierlistNames as $id => $nombre)
+                    <option value="{{ $id }}">{{ $nombre }}</option>
+                @endforeach
+            </select>
+            {{-- Filtro por rol --}}
             <nav class="filtro-navegacion">
                 <button wire:click="filtrarPorRol(null)"
                     class="{{ $filtroR == null ? 'filtro-t-selected' : '' }}">Todos</button>
@@ -270,60 +305,21 @@
         </header>
         <div class="cargador" style="border-top-color:#ffffff8d;" wire:loading wire:target='filtrarPorRol'></div>
         <article class="tierlist" wire:loading.remove wire:target='filtrarPorRol'>
-            @if ($modo === 'verTierlist')
-                {{-- Rellenar los tiers --}}
-                @foreach ($tierlistGrouped as $tier)
-                    {{-- Título del tier con color --}}
-                    <div class="tier-row-head" style="background-color: {{ $tier->color }};">
-                        {{ $tier->nombre ?? 'Tier ' . $tier->posicion }}
-                    </div>
+            {{-- Rellenar los tiers --}}
+            @foreach ($tierlistGrouped as $tier)
+                {{-- Título del tier con color --}}
+                <div class="tier-row-head" style="background-color: {{ $tier->color }};">
+                    {{ $tier->nombre ?? 'Tier ' . $tier->posicion }}
+                </div>
 
-                    {{-- Contenido del tier: Imágenes de los héroes --}}
-                    <div class="tier-row-content">
-                        @foreach ($tier->entries as $entry)
-                            <img src="{{ $entry->hero->img_path }}" alt="{{ $entry->hero->nombre }}" class="hero-img"
-                                title="{{ $entry->hero->nombre }}">
-                        @endforeach
-                    </div>
-                @endforeach
-            @else
-                {{-- Tiers vacíos --}}
-                @foreach ($tiers as $index => $tier)
-                    <div class="tier-row-head make" style="background-color: {{ $tier['color'] }};">
-                        <input class="input-tier" type="text" wire:model="tiers.{{ $index }}.nombre">
-                        <input class="input-tier" type="color" wire:model="tiers.{{ $index }}.color">
-                    </div>
-
-                    <div class="tier-row-content" x-data
-                        @drop="event.preventDefault(); let heroId = event.dataTransfer.getData('heroId'); $wire.addHeroToTier(heroId, {{ $index }})"
-                        @dragover="event.preventDefault()">
-                        @foreach ($tier['entries'] as $hero)
-                            <img src="{{ $hero['img_path'] }}" alt="{{ $hero['nombre'] }}" class="hero-img">
-                        @endforeach
-                    </div>
-                @endforeach
-            @endif
-        </article>
-    </main>
-
-    @if ($modo === 'hacerTierlist')
-        <footer class="tier-imagenes">
-            @foreach ($heroes as $hero)
-                <div class="imagen-footer" x-data="{ heroId: {{ $hero->id }} }" draggable="true"
-                    @dragstart="event.dataTransfer.setData('heroId', heroId)">
-                    <img src="{{ $hero->img_path }}" alt="{{ $hero->nombre }}">
+                {{-- Contenido del tier: Imágenes de los héroes --}}
+                <div class="tier-row-content">
+                    @foreach ($tier->entries as $entry)
+                        <img src="{{ $entry->hero->img_path }}" alt="{{ $entry->hero->nombre }}" class="hero-img"
+                            title="{{ $entry->hero->nombre }}">
+                    @endforeach
                 </div>
             @endforeach
-        </footer>
-    @endif
-
-    @push('scripts')
-        <script>
-            function cargarTierlist() {
-                // console.log('cargando tierlist');
-
-            }
-            window.addEventListener('cargaTierlist', cargarTierlist);
-        </script>
-    @endpush
+        </article>
+    </main>
 </div>
