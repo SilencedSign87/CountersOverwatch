@@ -200,7 +200,7 @@
             border-radius: 5px;
             cursor: grab;
             transition: scale 0.1s ease-in,
-            border 0.1 ease-in;
+                border 0.1 ease-in;
         }
 
         .hero-img:hover {
@@ -234,29 +234,68 @@
                     class="{{ $filtroR == 'supp' ? 'filtro-t-selected' : '' }}">Support</button>
             </nav>
         </header>
-        {{-- Tierlist Rederizada --}}
+
+        {{-- Tierlist Renderizada --}}
         <article class="tierlist">
-            @foreach ($renderTiers as $tier)
+            @foreach ($renderTiers as $tierIndex => $tier)
                 <div class="tier-row-head" style="background-color: {{ $tier['color'] }};">
                     {{ $tier['nombre'] }}
                 </div>
-                <div class="tier-row-content">
-                    @foreach ($tier['entries'] as $entry)
+                <div class="tier-row-content" id="tier-{{ $tierIndex }}" ondrop="drop(event, {{ $tierIndex }})"
+                    ondragover="allowDrop(event)">
+                    @foreach ($tier['entries'] as $entryIndex => $entry)
                         <img src="{{ $entry['img_path'] }}" alt="{{ $entry['nombre'] }}" class="hero-img"
-                            title="{{ $entry['nombre'] }}">
+                            title="{{ $entry['nombre'] }}" draggable="true"
+                            ondragstart="drag(event, {{ $tierIndex }}, {{ $entryIndex }})"
+                            id="hero-{{ $tierIndex }}-{{ $entryIndex }}">
                     @endforeach
                 </div>
             @endforeach
         </article>
     </main>
+
     {{-- Imagenes y botones de control --}}
     <footer class="tier-footer">
-        <div class="tier-row-content">
-            @foreach ($renderHeroesDisponibles as $hero)
+        <div class="tier-row-content" id="heroes-disponibles" ondrop="drop(event, null)" ondragover="allowDrop(event)">
+            @foreach ($renderHeroesDisponibles as $heroIndex => $hero)
                 <img src="{{ $hero['img_path'] }}" alt="{{ $hero['nombre'] }}" class="hero-img"
-                    title="{{ $hero['nombre'] }}">
+                    title="{{ $hero['nombre'] }}" draggable="true"
+                    ondragstart="drag(event, 'available', {{ $heroIndex }})"
+                    id="hero-available-{{ $heroIndex }}">
             @endforeach
         </div>
     </footer>
 
+    <script>
+        let draggedHero = null;
+        let sourceTier = null;
+        let sourceIndex = null;
+
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev, tierIndex, entryIndex) {
+            draggedHero = ev.target;
+            sourceTier = tierIndex;
+            sourceIndex = entryIndex;
+        }
+
+        function drop(ev, targetTierIndex) {
+            ev.preventDefault();
+
+            if (draggedHero) {
+                // Mover héroe en la interfaz
+                ev.target.appendChild(draggedHero);
+
+                // Llamar a Livewire para actualizar los tiers
+                @this.call('moveHero', sourceTier, sourceIndex, targetTierIndex);
+
+                // Reset variables
+                draggedHero = null;
+                sourceTier = null;
+                sourceIndex = null;
+            }
+        }
+    </script>
 </div>
