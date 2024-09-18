@@ -175,7 +175,7 @@
         .tier-row-content {
             background-color: hsla(0, 0%, 0%, 0.5);
             border-bottom: 10px solid hsl(226, 31%, 47%);
-            min-height: 80px;
+            min-height: 75px;
         }
 
         .tier-row-head {
@@ -195,7 +195,7 @@
         .hero-img {
             box-sizing: border-box;
             width: 33%;
-            max-width: 106px;
+            max-width: 75px;
             height: auto;
             border-radius: 5px;
             cursor: grab;
