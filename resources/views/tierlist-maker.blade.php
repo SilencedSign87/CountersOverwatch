@@ -207,6 +207,31 @@
             scale: 1.05;
             border: 2px solid hsl(0, 0%, 100%);
         }
+
+        .btn_guardar {
+            display: block;
+            margin: 0 auto;
+            width: fit-content;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            background-color: hsla(0, 0%, 100%, 0.6);
+            color: hsla(0, 0%, 0%, 0.7);
+            border: 2px solid hsl(0, 0%, 100%);
+            border-radius: 5px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .btn_guardar:hover {
+            background-color: hsl(0, 0%, 90%);
+            color: hsl(0, 0%, 0%);
+        }
+
+        .btn_guardar:active {
+            background-color: hsla(0, 0%, 100%, 1);
+            scale: 0.95;
+        }
     </style>
 
     <header class="tier-header">
@@ -221,83 +246,136 @@
     </header>
     {{-- TIerlist --}}
     <main class="tier-contenedor">
-        {{-- Filtros por rol --}}
+        {{-- Filtros por rol (los mismos que antes) --}}
         <header>
             <nav class="filtro-navegacion">
-                <button wire:click="filtrarPorRol(null)"
-                    class="{{ $filtroR == null ? 'filtro-t-selected' : '' }}">Todos</button>
-                <button wire:click="filtrarPorRol('tank')"
-                    class="{{ $filtroR == 'tank' ? 'filtro-t-selected' : '' }}">Tank</button>
-                <button wire:click="filtrarPorRol('dps')"
-                    class="{{ $filtroR == 'dps' ? 'filtro-t-selected' : '' }}">DPS</button>
-                <button wire:click="filtrarPorRol('supp')"
-                    class="{{ $filtroR == 'supp' ? 'filtro-t-selected' : '' }}">Support</button>
+                <button class="filtro-t-selected" onclick="filtrarPorRol(null)">Todos</button>
+                <button onclick="filtrarPorRol('tank')" class="">Tank</button>
+                <button onclick="filtrarPorRol('dps')" class="">DPS</button>
+                <button onclick="filtrarPorRol('supp')" class="}">Support</button>
             </nav>
         </header>
+        {{-- Botón Guardar --}}
+        <button onclick="guardarTierlist()" class="btn_guardar">Guardar Tierlist</button>
 
         {{-- Tierlist Renderizada --}}
         <article class="tierlist">
-            @foreach ($renderTiers as $tierIndex => $tier)
+            @foreach ($tiers as $tierIndex => $tier)
                 <div class="tier-row-head" style="background-color: {{ $tier['color'] }};">
                     {{ $tier['nombre'] }}
                 </div>
-                <div class="tier-row-content" id="tier-{{ $tierIndex }}" ondrop="drop(event, {{ $tierIndex }})"
-                    ondragover="allowDrop(event)">
+                <div class="tier-row-content" id="tier-{{ $tierIndex }}" data-tier-index="{{ $tierIndex }}">
                     @foreach ($tier['entries'] as $entryIndex => $entry)
                         <img src="{{ $entry['img_path'] }}" alt="{{ $entry['nombre'] }}" class="hero-img"
-                            title="{{ $entry['nombre'] }}" draggable="true"
-                            ondragstart="drag(event, {{ $tierIndex }}, {{ $entryIndex }})"
-                            id="hero-{{ $tierIndex }}-{{ $entryIndex }}" data-index="{{ $entryIndex }}">
+                            title="{{ $entry['nombre'] }}" data-hero-id="{{ $entry['id'] }}"
+                            data-index="{{ $entryIndex }}">
                     @endforeach
                 </div>
             @endforeach
         </article>
+
+        {{-- Footer con héroes disponibles --}}
+        <footer class="tier-footer">
+            <div class="tier-row-content" id="heroes-disponibles">
+                @foreach ($heroesDisponibles as $heroIndex => $hero)
+                    <img src="{{ $hero['img_path'] }}" alt="{{ $hero['nombre'] }}" class="hero-img"
+                        title="{{ $hero['nombre'] }}" data-hero-id="{{ $hero['id'] }}"
+                        data-index="{{ $heroIndex }}" data-rol="{{ $hero['rol'] }}">
+                @endforeach
+            </div>
+        </footer>
     </main>
 
-    {{-- Imagenes y botones de control --}}
-    <footer class="tier-footer">
-        <div class="tier-row-content" id="heroes-disponibles" ondrop="drop(event, null)" ondragover="allowDrop(event)">
-            @foreach ($renderHeroesDisponibles as $heroIndex => $hero)
-                <img src="{{ $hero['img_path'] }}" alt="{{ $hero['nombre'] }}" class="hero-img"
-                    title="{{ $hero['nombre'] }}" draggable="true"
-                    ondragstart="drag(event, 'available', {{ $heroIndex }})"
-                    id="hero-available-{{ $heroIndex }}">
-            @endforeach
-        </div>
-    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
     <script>
-        let draggedHero = null;
-        let sourceTier = null;
-        let sourceIndex = null;
+        // Inicializar Sortable.js para cada tier y el footer
+        let tiers = document.querySelectorAll('.tier-row-content');
 
-        function allowDrop(ev) {
-            ev.preventDefault();
+        tiers.forEach(tier => {
+            new Sortable(tier, {
+                group: 'shared', // Permitir arrastrar entre tiers y el footer
+                animation: 150,
+                onEnd: function(evt) {
+                    // Actualizar la posición de los héroes en el DOM
+                    actualizarPosiciones();
+                }
+            });
+        });
+
+        // Función para actualizar la posición de los héroes en el DOM
+        function actualizarPosiciones() {
+            tiers.forEach(tier => {
+                let heroes = tier.querySelectorAll('.hero-img');
+                heroes.forEach((hero, index) => {
+                    hero.dataset.index = index;
+                });
+            });
         }
 
-        function drag(ev, tierIndex, entryIndex) {
-            draggedHero = ev.target;
-            sourceTier = tierIndex;
-            sourceIndex = entryIndex;
+        // Función para filtrar por rol
+        function filtrarPorRol(rol) {
+            let heroes = document.querySelectorAll('.hero-img');
+            let botonesFiltro = document.querySelectorAll('.filtro-navegacion button');
+
+            heroes.forEach(hero => {
+                if (rol === null || hero.dataset.rol === rol) {
+                    hero.style.display = 'block';
+                } else {
+                    hero.style.display = 'none';
+                }
+            });
+
+            // Actualizar la clase del botón seleccionado
+            botonesFiltro.forEach(boton => {
+                if (boton.getAttribute('onclick') === `filtrarPorRol('${rol}')` || (rol === null && boton
+                        .getAttribute('onclick') === 'filtrarPorRol(null)')) {
+                    boton.classList.add('filtro-t-selected');
+                } else {
+                    boton.classList.remove('filtro-t-selected');
+                }
+            });
+
+            actualizarPosiciones();
         }
 
-        function drop(ev, targetTierIndex) {
-            ev.preventDefault();
+        function actualizarPosiciones() {
+            let tiers = document.querySelectorAll('.tier-row-content');
+            tiers.forEach(tier => {
+                let heroes = tier.querySelectorAll(
+                    '.hero-img:not([style*="display: none"])'); // Seleccionar solo los héroes visibles
+                heroes.forEach((hero, index) => {
+                    hero.dataset.index = index;
+                });
+            });
 
-            if (draggedHero) {
-                // Obtener el índice donde se está soltando
-                let targetIndex = Array.from(ev.target.parentNode.children).indexOf(ev.target);
+            // Actualizar la posición de los héroes en el footer (si es necesario)
+            let footerHeroes = document.querySelectorAll('#heroes-disponibles .hero-img:not([style*="display: none"])');
+            footerHeroes.forEach((hero, index) => {
+                hero.dataset.index = index;
+            });
+        }
 
-                // Mover héroe en la interfaz
-                ev.target.appendChild(draggedHero);
+        // Función para guardar la tierlist
+        function guardarTierlist() {
+            let tierlistData = [];
+            tiers.forEach(tier => {
+                let tierIndex = tier.dataset.tierIndex;
+                let tierEntries = [];
+                let heroes = tier.querySelectorAll('.hero-img');
+                heroes.forEach(hero => {
+                    tierEntries.push({
+                        hero_id: hero.dataset.heroId,
+                        posicion: hero.dataset.index
+                    });
+                });
+                tierlistData.push({
+                    tier_index: tierIndex,
+                    entries: tierEntries
+                });
+            });
+            console.log(tierlistData);
 
-                // Llamar a Livewire para actualizar los tiers o el footer
-                @this.call('moveHero', sourceTier, sourceIndex, targetTierIndex, targetIndex);
-
-                // Resetear variables
-                draggedHero = null;
-                sourceTier = null;
-                sourceIndex = null;
-            }
         }
     </script>
 </div>

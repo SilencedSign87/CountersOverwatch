@@ -3,6 +3,9 @@
 namespace App\Components;
 
 use App\Models\hero;
+use App\Models\tierlist;
+use App\Models\tierlist_entry;
+use App\Models\tierlist_tier;
 use Livewire\Component;
 use Illuminate\Support\Facades\Request;
 
@@ -20,11 +23,6 @@ class TierlistMaker extends Component
     // Héroes disponibles en el footer
     public $heroesDisponibles = [];
 
-    // Tiers a mostrar
-    public $renderTiers = [];
-    public $renderHeroesDisponibles = [];
-    public $filtroR = null;
-
     public function mount()
     {
         $tank = hero::where('rol', 'tank')->orderBy('nombre')->get()->toArray();
@@ -33,91 +31,49 @@ class TierlistMaker extends Component
 
         // Asignar héroes disponibles al footer
         $this->heroesDisponibles = array_merge($tank, $dps, $supp);
-        $this->renderHeroesDisponibles = $this->heroesDisponibles; // Ya es un array
-        $this->renderTiers = $this->tiers; // Esto ya es un array
     }
 
-    public function filtrarPorRol($filtro = null)
+    public function guardarTierlist(Request $request)
     {
-        $this->filtroR = $filtro;
-        $heroesInTiers = $this->getHeroesInTiers();
+        // Validar los datos recibidos
+        $request->validate([
+            'nombre' => 'required|string',
+            'descripcion' => 'nullable|string',
+            'fecha' => 'nullable|date',
+            'tiers' => 'required|array',
+        ]);
 
-        if ($filtro === null) {
-            $this->renderTiers = $this->tiers;
+        // Crear la tierlist
+        $tierlist = tierlist::create([
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+            'fecha' => $request->fecha,
+            'num_tiers' => count($request->tiers),
+        ]);
 
-            // Filtrar héroes disponibles que no están en los tiers
-            $this->renderHeroesDisponibles = array_filter($this->heroesDisponibles, function ($hero) use ($heroesInTiers) {
-                return !in_array($hero, $heroesInTiers);
-            });
-        } else {
-            $this->renderTiers = array_map(function ($tier) use ($filtro) {
-                $tier['entries'] = array_filter($tier['entries'], function ($entry) use ($filtro) {
-                    return $entry['rol'] === $filtro;
-                });
-                return $tier;
-            }, $this->tiers);
+        // Crear los tiers y las entradas
+        foreach ($request->tiers as $tierData) {
+            $tier = tierlist_tier::create([
 
-            // Filtrar héroes disponibles según el rol y que no estén en los tiers
-            $this->renderHeroesDisponibles = array_filter($this->heroesDisponibles, function ($hero) use ($filtro, $heroesInTiers) {
-                return $hero['rol'] === $filtro && !in_array($hero, $heroesInTiers);
-            });
-        }
+                'tierlist_id' => $tierlist->id,
+                'posicion' => $tierData['tier_index'],
+                // ... (otros campos del tier - nombre, color) ...
+            ]);
 
-        // Reindexar arrays
-        $this->renderHeroesDisponibles = array_values($this->renderHeroesDisponibles);
-    }
+            foreach ($tierData['entries'] as $entryData) {
+                tierlist_entry::create([
 
-    private function getHeroesInTiers()
-    {
-        $heroesInTiers = [];
-        foreach ($this->tiers as $tier) {
-            foreach ($tier['entries'] as $entry) {
-                $heroesInTiers[] = $entry;
-            }
-        }
-        return $heroesInTiers;
-    }
-
-    public function moveHero($sourceTier, $sourceIndex, $targetTier, $targetIndex = null)
-    {
-        // Mover desde el footer a un tier
-        if ($sourceTier === 'available') {
-            $hero = $this->renderHeroesDisponibles[$sourceIndex];
-            unset($this->renderHeroesDisponibles[$sourceIndex]);
-            $this->renderHeroesDisponibles = array_values($this->renderHeroesDisponibles);
-
-            if ($targetIndex !== null) {
-                array_splice($this->tiers[$targetTier]['entries'], $targetIndex, 0, [$hero]);
-            } else {
-                $this->tiers[$targetTier]['entries'][] = $hero;
-            }
-        } else {
-            // Mover entre tiers
-            $hero = $this->tiers[$sourceTier]['entries'][$sourceIndex];
-            unset($this->tiers[$sourceTier]['entries'][$sourceIndex]);
-            $this->tiers[$sourceTier]['entries'] = array_values($this->tiers[$sourceTier]['entries']);
-
-            if ($targetTier !== null) {
-                if ($targetIndex !== null) {
-                    array_splice($this->tiers[$targetTier]['entries'], $targetIndex, 0, [$hero]);
-                } else {
-                    $this->tiers[$targetTier]['entries'][] = $hero;
-                }
-            } else {
-                $this->renderHeroesDisponibles[] = $hero;
+                    'tierlist_tier_id' => $tier->id,
+                    'hero_id' => $entryData['hero_id'],
+                    'posicion' => $entryData['posicion'],
+                ]);
             }
         }
 
-        $this->renderTiers = $this->tiers; // Actualizar tiers
-        $this->filtrarPorRol($this->filtroR);
+        // Retornar una respuesta exitosa
+        return response()->json(['mensaje' => 'Tierlist guardada correctamente'], 201);
     }
 
-    private function recalcularPosiciones($tierIndex)
-    {
-        foreach ($this->tiers[$tierIndex]['entries'] as $index => $entry) {
-            $this->tiers[$tierIndex]['entries'][$index]['posicion'] = $index;
-        }
-    }
 
     public function render()
     {
