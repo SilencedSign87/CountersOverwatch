@@ -247,7 +247,7 @@
                         <img src="{{ $entry['img_path'] }}" alt="{{ $entry['nombre'] }}" class="hero-img"
                             title="{{ $entry['nombre'] }}" draggable="true"
                             ondragstart="drag(event, {{ $tierIndex }}, {{ $entryIndex }})"
-                            id="hero-{{ $tierIndex }}-{{ $entryIndex }}">
+                            id="hero-{{ $tierIndex }}-{{ $entryIndex }}" data-index="{{ $entryIndex }}">
                     @endforeach
                 </div>
             @endforeach
@@ -265,7 +265,6 @@
             @endforeach
         </div>
     </footer>
-
     <script>
         let draggedHero = null;
         let sourceTier = null;
@@ -285,13 +284,16 @@
             ev.preventDefault();
 
             if (draggedHero) {
+                // Obtener el índice donde se está soltando
+                let targetIndex = Array.from(ev.target.parentNode.children).indexOf(ev.target);
+
                 // Mover héroe en la interfaz
                 ev.target.appendChild(draggedHero);
 
-                // Llamar a Livewire para actualizar los tiers
-                @this.call('moveHero', sourceTier, sourceIndex, targetTierIndex);
+                // Llamar a Livewire para actualizar los tiers o el footer
+                @this.call('moveHero', sourceTier, sourceIndex, targetTierIndex, targetIndex);
 
-                // Reset variables
+                // Resetear variables
                 draggedHero = null;
                 sourceTier = null;
                 sourceIndex = null;
