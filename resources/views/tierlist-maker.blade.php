@@ -288,19 +288,21 @@
 
 
     <script>
-        // Inicializar Sortable.js para cada tier y el footer
-        let tiers = document.querySelectorAll('.tier_row_content');
+        if (typeof tiers === 'undefined') {
+            // Inicializar Sortable.js para cada tier y el footer
+            let tiers = document.querySelectorAll('.tier_row_content');
 
-        tiers.forEach(tier => {
-            new Sortable(tier, {
-                group: 'shared', // Permitir arrastrar entre tiers y el footer
-                animation: 150,
-                onEnd: function(evt) {
-                    // Actualizar la posición de los héroes en el DOM
-                    actualizarPosiciones();
-                }
+            tiers.forEach(tier => {
+                new Sortable(tier, {
+                    group: 'shared', // Permitir arrastrar entre tiers y el footer
+                    animation: 150,
+                    onEnd: function(evt) {
+                        // Actualizar la posición de los héroes en el DOM
+                        actualizarPosiciones();
+                    }
+                });
             });
-        });
+        }
 
         // Función para actualizar la posición de los héroes en el DOM
         function actualizarPosiciones() {
