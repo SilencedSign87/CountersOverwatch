@@ -171,14 +171,14 @@
             padding: 1%;
         }
 
-        .tier-row-head,
-        .tier-row-content {
+        .tier_row_head,
+        .tier_row_content {
             background-color: hsla(0, 0%, 0%, 0.5);
             border-bottom: 10px solid hsl(226, 31%, 47%);
             min-height: 75px;
         }
 
-        .tier-row-head {
+        .tier_row_head {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -187,12 +187,12 @@
             font-size: 1.5rem;
         }
 
-        .tier-row-content {
+        .tier_row_content {
             display: flex;
             flex-wrap: wrap;
         }
 
-        .hero-img {
+        .imagen_heroe {
             box-sizing: border-box;
             width: 33%;
             max-width: 75px;
@@ -203,7 +203,7 @@
                 border 0.1 ease-in;
         }
 
-        .hero-img:hover {
+        .imagen_heroe:hover {
             scale: 1.05;
             border: 2px solid hsl(0, 0%, 100%);
         }
@@ -261,12 +261,12 @@
         {{-- Tierlist Renderizada --}}
         <article class="tierlist">
             @foreach ($tiers as $tierIndex => $tier)
-                <div class="tier-row-head" style="background-color: {{ $tier['color'] }};">
+                <div class="tier_row_head" style="background-color: {{ $tier['color'] }};">
                     {{ $tier['nombre'] }}
                 </div>
-                <div class="tier-row-content" id="tier-{{ $tierIndex }}" data-tier-index="{{ $tierIndex }}">
+                <div class="tier_row_content" id="tier-{{ $tierIndex }}" data-tier-index="{{ $tierIndex }}">
                     @foreach ($tier['entries'] as $entryIndex => $entry)
-                        <img src="{{ $entry['img_path'] }}" alt="{{ $entry['nombre'] }}" class="hero-img"
+                        <img src="{{ $entry['img_path'] }}" alt="{{ $entry['nombre'] }}" class="imagen_heroe"
                             title="{{ $entry['nombre'] }}" data-hero-id="{{ $entry['id'] }}"
                             data-index="{{ $entryIndex }}">
                     @endforeach
@@ -276,9 +276,9 @@
 
         {{-- Footer con héroes disponibles --}}
         <footer class="tier-footer">
-            <div class="tier-row-content" id="heroes-disponibles">
+            <div class="tier_row_content" id="heroes-disponibles">
                 @foreach ($heroesDisponibles as $heroIndex => $hero)
-                    <img src="{{ $hero['img_path'] }}" alt="{{ $hero['nombre'] }}" class="hero-img"
+                    <img src="{{ $hero['img_path'] }}" alt="{{ $hero['nombre'] }}" class="imagen_heroe"
                         title="{{ $hero['nombre'] }}" data-hero-id="{{ $hero['id'] }}"
                         data-index="{{ $heroIndex }}" data-rol="{{ $hero['rol'] }}">
                 @endforeach
@@ -286,11 +286,10 @@
         </footer>
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 
     <script>
         // Inicializar Sortable.js para cada tier y el footer
-        let tiers = document.querySelectorAll('.tier-row-content');
+        let tiers = document.querySelectorAll('.tier_row_content');
 
         tiers.forEach(tier => {
             new Sortable(tier, {
@@ -306,7 +305,7 @@
         // Función para actualizar la posición de los héroes en el DOM
         function actualizarPosiciones() {
             tiers.forEach(tier => {
-                let heroes = tier.querySelectorAll('.hero-img');
+                let heroes = tier.querySelectorAll('.imagen_heroe');
                 heroes.forEach((hero, index) => {
                     hero.dataset.index = index;
                 });
@@ -315,7 +314,7 @@
 
         // Función para filtrar por rol
         function filtrarPorRol(rol) {
-            let heroes = document.querySelectorAll('.hero-img');
+            let heroes = document.querySelectorAll('.imagen_heroe');
             let botonesFiltro = document.querySelectorAll('.filtro-navegacion button');
 
             heroes.forEach(hero => {
@@ -340,17 +339,17 @@
         }
 
         function actualizarPosiciones() {
-            let tiers = document.querySelectorAll('.tier-row-content');
+            let tiers = document.querySelectorAll('.tier_row_content');
             tiers.forEach(tier => {
                 let heroes = tier.querySelectorAll(
-                    '.hero-img:not([style*="display: none"])'); // Seleccionar solo los héroes visibles
+                    '.imagen_heroe:not([style*="display: none"])'); // Seleccionar solo los héroes visibles
                 heroes.forEach((hero, index) => {
                     hero.dataset.index = index;
                 });
             });
 
             // Actualizar la posición de los héroes en el footer (si es necesario)
-            let footerHeroes = document.querySelectorAll('#heroes-disponibles .hero-img:not([style*="display: none"])');
+            let footerHeroes = document.querySelectorAll('#heroes-disponibles .imagen_heroe:not([style*="display: none"])');
             footerHeroes.forEach((hero, index) => {
                 hero.dataset.index = index;
             });
@@ -362,7 +361,7 @@
             tiers.forEach(tier => {
                 let tierIndex = tier.dataset.tierIndex;
                 let tierEntries = [];
-                let heroes = tier.querySelectorAll('.hero-img');
+                let heroes = tier.querySelectorAll('.imagen_heroe');
                 heroes.forEach(hero => {
                     tierEntries.push({
                         hero_id: hero.dataset.heroId,
@@ -378,4 +377,5 @@
 
         }
     </script>
+
 </div>
