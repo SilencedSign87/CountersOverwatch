@@ -91,18 +91,24 @@
                         @endforeach
                     </div>
                     <div class="acciones-tier">
-                        <button class="accion_btn" onclick="moverTier(document.getElementById('tierIndex').value, 'arriba')">Subir
+                        <button class="accion_btn"
+                            onclick="moverTier(document.getElementById('tierIndex').value, 'arriba')">Subir
                             Tier</button>
-                        <button class="accion_btn" onclick="moverTier(document.getElementById('tierIndex').value, 'abajo')">Bajar
+                        <button class="accion_btn"
+                            onclick="moverTier(document.getElementById('tierIndex').value, 'abajo')">Bajar
                             tier</button>
-                        <button class="accion_btn" onclick="vaciarTier(document.getElementById('tierIndex').value)">Vaciar Tier</button>
-                        <button class="accion_btn" onclick="eliminarTier(document.getElementById('tierIndex').value)">Eliminar
+                        <button class="accion_btn"
+                            onclick="vaciarTier(document.getElementById('tierIndex').value)">Vaciar Tier</button>
+                        <button class="accion_btn"
+                            onclick="eliminarTier(document.getElementById('tierIndex').value)">Eliminar
                             Tier</button>
                     </div>
                     <div class="acciones-tier">
-                        <button class="accion_btn" onclick="agregarTier(document.getElementById('tierIndex').value, 'arriba')">Añadir tier
+                        <button class="accion_btn"
+                            onclick="agregarTier(document.getElementById('tierIndex').value, 'arriba')">Añadir tier
                             arriba</button>
-                        <button class="accion_btn" onclick="agregarTier(document.getElementById('tierIndex').value, 'abajo')">Añadir tier
+                        <button class="accion_btn"
+                            onclick="agregarTier(document.getElementById('tierIndex').value, 'abajo')">Añadir tier
                             abajo</button>
                     </div>
                 </section>
@@ -119,7 +125,7 @@
         <div class="modal-aux">
             <div class="modal-content cont-save">
                 <h2>Guardando Tierlist</h2>
-                <button class="accion_btn">Guardar en PNG</button>
+                <button id="btn-guardar-png" class="accion_btn">Guardar en PNG</button>
                 <button class="accion_btn">Acceder</button>
                 <button class="btn_resaltado" onclick="cerrarModal('modal-guardar')">×</button>
             </div>
