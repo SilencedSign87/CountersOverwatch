@@ -231,12 +231,13 @@
             background-color: #f06414;
             color: white;
         }
-        .buscar-tierlist:focus-visible{
+
+        .buscar-tierlist:focus-visible {
             outline: none;
             border: 1px solid #ffffff;
         }
 
-        .buscar-tierlist option{
+        .buscar-tierlist option {
             font-size: 1rem;
             padding: 5px;
             font-weight: normal;
@@ -269,8 +270,9 @@
         .imagen-footer span {
             display: none;
         }
-        .tier-footer{
-            color:rgba(255, 255, 255, 0.507);
+
+        .tier-footer {
+            color: rgba(255, 255, 255, 0.507);
             /* cursiva*/
             font-style: italic;
         }
@@ -281,9 +283,11 @@
             <button class="boton-navegacion filtro-seleccionado" wire:navigate.hover href="/tierlist">
                 Ver Tierlist
             </button>
-            <button class="boton-navegacion" wire:navigate.hover href="/tierlist-maker">
-                Hacer Tierlist
-            </button>
+            <a href="/tierlist-maker" style="text-decoration: none;">
+                <button class="boton-navegacion">
+                    Hacer Tierlist
+                </button>
+            </a>
         </nav>
     </header>
     <main class="tier-contenedor">
@@ -318,7 +322,7 @@
                 <div class="tier-row-head" style="background-color: {{ $tier->color }};">
                     {{ $tier->nombre ?? 'Tier ' . $tier->posicion }}
                 </div>
-        
+
                 {{-- Contenido del tier: Imágenes de los héroes, ordenados por su posición y de derecha a izquierda --}}
                 <div class="tier-row-content">
                     @foreach ($tier->entries->sortBy('posicion') as $entry)

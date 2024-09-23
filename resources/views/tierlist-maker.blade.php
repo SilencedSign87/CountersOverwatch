@@ -1,252 +1,24 @@
 <div>
-    <style>
-        /* Spinner */
-        .cargador {
-            border: 2px solid transparent;
-            border-radius: 100%;
-            border-top: 2px solid rgba(0, 0, 0, 0.50);
-            width: 30px;
-            height: 30px;
-            animation: girar 0.5s linear infinite;
-        }
-
-        @keyframes girar {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* Barra de navegación */
-        .barra-navegacion {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0.5rem;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            background: transparent;
-
-            animation: blur linear both;
-            animation-timeline: scroll();
-            animation-range: 0 400px;
-        }
-
-        @keyframes blur {
-            to {
-                box-shadow:
-                    0px 5px 50px -5px rgba(49, 120, 201, 0.1),
-                    0px 0px 0 1px rgba(49, 120, 201, 0.1);
-                background-color: rgba(49, 120, 201, 0.3);
-                backdrop-filter: blur(10px);
-            }
-        }
-
-        .boton-navegacion {
-            width: fit-content;
-            height: 3rem;
-            min-width: 6rem;
-            border-radius: 0.25rem;
-            padding-left: 1rem;
-            padding-right: 1rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: system-ui;
-            text-transform: uppercase;
-            font-weight: bold;
-            font-size: 1.2rem;
-            background-color: hsla(0, 0%, 100%, 0.75);
-            color: hsla(0, 0%, 0%, 0.7);
-            border: 2px solid hsl(0, 0%, 100%);
-            backdrop-filter: blur(1rem);
-            -webkit-backdrop-filter: blur(1rem);
-            transition: background-color 0.2s ease-in, color 0.2s ease-in, scale 0.1s ease-in;
-            /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
-        }
-
-        .boton-navegacion:hover {
-            background-color: hsl(0, 0%, 90%);
-            color: hsl(0, 0%, 0%);
-        }
-
-        .boton-navegacion:active {
-            background-color: hsla(0, 0%, 100%, 1);
-            scale: 0.95;
-        }
-
-        .filtro-seleccionado {
-            background-color: hsl(0, 0%, 100%);
-            color: hsl(0, 0%, 0%);
-        }
-
-        /* Estilos del header y contenedor y footer */
-        .tier-header,
-        .tier-contenedor,
-        .tier-footer {
-            margin: 0 auto;
-            width: 100%;
-            max-width: 1500px;
-        }
-
-        .tier-contenedor {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            position: relative;
-            gap: 10px;
-        }
-
-        .tier-footer {
-            box-sizing: border-box;
-            /* Ajustar tamaño al contenido */
-            width: 100%;
-            max-width: 1427px;
-            padding: 10px;
-            border-radius: 10px;
-            background-color: hsla(220, 100%, 12%, 0.5);
-        }
-
-        /* Filtros de rol */
-        .filtro-navegacion {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 0.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .filtro-navegacion {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        .filtro-navegacion button {
-            padding: 5px;
-            font-size: 1rem;
-            width: 7rem;
-            height: 2rem;
-            flex: 1 1 1 calc(25% - 1rem);
-            /* Cada botón ocupa un 25% del ancho con un pequeño margen */
-            background-color: hsla(0, 0%, 100%, 0.6);
-            color: hsla(0, 0%, 0%, 0.7);
-            border: 2px solid hsl(0, 0%, 100%);
-            border-radius: 5px;
-            text-align: center;
-            text-transform: uppercase;
-        }
-
-        .filtro-navegacion button:hover {
-            background-color: hsl(0, 0%, 90%);
-            color: hsl(0, 0%, 0%);
-        }
-
-        .filtro-navegacion button:active {
-            scale: 0.95;
-        }
-
-        .filtro-t-selected {
-            background-color: #f06414 !important;
-            border: 2px solid #f06414 !important;
-            color: hsl(0, 0%, 100%) !important;
-            font-weight: bold;
-        }
-
-        /* Estilos de la tierlist */
-        .tierlist {
-            box-sizing: border-box;
-            width: 100%;
-            max-width: 1427px;
-            border-radius: 5px;
-            background-color: hsla(220, 100%, 12%, 0.5);
-            display: grid;
-            grid-template-columns: minmax(60px, 1fr) 11fr;
-            padding: 1%;
-        }
-
-        .tier_row_head,
-        .tier_row_content {
-            background-color: hsla(0, 0%, 0%, 0.5);
-            border-bottom: 10px solid hsl(226, 31%, 47%);
-            min-height: 75px;
-        }
-
-        .tier_row_head {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #000000;
-            font-weight: bold;
-            font-size: 1.5rem;
-        }
-
-        .tier_row_content {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        .imagen_heroe {
-            box-sizing: border-box;
-            width: 33%;
-            max-width: 75px;
-            height: auto;
-            border-radius: 5px;
-            cursor: grab;
-            transition: scale 0.1s ease-in,
-                border 0.1 ease-in;
-        }
-
-        .imagen_heroe:hover {
-            scale: 1.05;
-            border: 2px solid hsl(0, 0%, 100%);
-        }
-
-        .btn_guardar {
-            display: block;
-            margin: 0 auto;
-            width: fit-content;
-            padding: 0.5rem 1rem;
-            font-size: 1rem;
-            border-radius: 5px;
-            background-color: hsla(0, 0%, 100%, 0.6);
-            color: hsla(0, 0%, 0%, 0.7);
-            border: 2px solid hsl(0, 0%, 100%);
-            border-radius: 5px;
-            text-align: center;
-            text-transform: uppercase;
-        }
-
-        .btn_guardar:hover {
-            background-color: hsl(0, 0%, 90%);
-            color: hsl(0, 0%, 0%);
-        }
-
-        .btn_guardar:active {
-            background-color: hsla(0, 0%, 100%, 1);
-            scale: 0.95;
-        }
-    </style>
+    <title>Tierlist Maker</title>
+    
+    <link rel="stylesheet" href="tierlist-maker.css">
 
     <header class="tier-header">
         <nav class="barra-navegacion">
-            <button class="boton-navegacion" wire:navigate.hover href="/tierlist">
-                Ver Tierlist
-            </button>
-            <button class="boton-navegacion filtro-seleccionado" wire:navigate.hover href="/tierlist-maker">
-                Hacer Tierlist
-            </button>
+            <a href="/tierlist">
+                <button class="boton-navegacion">
+                    Ver Tierlist
+                </button>
+            </a>
+            <a href="/tierlist-maker">
+                <button class="boton-navegacion filtro-seleccionado">
+                    Hacer Tierlist
+                </button>
+            </a>
         </nav>
     </header>
-    {{-- TIerlist --}}
+
     <main class="tier-contenedor">
-        {{-- Filtros por rol (los mismos que antes) --}}
         <header>
             <nav class="filtro-navegacion">
                 <button class="filtro-t-selected" onclick="filtrarPorRol(null)">Todos</button>
@@ -255,26 +27,35 @@
                 <button onclick="filtrarPorRol('supp')" class="}">Support</button>
             </nav>
         </header>
-        {{-- Botón Guardar --}}
+
         <button onclick="guardarTierlist()" class="btn_guardar">Guardar Tierlist</button>
 
-        {{-- Tierlist Renderizada --}}
         <article class="tierlist">
             @foreach ($tiers as $tierIndex => $tier)
                 <div class="tier_row_head" style="background-color: {{ $tier['color'] }};">
                     {{ $tier['nombre'] }}
                 </div>
-                <div class="tier_row_content" id="tier-{{ $tierIndex }}" data-tier-index="{{ $tierIndex }}">
+                <div class="tier_row_content" id="tier-{{ $tierIndex }}" data-tier-index="{{ $tierIndex }}"
+                    data-color="{{ $tier['color'] }}">
                     @foreach ($tier['entries'] as $entryIndex => $entry)
                         <img src="{{ $entry['img_path'] }}" alt="{{ $entry['nombre'] }}" class="imagen_heroe"
                             title="{{ $entry['nombre'] }}" data-hero-id="{{ $entry['id'] }}"
                             data-index="{{ $entryIndex }}">
                     @endforeach
                 </div>
+                <div class="tier_row_control">
+                    <button onclick="editarTier({{ $tierIndex }})">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-settings">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M14.647 4.081a.724 .724 0 0 0 1.08 .448c2.439 -1.485 5.23 1.305 3.745 3.744a.724 .724 0 0 0 .447 1.08c2.775 .673 2.775 4.62 0 5.294a.724 .724 0 0 0 -.448 1.08c1.485 2.439 -1.305 5.23 -3.744 3.745a.724 .724 0 0 0 -1.08 .447c-.673 2.775 -4.62 2.775 -5.294 0a.724 .724 0 0 0 -1.08 -.448c-2.439 1.485 -5.23 -1.305 -3.745 -3.744a.724 .724 0 0 0 -.447 -1.08c-2.775 -.673 -2.775 -4.62 0 -5.294a.724 .724 0 0 0 .448 -1.08c-1.485 -2.439 1.305 -5.23 3.744 -3.745a.722 .722 0 0 0 1.08 -.447c.673 -2.775 4.62 -2.775 5.294 0zm-2.647 4.919a3 3 0 1 0 0 6a3 3 0 0 0 0 -6z" />
+                        </svg>
+                    </button>
+                </div>
             @endforeach
         </article>
 
-        {{-- Footer con héroes disponibles --}}
         <footer class="tier-footer">
             <div class="tier_row_content" id="heroes-disponibles">
                 @foreach ($heroesDisponibles as $heroIndex => $hero)
@@ -286,23 +67,35 @@
         </footer>
     </main>
 
+    {{-- Modal para editar los valores del row --}}
+    <div class="modal-bg">
+        <div class="modal-aux">
+            <article class="modal-content">
+                <header>
+                    Aquí se mostrará el modal
+                    <button onclick="cerrarModal()">Cerrar</button>
+                </header>
+            </article>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 
     <script>
-        if (typeof tiers === 'undefined') {
-            // Inicializar Sortable.js para cada tier y el footer
-            let tiers = document.querySelectorAll('.tier_row_content');
+        // Inicializar Sortable.js para cada tier y el footer
+        let tiers = document.querySelectorAll('.tier_row_content');
 
-            tiers.forEach(tier => {
-                new Sortable(tier, {
-                    group: 'shared', // Permitir arrastrar entre tiers y el footer
-                    animation: 150,
-                    onEnd: function(evt) {
-                        // Actualizar la posición de los héroes en el DOM
-                        actualizarPosiciones();
-                    }
-                });
+        tiers.forEach(tier => {
+            new Sortable(tier, {
+                group: 'shared', // Permitir arrastrar entre tiers y el footer
+                animation: 150,
+                onEnd: function(evt) {
+                    // Actualizar la posición de los héroes en el DOM
+                    actualizarPosiciones();
+                }
             });
-        }
+        });
+
 
         // Función para actualizar la posición de los héroes en el DOM
         function actualizarPosiciones() {
@@ -372,12 +165,34 @@
                 });
                 tierlistData.push({
                     tier_index: tierIndex,
-                    entries: tierEntries
+                    entries: tierEntries,
+                    color: tier.dataset.color
                 });
             });
             console.log(tierlistData);
 
         }
-    </script>
 
+        function editarTier(tierIndex) {
+            console.log(tierIndex);
+            // Abrir el modal
+            let modal = document.querySelector('.modal-bg');
+            document.body.style.overflow = 'hidden';
+            modal.style.display = 'block';
+        }
+
+        function cerrarModal() {
+            let modal = document.querySelector('.modal-bg');
+            document.body.style.overflow = 'auto';
+            modal.style.display = 'none';
+        }
+
+        // detectar click fuera de de la ventana modal
+        const modalbg = document.querySelector('.modal-bg');
+        modalbg.addEventListener('click', (e) => {
+            if (e.target.className !== 'modal-bg') {
+                cerrarModal();
+            }
+        });
+    </script>
 </div>

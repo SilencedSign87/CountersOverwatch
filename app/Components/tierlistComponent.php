@@ -4,8 +4,10 @@ namespace App\Components;
 
 use App\Models\hero;
 use App\Models\tierlist;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
+#[Title('Tierlist')]
 class tierlistComponent extends Component
 {
     public $searchTerm; // Para autocompletado o búsqueda
