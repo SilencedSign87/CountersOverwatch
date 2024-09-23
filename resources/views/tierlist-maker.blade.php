@@ -397,6 +397,13 @@
             actualizarPosicionesTiers();
         }
 
+        function actualizarPosicionesTiers() {
+            let tierRows = document.querySelectorAll('.tier_row_content'); // Seleccionar todos los tier_row_content
+            tierRows.forEach((tierRow, index) => {
+                tierRow.dataset.tierIndex = index; // Actualizar el data-tier-index
+            });
+        }
+
         // Funciones de doble click en el header
 
         // Agregar evento de doble clic a los tier heads
