@@ -389,6 +389,10 @@ a {
     border: none;
 }
 
+.modal-content header button:hover {
+    color: #f06414;
+}
+
 .modal-content section {
     display: flex;
     flex-direction: column;

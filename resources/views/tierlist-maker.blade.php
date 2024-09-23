@@ -127,7 +127,7 @@
                 <h2>Guardando Tierlist</h2>
                 <button id="btn-guardar-png" class="accion_btn">Guardar en PNG</button>
                 <button class="accion_btn">Acceder</button>
-                <button class="btn_resaltado" onclick="cerrarModal('modal-guardar')">×</button>
+                <button class="btn_resaltado" onclick="cerrarModal('modal-guardar')" style="font-size: 1.5rem">×</button>
             </div>
         </div>
     </div>
