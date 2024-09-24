@@ -92,24 +92,84 @@
                     </div>
                     <div class="acciones-tier">
                         <button class="accion_btn"
-                            onclick="moverTier(document.getElementById('tierIndex').value, 'arriba')">Subir
-                            Tier</button>
+                            onclick="moverTier(document.getElementById('tierIndex').value, 'arriba')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-square-arrow-up">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M16 12l-4 -4l-4 4" />
+                                <path d="M12 16v-8" />
+                                <path
+                                    d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+                            </svg>
+                            Subir Tier</button>
                         <button class="accion_btn"
-                            onclick="moverTier(document.getElementById('tierIndex').value, 'abajo')">Bajar
-                            tier</button>
-                        <button class="accion_btn"
-                            onclick="vaciarTier(document.getElementById('tierIndex').value)">Vaciar Tier</button>
-                        <button class="accion_btn"
-                            onclick="eliminarTier(document.getElementById('tierIndex').value)">Eliminar
-                            Tier</button>
+                            onclick="moverTier(document.getElementById('tierIndex').value, 'abajo')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-square-arrow-down">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M8 12l4 4l4 -4" />
+                                <path d="M12 8v8" />
+                                <path
+                                    d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+                            </svg>
+                            Bajar Tier
+                        </button>
+                    </div>
+                    <div class="acciones-tier">
+                        <button class="accion_btn" onclick="vaciarTier(document.getElementById('tierIndex').value)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-wash-dry-shade">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path
+                                    d="M3 3m0 3a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z" />
+                                <path d="M3 11l8 -8" />
+                                <path d="M3 17l14 -14" />
+                            </svg>
+                            Vaciar Tier</button>
+                        <button class="accion_btn" onclick="eliminarTier(document.getElementById('tierIndex').value)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-trash-x">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M4 7h16" />
+                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                <path d="M10 12l4 4m0 -4l-4 4" />
+                            </svg>
+                            Eliminar Tier</button>
                     </div>
                     <div class="acciones-tier">
                         <button class="accion_btn"
-                            onclick="agregarTier(document.getElementById('tierIndex').value, 'arriba')">Añadir tier
-                            arriba</button>
+                            onclick="agregarTier(document.getElementById('tierIndex').value, 'arriba')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-swipe-up">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M12 16m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                                <path d="M12 12v-8" />
+                                <path d="M9 7l3 -3l3 3" />
+                            </svg>
+                            Añadir tier arriba</button>
                         <button class="accion_btn"
-                            onclick="agregarTier(document.getElementById('tierIndex').value, 'abajo')">Añadir tier
-                            abajo</button>
+                            onclick="agregarTier(document.getElementById('tierIndex').value, 'abajo')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-swipe-down">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M12 4a4 4 0 1 1 0 8a4 4 0 0 1 0 -8z" />
+                                <path d="M12 12v8" />
+                                <path d="M9 17l3 3l3 -3" />
+                            </svg>
+                            Añadir tier abajo</button>
                     </div>
                 </section>
                 <footer>
@@ -126,8 +186,11 @@
             <div class="modal-content cont-save">
                 <h2>Guardando Tierlist</h2>
                 <button id="btn-guardar-png" class="accion_btn">Guardar en PNG</button>
-                <button class="accion_btn">Acceder</button>
-                <button class="btn_resaltado" onclick="cerrarModal('modal-guardar')" style="font-size: 1.5rem">×</button>
+                @auth
+                    <button class="accion_btn">guardar en la base de datos</button>
+                @endauth
+                <button class="btn_resaltado" onclick="cerrarModal('modal-guardar')"
+                    style="font-size: 1.5rem">×</button>
             </div>
         </div>
     </div>
@@ -148,7 +211,6 @@
                 }
             });
         });
-
 
         // Función para actualizar la posición de los héroes en el DOM
         function actualizarPosiciones() {

@@ -479,9 +479,10 @@ a {
 }
 
 .accion_btn{
-    padding: 5px;
     font-size: 1rem;
     height: 2rem;
+    width: fit-content;
+    padding-inline: 1rem;
     flex: 1 1 1 calc(25% - 1rem);
     /* Cada botón ocupa un 25% del ancho con un pequeño margen */
     background-color: hsla(0, 0%, 100%, 0.6);
@@ -490,6 +491,10 @@ a {
     border-radius: 5px;
     text-align: center;
     text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
 }
 .accion_btn:hover{
     background-color: #ffffff;
@@ -501,6 +506,7 @@ a {
 .cont-save{
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 10px;
     padding: 20px;
 }

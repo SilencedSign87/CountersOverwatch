@@ -179,8 +179,8 @@
             justify-content: center;
             align-items: center;
             color: #000000;
-            font-weight: bold;
-            font-size: 1.5rem;
+            font-size: 1rem;
+            text-align: center;
         }
 
         .tier-row-content {
@@ -193,6 +193,8 @@
             max-width: 106px;
             height: auto;
             border-radius: 5px;
+            /* Mastener el aspect ratio de la imagen */
+            object-fit: cover;
         }
 
         .filtro-t-selected {

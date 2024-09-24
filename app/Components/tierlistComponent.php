@@ -41,7 +41,9 @@ class tierlistComponent extends Component
     // Cargar los nombres de las tierlists
     private function cargarNombresDeTierlist()
     {
-        $this->tierlistNames = tierlist::pluck('nombre', 'id')->toArray();
+        // Obtener los nombres de las tierlists y ordenarlos por recientes
+        $this->tierlistNames = tierlist::orderBy('fecha', 'desc')->pluck('nombre', 'id')->toArray();
+        // $this->tierlistNames = tierlist::pluck('nombre', 'id')->toArray();
     }
 
     // Cargar la tierlist actual
