@@ -33,7 +33,8 @@
         <article class="tierlist">
             @foreach ($tiers as $tierIndex => $tier)
                 <div class="tier_row">
-                    <div class="tier_row_head" style="background-color: {{ $tier['color'] }};">
+                    <div class="tier_row_head" style="background-color: {{ $tier['color'] }};" contenteditable="true"
+                        data-tier-index="{{ $tierIndex }}">
                         {{ $tier['nombre'] }}
                     </div>
                     <div class="tier_row_content" id="tier-{{ $tierIndex }}" data-tier-index="{{ $tierIndex }}"
@@ -429,10 +430,19 @@
                 tierRow.parentNode.insertBefore(nuevoTierRow, tierRow.nextSibling);
             }
 
-            // Agregar evento de doble clic a los tier heads
-            nuevoTierRowHead.addEventListener('dblclick', function() {
-                editarNombreTier(this);
+            // Agregar event listeners a los tier_row_head para detectar cambios
+            document.querySelectorAll('.tier_row_head').forEach(tierHead => {
+                tierHead.addEventListener('input', function() {
+                    guardarNombreTier(this);
+                });
             });
+
+            // Función para guardar el nombre del tier en el dataset
+            function guardarNombreTier(tierHead) {
+                let tierIndex = tierHead.dataset.tierIndex;
+                document.getElementById(`tier-${tierIndex}`).previousElementSibling.textContent = tierHead.textContent
+                .trim();
+            }
 
             // Inicializar Sortable.js para el nuevo tier
             new Sortable(nuevoTierRowContent, {
@@ -463,58 +473,6 @@
             let tierRows = document.querySelectorAll('.tier_row_content'); // Seleccionar todos los tier_row_content
             tierRows.forEach((tierRow, index) => {
                 tierRow.dataset.tierIndex = index; // Actualizar el data-tier-index
-            });
-        }
-
-        // Funciones de doble click en el header
-
-        // Agregar evento de doble clic a los tier heads
-        let tierHeads = document.querySelectorAll('.tier_row_head');
-
-        tierHeads.forEach(tierHead => {
-            tierHead.addEventListener('dblclick', function() {
-                editarNombreTier(this);
-            });
-        });
-
-        function editarNombreTier(tierHead) {
-            // Guardar el nombre original del tier
-            let nombreOriginal = tierHead.textContent;
-
-            // Crear un input para editar el nombre
-            let input = document.createElement('input');
-            input.type = 'text';
-            input.value = nombreOriginal;
-
-            // Estilos del input
-            input.style.width = '75px';
-            input.style.backgroundColor = tierHead.style.backgroundColor;
-            input.style.color = tierHead.style.color;
-            input.style.fontWeight = tierHead.style.fontWeight;
-            input.style.fontSize = tierHead.style.fontSize;
-            input.style.textAlign = 'center';
-            input.style.padding = tierHead.style.padding;
-            input.style.border = 'none'; // Eliminar el borde del input
-            input.style.outline = 'none'; // Eliminar el borde del input
-
-            // Reemplazar el texto del tier head con el input
-            tierHead.innerHTML = '';
-            tierHead.appendChild(input);
-
-            // Enfocar el input y seleccionar todo el texto
-            input.focus();
-            input.select();
-
-            // Agregar evento para guardar el nuevo nombre al presionar Enter
-            input.addEventListener('keydown', function(event) {
-                if (event.key === 'Enter') {
-                    guardarNuevoNombreTier(tierHead, input.value);
-                }
-            });
-
-            // Agregar evento para restaurar el nombre original al perder el foco
-            input.addEventListener('blur', function() {
-                guardarNuevoNombreTier(tierHead, input.value); // guarda el valor actual del input
             });
         }
 

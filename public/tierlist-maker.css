@@ -212,9 +212,12 @@ a {
     justify-content: center;
     align-items: center;
     color: #000000;
-    font-weight: bold;
+    font-weight: 500;
     font-size: 1rem;
     min-width: 100px;
+}
+.tier_row_head:focus-visible{
+    outline: 3px solid #ffffff;
 }
 
 .tier_row_content {
