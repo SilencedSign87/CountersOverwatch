@@ -215,9 +215,10 @@ a {
     font-weight: 500;
     font-size: 1rem;
     min-width: 100px;
+    cursor: text;
 }
 .tier_row_head:focus-visible{
-    outline: 3px solid #ffffff;
+    z-index: 10;
 }
 
 .tier_row_content {
