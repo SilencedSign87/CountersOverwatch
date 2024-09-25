@@ -99,12 +99,12 @@
                   display: grid;
                   grid-template-columns: repeat(
                     auto-fill,
-                    minmax(100px, 205px)
+                    minmax(175px, 1fr)
                   );
                   gap: 10px;
                   margin: 0 auto;
                   width: 100%;
-                  max-width: 1300px;
+                  max-width: 1200px;
                   justify-content: center;
               }
 
