@@ -97,10 +97,8 @@
               /* Grid container styles */
               .rejilla-contenedor {
                   display: grid;
-                  grid-template-columns: repeat(
-                    auto-fill,
-                    minmax(175px, 1fr)
-                  );
+                  grid-template-columns: repeat(auto-fill,
+                          minmax(175px, 1fr));
                   gap: 10px;
                   margin: 0 auto;
                   width: 100%;
@@ -299,6 +297,7 @@
 
                   flex-grow: 0;
                   /* No crece */
+                  gap: 10px;
               }
 
               .cabecera-modal,
@@ -684,6 +683,11 @@
                       </article>
                       <footer class="pie-modal" wire:loading.remove wire:target='selectHero'>
                           {{-- Boton --}}
+                          <a href="/tierlist">
+                              <button class="btn_nav">
+                                  Ver tierlist
+                              </button>
+                          </a>
                           <button type="button" class="boton-cerrar" onclick="cerrarModal('contadoresHeroe')"
                               aria-label="Close" aria-hidden="true">
                               Cerrar

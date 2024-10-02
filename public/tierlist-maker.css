@@ -459,7 +459,7 @@ a {
     flex: 1 1 1 calc(25% - 1rem);
     /* Cada botón ocupa un 25% del ancho con un pequeño margen */
     background-color: #f06414;
-    color: hsla(0, 0%, 100%, 0.7);
+    color: hsla(0, 0%, 100%);
     border: none;
     border-radius: 5px;
     text-align: center;
@@ -528,26 +528,25 @@ a {
     padding: 20px;
 }
 
-.btn_cerrar {
+.btn_sesion {
     position: absolute;
     top: 10px;
     right: 10px;
-    background-color: transparent;
-    font-size: 1.25rem;
-    color: tomato;
-    border: 3px solid tomato;
-    padding: 10px 20px;
-    border-radius: 5px;
-    transition: all 0.3s ease-in-out;
-    z-index: 11;
-}
-
-.btn_cerrar:hover {
+    background: #f06414;
+    color: #ffffff;
+    border: 0;
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
     cursor: pointer;
-    background-color: tomato;
-    color: white;
+    transition: background 0.2s ease-in-out;
 }
 
-.btn_cerrar:active {
+.btn_sesion:hover {
+    background: #ff8b47;
+    color: #ffffff;
+}
+
+.btn_sesion:active {
     scale: 0.9;
 }

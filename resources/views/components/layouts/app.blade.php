@@ -32,27 +32,46 @@
             flex: 1;
         }
 
-        .btn_cerrar {
+        .btn_sesion {
             position: absolute;
             top: 10px;
             right: 10px;
-            background-color: transparent;
-            font-size: 1.25rem;
-            color: tomato;
-            border: 3px solid tomato;
-            padding: 10px 20px;
-            border-radius: 5px;
-            transition: all 0.3s ease-in-out;
-            z-index: 11;
-        }
-
-        .btn_cerrar:hover {
+            background: #f06414;
+            color: #ffffff;
+            border: 0;
+            border-radius: 0.25rem;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
             cursor: pointer;
-            background-color: tomato;
-            color: white;
+            transition: background 0.2s ease-in-out;
         }
 
-        .btn_cerrar:active {
+        .btn_sesion:hover {
+            background: #ff8b47;
+            color: #ffffff;
+        }
+
+        .btn_sesion:active {
+            scale: 0.9;
+        }
+
+        .btn_nav {
+            background: #ffffff;
+            color: #414141;
+            border: 0;
+            border-radius: 0.25rem;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s ease-in-out;
+        }
+
+        .btn_nav:hover {
+            background: #464646;
+            color: #ffffff;
+        }
+
+        .btn_nav:active {
             scale: 0.9;
         }
     </style>
@@ -63,7 +82,7 @@
 
 <body>
     @auth
-        <button id="btnCerrar" onclick="cerrarSesion()" class="btn_cerrar">Cerrar Sesión</button>
+        <button id="btnCerrar" onclick="cerrarSesion()" class="btn_sesion">Cerrar Sesión</button>
         <script>
             // Ajax para cerrar sesión
             function cerrarSesion() {

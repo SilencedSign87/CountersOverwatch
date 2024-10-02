@@ -10,6 +10,14 @@
 </head>
 
 <body>
+
+    @auth
+        <button id="btnCerrar" onclick="cerrarSesion()" class="btn_sesion">Cerrar Sesión</button>
+    @else
+        <a href="/login">
+            <button class="btn_sesion">Iniciar sesión</button>
+        </a>
+    @endauth
     <header class="tier-header">
         <nav class="barra-navegacion">
             <a href="/tierlist">
@@ -193,7 +201,7 @@
         <div class="modal-aux">
             <div class="modal-content cont-save">
                 <h2>Guardando Tierlist</h2>
-                <button id="btn-guardar-png" class="accion_btn">Guardar en PNG</button>
+                <button id="btn-guardar-png" onclick="descargarpng()" class="accion_btn">Guardar en PNG</button>
                 @auth
                     <button class="accion_btn" onclick="abrirModal('modal-datos-guardar')">guardar en la base de
                         datos</button>
@@ -226,11 +234,9 @@
             </div>
         </div>
 
-        <button id="btnCerrar" onclick="cerrarSesion()" class="btn_cerrar">Cerrar Sesión</button>
-
         <script>
-             // Ajax para cerrar sesión
-             function cerrarSesion() {
+            // Ajax para cerrar sesión
+            function cerrarSesion() {
                 fetch('/tierlist-maker/logout', {
                         method: 'POST',
                         headers: {
@@ -247,7 +253,7 @@
                         console.error('Error al cerrar sesión:', error);
                     });
             }
-            
+
             //Detectar click fuera del modal de guardar base de datos
             const modalDB = document.getElementById('modal-datos-guardar');
             modalDB.addEventListener('click', (e) => {
@@ -580,6 +586,10 @@
         function guardarNuevoNombreTier(tierHead, nuevoNombre) {
             // Reemplazar el input con el nuevo nombre
             tierHead.innerHTML = nuevoNombre;
+        }
+
+        function descargarpng(){
+            alert("De momento, no esta implementado una forma de descarga una imagen :(");
         }
     </script>
 </body>

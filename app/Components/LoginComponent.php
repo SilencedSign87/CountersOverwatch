@@ -20,7 +20,7 @@ class LoginComponent extends Component
     {
         if (auth()->attempt(['email' => $this->correo, 'password' => $this->pass])) {
             session()->regenerate();
-            $this->redirect('/tierlist');
+            $this->redirect('/tierlist-maker');
         }
 
         $this->reset();
