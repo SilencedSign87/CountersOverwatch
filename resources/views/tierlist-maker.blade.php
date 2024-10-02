@@ -1,8 +1,15 @@
-<div>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Tierlist Maker</title>
-
     <link rel="stylesheet" href="tierlist-maker.css">
+</head>
 
+<body>
     <header class="tier-header">
         <nav class="barra-navegacion">
             <a href="/tierlist">
@@ -28,7 +35,7 @@
             </nav>
         </header>
 
-        <button onclick="guardarTierlist()" class="btn_guardar">Guardar Tierlist</button>
+        <button onclick="abrirModal('modal-guardar')" class="btn_guardar">Guardar Tierlist</button>
 
         <article class="tierlist">
             @foreach ($tiers as $tierIndex => $tier)
@@ -107,9 +114,9 @@
                             Subir Tier</button>
                         <button class="accion_btn"
                             onclick="moverTier(document.getElementById('tierIndex').value, 'abajo')">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
                                 class="icon icon-tabler icons-tabler-outline icon-tabler-square-arrow-down">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                 <path d="M8 12l4 4l4 -4" />
@@ -188,13 +195,37 @@
                 <h2>Guardando Tierlist</h2>
                 <button id="btn-guardar-png" class="accion_btn">Guardar en PNG</button>
                 @auth
-                    <button class="accion_btn">guardar en la base de datos</button>
+                    <button class="accion_btn" onclick="abrirModal('modal-datos-guardar')">guardar en la base de
+                        datos</button>
                 @endauth
                 <button class="btn_resaltado" onclick="cerrarModal('modal-guardar')"
                     style="font-size: 1.5rem">×</button>
             </div>
         </div>
     </div>
+
+    @auth
+        <div class="modal-bg" id="modal-datos-guardar">
+            <div class="modal-aux">
+                <article class="modal-content">
+                    <header>
+                        <h2>Guardando Tierlist</h2>
+                    </header>
+                    <section>
+                        <label for="nombre">Nombre de la tierlist:</label>
+                        <input id="nombre" type="text" name="nombre" placeholder="Nombre de la tierlist"
+                            required>
+                        <label for="descripcion">Descripción de la tierlist:</label>
+                        <textarea id="descripcion" name="descripcion" placeholder="Descripción de la tierlist" required></textarea>
+                    </section>
+                    <footer style="gap: 10px;">
+                        <button class="btn_resaltado" onclick="guardarTierlist()">Guardar</button>
+                        <button class="accion_btn" onclick="cerrarModal('modal-datos-guardar')">Cancelar</button>
+                    </footer>
+                </article>
+            </div>
+        </div>
+    @endauth
 
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 
@@ -295,6 +326,14 @@
             }
         });
 
+        //Detectar click fuera del modal de guardar base de datos
+        const modalDB = document.getElementById('modal-datos-guardar');
+        modalDB.addEventListener('click', (e) => {
+            if (e.target.className === 'modal-aux') {
+                cerrarModal('modal-datos-guardar');
+            }
+        });
+
         // Función para guardar la tierlist
         function guardarTierlist() {
             let tierlistData = [];
@@ -322,11 +361,6 @@
                 });
             });
             console.log(tierlistData);
-
-            
-
-            // Abrir modal para guardar la tierlist
-            abrirModal('modal-guardar');
         }
 
         function editarTier(tierIndex) {
@@ -443,7 +477,7 @@
             function guardarNombreTier(tierHead) {
                 let tierIndex = tierHead.dataset.tierIndex;
                 document.getElementById(`tier-${tierIndex}`).previousElementSibling.textContent = tierHead.textContent
-                .trim();
+                    .trim();
             }
 
             // Inicializar Sortable.js para el nuevo tier
@@ -483,4 +517,6 @@
             tierHead.innerHTML = nuevoNombre;
         }
     </script>
-</div>
+</body>
+
+</html>
