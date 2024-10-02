@@ -212,11 +212,11 @@
                         <h2>Guardando Tierlist</h2>
                     </header>
                     <section>
-                        <label for="nombre">Nombre de la tierlist:</label>
-                        <input id="nombre" type="text" name="nombre" placeholder="Nombre de la tierlist"
+                        <label for="nombre_tierlist">Nombre de la tierlist:</label>
+                        <input id="nombre_tierlist" type="text" name="nombre" placeholder="Nombre de la tierlist"
                             required>
-                        <label for="descripcion">Descripción de la tierlist:</label>
-                        <textarea id="descripcion" name="descripcion" placeholder="Descripción de la tierlist" required></textarea>
+                        <label for="descripcion_tierlist">Descripción de la tierlist:</label>
+                        <textarea id="descripcion_tierlist" name="descripcion" placeholder="Descripción de la tierlist" required></textarea>
                     </section>
                     <footer style="gap: 10px;">
                         <button class="btn_resaltado" onclick="guardarTierlist()">Guardar</button>
@@ -225,6 +225,87 @@
                 </article>
             </div>
         </div>
+
+        <script>
+            //Detectar click fuera del modal de guardar base de datos
+            const modalDB = document.getElementById('modal-datos-guardar');
+            modalDB.addEventListener('click', (e) => {
+                if (e.target.className === 'modal-aux') {
+                    cerrarModal('modal-datos-guardar');
+                }
+            });
+
+            // Función para guardar la tierlist
+            function guardarTierlist() {
+
+                //Array de tiers
+                let tierlistTiers = [];
+
+                tiers.forEach(tier => {
+                    let tierIndex = tier.dataset.tierIndex;
+                    let tierEntries = [];
+                    let heroes = tier.querySelectorAll('.imagen_heroe');
+
+                    // Obtener los héroes de cada tier
+                    heroes.forEach(hero => {
+                        tierEntries.push({
+                            hero_id: hero.dataset.heroId,
+                            posicion: hero.dataset.index
+                        });
+                    });
+
+                    let nombreTier = "";
+                    if (tier.previousElementSibling) {
+                        nombreTier = tier.previousElementSibling.textContent.trim();
+                    }
+
+                    // Agregar cada tier con sus datos
+                    tierlistTiers.push({
+                        tier_index: tierIndex,
+                        entries: tierEntries,
+                        nombre: nombreTier,
+                        color: tier.dataset.color
+                    });
+                });
+
+                // Obtener el nombre y descripción del modal
+                let nombreTierlist = document.getElementById('nombre_tierlist').value;
+                let descripcionTierlist = document.getElementById('descripcion_tierlist').value;
+
+                // Crear request
+                let tierlistData = {
+                    nombre: nombreTierlist,
+                    descripcion: descripcionTierlist,
+                    tiers: tierlistTiers // tiers
+                };
+
+                console.log(tierlistData); // Ver la estructura antes de enviarla
+
+                fetch('/tierlist-maker/new', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}' // Importante en Laravel
+                        },
+                        body: JSON.stringify({
+                            tierlist: tierlistData
+                        })
+                    })
+                    .then(response => {
+                        console.log('Response:', response);
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            alert(data.message); // Mostrar mensaje de éxito
+                        } else {
+                            alert(data.message);
+                            console.log(data.error);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        </script>
     @endauth
 
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
@@ -325,43 +406,6 @@
                 cerrarModal('modal-guardar');
             }
         });
-
-        //Detectar click fuera del modal de guardar base de datos
-        const modalDB = document.getElementById('modal-datos-guardar');
-        modalDB.addEventListener('click', (e) => {
-            if (e.target.className === 'modal-aux') {
-                cerrarModal('modal-datos-guardar');
-            }
-        });
-
-        // Función para guardar la tierlist
-        function guardarTierlist() {
-            let tierlistData = [];
-            tiers.forEach(tier => {
-                let tierIndex = tier.dataset.tierIndex;
-                let tierEntries = [];
-                let heroes = tier.querySelectorAll('.imagen_heroe');
-                heroes.forEach(hero => {
-                    tierEntries.push({
-                        hero_id: hero.dataset.heroId,
-                        posicion: hero.dataset.index
-                    });
-                });
-
-                let nombreTier = "";
-                if (tier.previousElementSibling) {
-                    nombreTier = tier.previousElementSibling.textContent.trim();
-                }
-
-                tierlistData.push({
-                    tier_index: tierIndex,
-                    entries: tierEntries,
-                    nombre: nombreTier, // Usar la variable nombreTier
-                    color: tier.dataset.color
-                });
-            });
-            console.log(tierlistData);
-        }
 
         function editarTier(tierIndex) {
             //Cargar datos del tier

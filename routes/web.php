@@ -14,4 +14,4 @@ Route::get('/tierlist', tierlistComponent::class);
 Route::post('/tierlist-maker/logout', [TierlistMakerController::class, 'CerrarSesion']);
 
 Route::get('/tierlist-maker', [TierlistMakerController::class, 'index']);
-Route::post('/tierlist-maker', [TierlistMakerController::class, 'guardarTierlist']);
+Route::post('/tierlist-maker/new', [TierlistMakerController::class, 'guardarTierlist']);

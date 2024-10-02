@@ -277,6 +277,7 @@
             color: rgba(255, 255, 255, 0.507);
             /* cursiva*/
             font-style: italic;
+            text-align: center;
         }
     </style>
 
@@ -336,6 +337,7 @@
         </article>
         <footer class="tier-footer">
             <p>Creado el: {{ $tierlist->fecha ?? '' }}</p>
+            <p>{{ $tierlist->descripcion ?? '' }}</p>
         </footer>
     </main>
 </div>

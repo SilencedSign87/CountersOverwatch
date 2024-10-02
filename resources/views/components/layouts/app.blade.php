@@ -63,6 +63,26 @@
 <body>
     @auth
         <button id="btnCerrar" onclick="cerrarSesion()" class="btn_cerrar">Cerrar Sesión</button>
+        <script>
+            // Ajax para cerrar sesión
+            function cerrarSesion() {
+                fetch('/tierlist-maker/logout', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        window.location.href = '/';
+                    })
+                    .catch(error => {
+                        console.error('Error al cerrar sesión:', error);
+                    });
+            }
+        </script>
     @endauth
 
     @csrf
@@ -71,27 +91,6 @@
     @livewireScripts()
 
     @stack('scripts')
-
-    <script>
-        // Ajax para cerrar sesión
-        function cerrarSesion() {
-            fetch('/tierlist-maker/logout', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    window.location.href = '/';
-                })
-                .catch(error => {
-                    console.error('Error al cerrar sesión:', error);
-                });
-        }
-    </script>
 
 </body>
 
