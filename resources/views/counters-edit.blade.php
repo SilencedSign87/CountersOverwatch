@@ -139,6 +139,16 @@
             width: 80%;
             text-decoration: none;
         }
+        .editar_contenedor{
+            margin: 0 auto;
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 10px;
+        }
     </style>
 
 </head>
@@ -170,6 +180,18 @@
             <button id="cerrarsesion" class="btn_resaltado" style="width: 80%">Cerrar Sesión</button>
         </div>
     </aside>
+
+    <article class="editar_contenedor">
+        <header>
+            <h1>Editar Counters</h1>
+        </header>
+        <section>
+            Aquí van los counters
+        </section>
+        <footer>
+            Aqui van los botones de control
+        </footer>
+    </article>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
