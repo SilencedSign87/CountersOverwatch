@@ -94,8 +94,8 @@
         }
 
         #sidebar {
+
             box-sizing: border-box;
-            display: none;
             width: 100%;
             height: 100vh;
             max-width: 300px;
@@ -104,6 +104,24 @@
             top: 0;
             left: 0;
             z-index: 10;
+
+            /* Animación de entrada */
+            transform: translateX(0);
+            opacity: 1;
+            transition: transform 0.2s ease-in-out,
+                opacity 0.2s ease-in-out,
+                display .2s ease allow-discrete;
+
+            @starting-style {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+        }
+
+        #sidebar.hide {
+            opacity: 0;
+            display: none;
+            transform: translateX(-100%);
         }
 
         .sidebar-content {
@@ -111,16 +129,16 @@
             flex-direction: column;
             align-items: flex-start;
             justify-content: flex-start;
-            width: 100% ;
+            width: 100%;
             height: 100%;
             padding: 3em 1em;
             gap: 1em;
         }
-        .sidebar-content a{
+
+        .sidebar-content a {
             width: 80%;
             text-decoration: none;
         }
-
     </style>
 
 </head>
@@ -137,7 +155,7 @@
         </svg>
     </button>
 
-    <aside id="sidebar">
+    <aside id="sidebar" class="hide">
         <div class="sidebar-content">
             <h1>Navegación</h1>
             <a href="/">
@@ -178,8 +196,11 @@
 
             btnSidebar.onclick = function() {
                 const sidebar = document.getElementById('sidebar');
-                sidebar.style.display = sidebar.style.display === 'block' ? 'none' : 'block';
+
+                sidebar.classList.toggle('hide'); // Cambiar la clase del sidebar
+
             }
+
         });
     </script>
 </body>
