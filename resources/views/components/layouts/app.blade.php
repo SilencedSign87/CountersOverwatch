@@ -82,7 +82,7 @@
 
 <body>
     @auth
-        <button id="btnCerrar" onclick="cerrarSesion()" class="btn_sesion">Cerrar Sesión</button>
+        <button id="btnCerrar" style="z-index: 11" onclick="cerrarSesion()" class="btn_sesion">Cerrar Sesión</button>
         <script>
             // Ajax para cerrar sesión
             function cerrarSesion() {
