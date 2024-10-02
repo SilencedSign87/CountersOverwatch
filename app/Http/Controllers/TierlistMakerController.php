@@ -49,10 +49,13 @@ class TierlistMakerController extends Controller
             return response()->json(['success' => false, 'message' => 'Hay heroes no registrados en la tierlist, no se registró nada']);
         }
 
+        // Crear la tierlist
         try {
+            // Iniciar transacción
+            DB::beginTransaction();
 
             // Crear tierlist padre
-            $newTierlist = tierlist::new();
+            $newTierlist = new tierlist();
             $newTierlist->nombre = $tierlistData['nombre'];
             $newTierlist->descripcion = $tierlistData['descripcion'];
             $newTierlist->fecha = date('Y-m-d');
@@ -60,20 +63,11 @@ class TierlistMakerController extends Controller
 
             $newTierlist->save();
 
-            // $newTierlist = tierlist::create([
-            //     'nombre' => $tierlistData['nombre'],
-            //     'descripcion' => $tierlistData['descripcion'],
-            //     // guarda solo la fecha (año mes dia)
-            //     'fecha' => date('Y-m-d'),
-            //     // El tier final no se incluye
-            //     'num_tiers' => count($tierlistData['tiers']) - 1
-            // ]);
-
             // Crear los tier_rows y tier_entry
             foreach ($tierlistData['tiers'] as $tierIndex => $tier) {
-                // Itera tiers
+                // Iterar tiers
                 if ($tier['nombre']) {
-                    $newTierRow = tierlist_tier::new();
+                    $newTierRow = new tierlist_tier();
                     $newTierRow->tierlist_id = $newTierlist->id;
                     $newTierRow->posicion = $tier['tier_index'];
                     $newTierRow->nombre = $tier['nombre'];
@@ -81,36 +75,30 @@ class TierlistMakerController extends Controller
 
                     $newTierRow->save();
 
-                    // $newTierRow = tierlist_tier::create([
-                    //     'tierlist_id' => $newTierlist->id,
-                    //     'posicion' => $tier['tier_index'],
-                    //     'nombre' => $tier['nombre'],
-                    //     'color' => $tier['color']
-                    // ]);
-
+                    // Iterar entradas
                     foreach ($tier['entries'] as $entryIndex => $entry) {
-                        // Itera entradas
-
-                        $newTierEntry = tierlist_entry::new();
+                        $newTierEntry = new tierlist_entry();
                         $newTierEntry->tierlist_tier_id = $newTierRow->id;
                         $newTierEntry->posicion = $entry['posicion'];
                         $newTierEntry->hero_id = $entry['hero_id'];
 
                         $newTierEntry->save();
-                        // $newTierEntry = tierlist_entry::create([
-                        //     'tierlist_tier_id' => $newTierRow->id,
-                        //     'posicion' => $entry['posicion'],
-                        //     'hero_id' => $entry['hero_id']
-                        // ]);
                     }
                 }
             }
+
+            // Confirmar la transacción
+            DB::commit();
+
+            // Mensaje de confirmación
+            return response()->json(['success' => true, 'message' => 'Tierlist guardada correctamente']);
+
         } catch (\Exception $e) {
+            // Revertir los cambios en caso de error
+            DB::rollBack();
+
             return response()->json(['success' => false, 'message' => 'Error al guardar tierlist', 'error' => $e->getMessage()]);
         }
-
-
-        return response()->json(['success' => true, 'message' => 'Tierlist guardada correctamente']);
     }
 
     public function CerrarSesion(Request $request)
