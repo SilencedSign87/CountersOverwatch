@@ -44,6 +44,7 @@
             font-size: 1rem;
             cursor: pointer;
             transition: background 0.2s ease-in-out;
+            z-index: 15;
         }
 
         .btn_sesion:hover {
@@ -82,27 +83,18 @@
 
 <body>
     @auth
-        <button id="btnCerrar" style="z-index: 11" onclick="cerrarSesion()" class="btn_sesion">Cerrar Sesión</button>
-        <script>
-            // Ajax para cerrar sesión
-            function cerrarSesion() {
-                fetch('/tierlist-maker/logout', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data);
-                        window.location.href = '/';
-                    })
-                    .catch(error => {
-                        console.error('Error al cerrar sesión:', error);
-                    });
-            }
-        </script>
+        <a href="/panelControl">
+            <button class="btn_sesion">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M4 6l16 0" />
+                    <path d="M4 12l16 0" />
+                    <path d="M4 18l16 0" />
+                </svg>
+            </button>
+        </a>
     @endauth
 
     @csrf

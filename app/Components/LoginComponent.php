@@ -12,7 +12,7 @@ class LoginComponent extends Component
 
     public function mount(){
         if(auth()->check()){
-            $this->redirect('/tierlist');
+            $this->redirect('/panelControl');
         }
     }
 
@@ -20,7 +20,7 @@ class LoginComponent extends Component
     {
         if (auth()->attempt(['email' => $this->correo, 'password' => $this->pass])) {
             session()->regenerate();
-            $this->redirect('/tierlist-maker');
+            $this->redirect('/panelControl');
         }
 
         $this->reset();

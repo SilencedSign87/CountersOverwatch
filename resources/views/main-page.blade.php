@@ -531,13 +531,6 @@
                       supp
                   </span>
               </button>
-              @auth                  
-              <a href="/editarCounters">
-                  <button class="boton-navegacion">
-                      Editar Counters
-                  </button>
-              </a>
-              @endauth
           </nav>
           {{-- Cartas de pantalla --}}
           <article class="rejilla-contenedor" wire:loading.remove wire:target='filtrarHeroes'>

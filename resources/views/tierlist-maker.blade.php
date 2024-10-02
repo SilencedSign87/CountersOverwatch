@@ -10,14 +10,6 @@
 </head>
 
 <body>
-
-    @auth
-        <button id="btnCerrar" onclick="cerrarSesion()" class="btn_sesion">Cerrar Sesión</button>
-    @else
-        <a href="/login">
-            <button class="btn_sesion">Iniciar sesión</button>
-        </a>
-    @endauth
     <header class="tier-header">
         <nav class="barra-navegacion">
             <a href="/tierlist">
@@ -233,27 +225,20 @@
                 </article>
             </div>
         </div>
+        <a href="/panelControl">
+            <button class="btn_sesion">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M4 6l16 0" />
+                    <path d="M4 12l16 0" />
+                    <path d="M4 18l16 0" />
+                </svg>
+            </button>
+        </a>
 
         <script>
-            // Ajax para cerrar sesión
-            function cerrarSesion() {
-                fetch('/tierlist-maker/logout', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data);
-                        window.location.href = '/';
-                    })
-                    .catch(error => {
-                        console.error('Error al cerrar sesión:', error);
-                    });
-            }
-
             //Detectar click fuera del modal de guardar base de datos
             const modalDB = document.getElementById('modal-datos-guardar');
             modalDB.addEventListener('click', (e) => {
@@ -588,7 +573,7 @@
             tierHead.innerHTML = nuevoNombre;
         }
 
-        function descargarpng(){
+        function descargarpng() {
             alert("De momento, no esta implementado una forma de descarga una imagen :(");
         }
     </script>
