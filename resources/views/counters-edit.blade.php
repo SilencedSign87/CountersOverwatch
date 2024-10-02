@@ -175,7 +175,9 @@
         document.addEventListener('DOMContentLoaded', function() {
             const btnSidebar = document.getElementById('btnToggle');
             const btnCerrar = document.getElementById('cerrarsesion');
+            const sidebar = document.getElementById('sidebar');
 
+            // Cerrar sesión
             btnCerrar.onclick = function() {
                 fetch('/tierlist-maker/logout', {
                         method: 'POST',
@@ -194,13 +196,21 @@
                     });
             }
 
+            // Abrir/cerrar el sidebar con el botón de toggle
             btnSidebar.onclick = function() {
-                const sidebar = document.getElementById('sidebar');
-
                 sidebar.classList.toggle('hide'); // Cambiar la clase del sidebar
-
             }
 
+            // Detectar clic fuera del sidebar
+            document.addEventListener('click', function(event) {
+                // Si el sidebar está abierto
+                if (!sidebar.classList.contains('hide')) {
+                    // Verificar si el clic fue fuera del sidebar y del botón de toggle
+                    if (!sidebar.contains(event.target) && !btnSidebar.contains(event.target)) {
+                        sidebar.classList.add('hide'); // Cerrar el sidebar
+                    }
+                }
+            });
         });
     </script>
 </body>
