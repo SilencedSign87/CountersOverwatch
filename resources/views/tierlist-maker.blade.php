@@ -323,6 +323,8 @@
             });
             console.log(tierlistData);
 
+            
+
             // Abrir modal para guardar la tierlist
             abrirModal('modal-guardar');
         }

@@ -28,7 +28,22 @@ class TierlistMakerController extends Controller
 
     public function guardarTierlist(Request $request)
     {
-        // Validar y guardar la tierlist en la base de datos
-        // ... (código para guardar la tierlist - similar al método del componente Livewire) ...
+        dd($request->all());
+        
+        if(auth()->check()){
+
+        }
+        else{
+            return redirect('/');
+        }
     }
+
+    public function CerrarSesion(Request $request){
+        auth()->logout();
+        $response=[];
+        $response['status']='success';
+        $response['message']='Sesión cerrada con éxito';
+        return response()->json($response);
+    }
+
 }

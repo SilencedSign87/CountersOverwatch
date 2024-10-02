@@ -41,22 +41,67 @@
         #content {
             flex: 1;
         }
+
+        .btn_cerrar {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: transparent;
+            color: tomato;
+            border: 2px solid tomato;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
+            z-index: 11;
+        }
+
+        .btn_cerrar:hover {
+            cursor: pointer;
+            background-color: tomato;
+            color: white;
+        }
+
+        .btn_cerrar:active {
+            scale: 0.9;
+        }
     </style>
-    
+
     @stack('styles')
 
 </head>
 
 <body>
+    @auth
+        <button id="btnCerrar" onclick="cerrarSesion()" class="btn_cerrar">Cerrar Sesión</button>
+    @endauth
+
     @csrf
     {{ $slot }}
 
     @livewireScripts()
 
-    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"> </script> --}}
-
     @stack('scripts')
+
+    <script>
+        // Ajax para cerrar sesión
+        function cerrarSesion() {
+            fetch('/tierlist-maker/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    window.location.href = '/';
+                })
+                .catch(error => {
+                    console.error('Error al cerrar sesión:', error);
+                });
+        }
+    </script>
 
 </body>
 
