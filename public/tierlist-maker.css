@@ -527,3 +527,27 @@ a {
     gap: 10px;
     padding: 20px;
 }
+
+.btn_cerrar {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    font-size: 1.25rem;
+    color: tomato;
+    border: 3px solid tomato;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+    z-index: 11;
+}
+
+.btn_cerrar:hover {
+    cursor: pointer;
+    background-color: tomato;
+    color: white;
+}
+
+.btn_cerrar:active {
+    scale: 0.9;
+}
