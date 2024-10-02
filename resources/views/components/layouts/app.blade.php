@@ -37,8 +37,9 @@
             top: 10px;
             right: 10px;
             background-color: transparent;
+            font-size: 1.25rem;
             color: tomato;
-            border: 2px solid tomato;
+            border: 3px solid tomato;
             padding: 10px 20px;
             border-radius: 5px;
             transition: all 0.3s ease-in-out;
