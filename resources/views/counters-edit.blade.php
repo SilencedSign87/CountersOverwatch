@@ -197,30 +197,27 @@
             width: 0;
             /* Ancho inicial 0 para la animación */
             white-space: nowrap;
-            transition: width 0.5s ease;
+            transition: width 0.75s ease-in-out;
             /* Transición del ancho */
             background: hsla(0, 0%, 100%, 0.75);
         }
 
         .contenedor_heroes.active {
-            width: 80%;
+            width: 100%;
             overflow-x: auto;
             /* Ancho al mostrar el contenedor, ajústalo según necesites */
         }
 
         .imagen_heroe {
+            opacity: 0;
             box-sizing: border-box;
             width: 80px;
             height: 80px;
-            opacity: 0;
-            /* Oculta las imágenes inicialmente */
-            transition: opacity 0.3s ease;
-            /* Transición para que las imágenes aparezcan gradualmente */
+            transition: opacity 0.25s ease;
         }
 
         .imagen_heroe.active {
             opacity: 1;
-            /* Muestra las imágenes al activar la clase */
         }
 
         .imagen_heroe:hover {
@@ -298,7 +295,6 @@
     </article>
 
     <script>
-
         document.addEventListener('DOMContentLoaded', function() {
             const btnSidebar = document.getElementById('btnToggle');
             const btnCerrar = document.getElementById('cerrarsesion');
@@ -309,7 +305,19 @@
 
             botonesRol.forEach(boton => {
                 boton.addEventListener('click', function() {
+                    // Obtener el rol del botón
                     const rol = boton.dataset.rol;
+
+                    if (boton.classList.contains('seleccionado')) {
+                        // Colapsar el contenedor si está activo
+                        boton.classList.remove('seleccionado');
+                        contenedoresHeroes.forEach(contenedor => {
+                            if (contenedor.dataset.rol === rol) {
+                                contenedor.classList.remove('active');
+                            }
+                        });
+                        return;
+                    }
 
                     // Remover la clase .seleccionado de todos los botones
                     botonesRol.forEach(b => b.classList.remove('seleccionado'));
@@ -379,7 +387,6 @@
                 }
             });
         });
-        
     </script>
 </body>
 
