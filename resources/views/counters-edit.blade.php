@@ -205,6 +205,7 @@
         .contenedor_heroes.active {
             width: 100%;
             overflow-x: auto;
+            overflow-y: hidden;
             /* Ancho al mostrar el contenedor, ajústalo según necesites */
         }
 
@@ -214,18 +215,21 @@
             width: 80px;
             height: 80px;
             transition: opacity 0.25s ease;
+            border:none;
         }
 
         .imagen_heroe.active {
             opacity: 1;
+            transition: all 0.25s;
+            border:none;
         }
 
         .imagen_heroe:hover {
-            border: 1px solid #f06414;
+            background: white;
         }
 
         .imagen_heroe:active {
-            border: 1px solid #ffffff;
+            border: 1px solid white;
         }
     </style>
 
