@@ -312,7 +312,7 @@
             width: 80px;
             height: 80px;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .imagen_heroe_footer.active {
@@ -413,7 +413,7 @@
 
     <article class="editar_contenedor">
         <header>
-            <h1>Editar Counters</h1>
+            <h1>Actualizar Counters</h1>
         </header>
         <section>
             <div id="contendor_heroes_objetivo">
@@ -434,7 +434,8 @@
                         @foreach ($heroes as $hero)
                             <img src="{{ $hero['img_path'] }}" alt="{{ $hero['nombre'] }}" class="imagen_heroe"
                                 draggable="false" data-id="{{ $hero['id'] }}" data-rol="{{ $rol }}"
-                                onclick="selectHero('{{ $hero['id'] }}','{{ $hero['nombre'] }}' , '{{ $hero['img_path'] }}' , '{{ $rol }}')">
+                                onclick="selectHero('{{ $hero['id'] }}','{{ $hero['nombre'] }}' , '{{ $hero['img_path'] }}' , '{{ $rol }}')"
+                                title="{{ $hero['nombre'] }}">
                         @endforeach
                     </div>
                 @endforeach
@@ -472,7 +473,8 @@
                         @foreach ($heroes as $hero)
                             <img src="{{ $hero['img_path'] }}" alt="{{ $hero['nombre'] }}" class="imagen_heroe_footer"
                                 draggable="false" data-id="{{ $hero['id'] }}" data-rol="{{ $rol }}"
-                                onclick="addCounter('{{ $hero['id'] }}' ,'{{ $hero['nombre'] }}' ,  '{{ $hero['img_path'] }}' , '{{ $rol }}')">
+                                onclick="addCounter('{{ $hero['id'] }}' ,'{{ $hero['nombre'] }}' ,  '{{ $hero['img_path'] }}' , '{{ $rol }}')"
+                                title="{{ $hero['nombre'] }}">
                         @endforeach
                     </div>
                 @endforeach
@@ -540,6 +542,7 @@
                 // Si el counter no existe, agregarlo
                 countersSelectedHero.push({
                     hero_id: id,
+                    nombre: nombre,
                     img_path: counterHero.img_path, // O la forma en que accedas a la ruta de la imagen
                     rol: rol
                 });
