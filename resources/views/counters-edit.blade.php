@@ -147,7 +147,7 @@
         .editar_contenedor {
             margin: 0 auto;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1250px;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
@@ -155,9 +155,15 @@
             gap: 10px;
         }
 
+        .editar_contenedor section,
+        .editar_contenedor footer,
+        .editar_contenedor header {
+            width: 100%;
+            height: fit-content;
+        }
+
         #contendor_heroes_objetivo {
             width: 100%;
-            max-width: 1200px;
             height: 100px;
             display: flex;
             gap: 2px;
@@ -250,8 +256,7 @@
         }
 
         #contendor_heroes_add {
-            width: 100%;
-            max-width: 1200px;
+            width: 1250px;
             display: flex;
             gap: 2px;
             justify-content: center;
@@ -308,7 +313,6 @@
 
         #contendor_hero_counters {
             width: 100%;
-            max-width: 1200px;
         }
 
         #hero_selected_counters {
@@ -323,19 +327,30 @@
             gap: 1px;
         }
 
+        #counters_rol_tank {
+            border: 2px solid rgb(108, 171, 255);
+            background: rgba(108, 172, 255, 0.5);
+        }
+
+        #counters_rol_dps {
+            border: 2px solid rgb(255, 142, 108);
+            background: rgba(255, 142, 108, 0.5);
+        }
+
+        #counters_rol_supp {
+            border: 2px solid rgb(57, 223, 132);
+            background: rgba(57, 223, 132, 0.5);
+        }
+
         .imagen_contenedor_row {
             box-sizing: border-box;
             display: flex;
             flex-direction: row;
             justify-content: flex-start;
             align-items: center;
-            min-height: 90px;
+            min-height: 94px;
         }
     </style>
-
-
-
-    Use code with caution.
 </head>
 
 <body>
@@ -400,9 +415,15 @@
 
                 </div>
                 <div id="hero_selected_counters">
-                    <div id="counters_rol_tank" class="imagen_contenedor_row"></div>
-                    <div id="counters_rol_dps" class="imagen_contenedor_row"></div>
-                    <div id="counters_rol_supp" class="imagen_contenedor_row"></div>
+                    <div id="counters_rol_tank" class="imagen_contenedor_row">
+
+                    </div>
+                    <div id="counters_rol_dps" class="imagen_contenedor_row">
+
+                    </div>
+                    <div id="counters_rol_supp" class="imagen_contenedor_row">
+
+                    </div>
                 </div>
             </div>
         </section>
@@ -433,12 +454,18 @@
     <script>
         // Datos de los counters
         let dataCounters = [];
-        // id del heroe seleccionado
-        let selectedHeroId = null;
+        // objeto del heroe
+        let selectedHeroObject = null;
+        let countersSelectedHero = [];
 
         // Cambia el heroe seleccionado
         function selectHero(id, nombre, img_path, rol) {
-            selectedHeroId = id;
+            selectedHeroObject = {
+                'id': id,
+                'nombre': nombre,
+                'img_path': img_path,
+                'rol': rol
+            }
 
             // Buscar el héroe en la lista de héroes
             let selectedHero = {
@@ -446,53 +473,31 @@
                 'nombre': nombre,
                 'img_path': img_path,
                 'rol': rol
-            }
-
-            let contenedorSelectedHero = document.getElementById('heroe-selected');
-            let countersContenedor = document.getElementById('hero_selected_counters');
-
-            // Crear una imagen del heroe seleccionado
-            contenedorSelectedHero.innerHTML = `
-            <img src="${img_path}" alt="${nombre}" class="imagen_hero_objetido" draggable="false" data-id="${id}" data-rol="${rol}">
-            <h3>${nombre}</h3>
-        `;
-            // Limpiar las imagenes de counters existentes
-            countersContenedor.innerHTML = ` 
-            <div id = "counters_rol_tank" class="imagen_contenedor_row" ></div> 
-            <div id = "counters_rol_dps" class="imagen_contenedor_row" ></div> 
-            <div id = "counters_rol_supp" class="imagen_contenedor_row" ></div>
-        `;
+            };
 
             // Buscar si el héroe ya tiene counters guardados en dataCounters
-            let existingHeroData = dataCounters.find(heroData => heroData.hero_id == selectedHeroId);
+            let existingHeroData = dataCounters.find(heroData => heroData.hero_id == selectedHeroObject.id);
 
             if (existingHeroData) {
                 // Si el héroe ya existe, cargar sus counters
                 countersSelectedHero = existingHeroData.counters;
-                // Actualizar la interfaz de usuario con los counters
-
-                // añade las iamgenes de los counters
-                countersSelectedHero.forEach(counter => {
-                    let contenedorRol = document.getElementById(`counters_rol_${counter.rol}`);
-                    contenedorRol.innerHTML += `
-                    <img src="${counter.img_path}" alt="${counter.nombre}" class="imagen_hero_objetido" title="${counter.nombre}" data-hero-id="${counter.hero_id}" data-index="${countersSelectedHero.indexOf(counter)}">
-                `;
-                });
-
             } else {
                 // Si el héroe es nuevo, inicializar un objeto para él en dataCounters
                 dataCounters.push({
-                    hero_id: selectedHeroId,
+                    hero_id: selectedHeroObject.id,
                     img_path: selectedHero.img_path, // O la forma en que accedas a la ruta de la imagen
                     counters: []
                 });
                 countersSelectedHero = []; // Reiniciar la lista de counters mostrados
             }
+
+            // Renderizar la interfaz de usuario
+            renderHeroCounters(selectedHeroObject);
         }
 
         // añade counter al heroe seleccionado
         function addCounter(id, nombre, img_path, rol) {
-            if (selectedHeroId === null) {
+            if (selectedHeroObject === null) {
                 // Manejar el caso en el que no se haya seleccionado un héroe objetivo
                 alert("Selecciona un héroe objetivo primero.");
                 return;
@@ -517,20 +522,52 @@
                 });
 
                 // Actualizar dataCounters con el nuevo counter
-                let heroDataIndex = dataCounters.findIndex(heroData => heroData.hero_id == selectedHeroId);
+                let heroDataIndex = dataCounters.findIndex(heroData => heroData.hero_id == selectedHeroObject.id);
                 dataCounters[heroDataIndex].counters = countersSelectedHero;
-
-                // Actualizar la interfaz de usuario:
-
-                let contenedorRol = document.getElementById(`counters_rol_${rol}`);
-                contenedorRol.innerHTML += `
-                <img src="${img_path}" alt="Counter" class="imagen_hero_objetido" title="${nombre}" data-hero-id="${id}">
-            `;
 
             } else {
                 // Si el counter ya existe:
                 // - No hacer nada
             }
+
+            // Renderizar la interfaz de usuario
+            renderHeroCounters(selectedHeroObject);
+        }
+
+        // Renderiza la interfaz de usuario del héroe seleccionado y sus counters
+        function renderHeroCounters(selectedHero) {
+            let contenedorSelectedHero = document.getElementById('heroe-selected');
+            let countersContenedor = document.getElementById('hero_selected_counters');
+
+            // Crear una imagen del heroe seleccionado
+            contenedorSelectedHero.innerHTML = `
+        <img src="${selectedHero.img_path}" alt="${selectedHero.nombre}" class="imagen_hero_objetido" draggable="false" data-id="${selectedHero.id}" data-rol="${selectedHero.rol}">
+        <h3>${selectedHero.nombre}</h3>
+    `;
+            // Limpiar las imagenes de counters existentes
+            countersContenedor.innerHTML = ` 
+        <div id = "counters_rol_tank" class="imagen_contenedor_row" ></div> 
+        <div id = "counters_rol_dps" class="imagen_contenedor_row" ></div> 
+        <div id = "counters_rol_supp" class="imagen_contenedor_row" ></div>
+    `;
+
+            // Renderizar los counters
+            countersSelectedHero.forEach(counter => {
+                let contenedorRol = document.getElementById(`counters_rol_${counter.rol}`);
+                contenedorRol.innerHTML += `
+            <img onclick="removeCounter('${counter.hero_id}')" src="${counter.img_path}" alt="${counter.nombre}" class="imagen_hero_objetido" title="${counter.nombre}" data-hero-id="${counter.hero_id}" data-index="${countersSelectedHero.indexOf(counter)}">
+        `;
+            });
+        }
+
+        function removeCounter(id) {
+            let existingCounterIndex = countersSelectedHero.findIndex(counter => counter.hero_id == id);
+            if (existingCounterIndex != -1) {
+                dataCounters.splice(existingCounterIndex, existingCounterIndex);
+                countersSelectedHero.splice(existingCounterIndex, existingCounterIndex);
+                console.log(existingCounterIndex);
+            }
+            renderHeroCounters(selectedHeroObject);
         }
 
         document.addEventListener('DOMContentLoaded', function() {
