@@ -207,6 +207,7 @@
             overflow-x: auto;
             overflow-y: hidden;
             /* Ancho al mostrar el contenedor, ajústalo según necesites */
+            user-select: none;
         }
 
         .imagen_heroe {
@@ -216,12 +217,18 @@
             height: 80px;
             transition: opacity 0.25s ease;
             border:none;
+            user-select: none;
         }
 
         .imagen_heroe.active {
             opacity: 1;
             transition: all 0.25s;
             border:none;
+        }
+        .imagen_heroe.selected{
+            background: rgba(0, 0, 0, 0.25);
+            /* cambiar la luminosidad de la imagen */
+            filter: brightness(0.5);
         }
 
         .imagen_heroe:hover {
@@ -272,16 +279,16 @@
                 @foreach ($HeroesRol as $rol => $heroes)
                     <div class="boton_rol" data-rol="{{ $rol }}">
                         @if ($rol == 'tank')
-                            <img src="/logos/tankLogo.svg" alt="logo de tank" width="30" height="30">
+                            <img draggable="false" src="/logos/tankLogo.svg" alt="logo de tank" width="30" height="30">
                         @elseif($rol == 'dps')
-                            <img src="/logos/dpsLogo.svg" alt="logo de tank" width="30" height="30">
+                            <img draggable="false" src="/logos/dpsLogo.svg" alt="logo de tank" width="30" height="30">
                         @elseif($rol == 'supp')
-                            <img src="/logos/suppLogo.svg" alt="logo de tank" width="30" height="30">
+                            <img draggable="false" src="/logos/suppLogo.svg" alt="logo de tank" width="30" height="30">
                         @endif
                     </div>
-                    <div class="contenedor_heroes" data-rol="{{ $rol }}">
+                    <div class="contenedor_heroes" data-rol="{{ $rol }}" >
                         @foreach ($heroes as $hero)
-                            <img src="{{ $hero['img_path'] }}" alt="{{ $hero['nombre'] }}" class="imagen_heroe">
+                            <img src="{{ $hero['img_path'] }}" alt="{{ $hero['nombre'] }}" class="imagen_heroe" draggable="false">
                         @endforeach
                     </div>
                 @endforeach
