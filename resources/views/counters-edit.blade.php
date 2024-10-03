@@ -162,7 +162,13 @@
             height: fit-content;
         }
 
+        .editar_contenedor header {
+            color: white;
+            text-align: center;
+        }
+
         #contendor_heroes_objetivo {
+            box-sizing: border-box;
             width: 100%;
             height: 100px;
             display: flex;
@@ -234,7 +240,8 @@
             border: none;
         }
 
-        .imagen_heroe.selected {
+        /* Cuando una imagen esta seleccionada */
+        .shaded {
             background: rgba(0, 0, 0, 0.25);
             /* cambiar la luminosidad de la imagen */
             filter: brightness(0.5);
@@ -256,6 +263,7 @@
         }
 
         #contendor_heroes_add {
+            box-sizing: border-box;
             width: 1250px;
             display: flex;
             gap: 2px;
@@ -329,21 +337,42 @@
 
         #counters_rol_tank {
             border: 2px solid rgb(108, 171, 255);
-            background: rgba(108, 172, 255, 0.5);
+            background: rgba(108, 172, 255, 0.25);
         }
 
         #counters_rol_dps {
             border: 2px solid rgb(255, 142, 108);
-            background: rgba(255, 142, 108, 0.5);
+            background: rgba(255, 142, 108, 0.25);
         }
 
         #counters_rol_supp {
             border: 2px solid rgb(57, 223, 132);
-            background: rgba(57, 223, 132, 0.5);
+            background: rgba(57, 223, 132, 0.25);
+        }
+
+        .contenedor_row {
+            box-sizing: border-box;
+            padding-inline: 1em;
+            height: 100px;
+            width: 100%;
+            overflow-x: auto;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 5px;
+            background: hsla(0, 0%, 100%, 0.75)
+        }
+
+        .imagen_rol {
+            background: transparent;
+            width: 2em;
+            height: 2em;
         }
 
         .imagen_contenedor_row {
             box-sizing: border-box;
+            width: 100%;
+            overflow-x: auto;
             display: flex;
             flex-direction: row;
             justify-content: flex-start;
@@ -411,7 +440,7 @@
                 @endforeach
             </div>
             <div id="contendor_hero_counters">
-                <div id="heroe-selected" class="imagen_contenedor_row">
+                <div id="heroe-selected" class="contenedor_row">
 
                 </div>
                 <div id="hero_selected_counters">
@@ -456,6 +485,7 @@
         let dataCounters = [];
         // objeto del heroe
         let selectedHeroObject = null;
+        // matriz con los counters del heroe seleccionado
         let countersSelectedHero = [];
 
         // Cambia el heroe seleccionado
@@ -467,14 +497,6 @@
                 'rol': rol
             }
 
-            // Buscar el héroe en la lista de héroes
-            let selectedHero = {
-                'id': id,
-                'nombre': nombre,
-                'img_path': img_path,
-                'rol': rol
-            };
-
             // Buscar si el héroe ya tiene counters guardados en dataCounters
             let existingHeroData = dataCounters.find(heroData => heroData.hero_id == selectedHeroObject.id);
 
@@ -485,7 +507,7 @@
                 // Si el héroe es nuevo, inicializar un objeto para él en dataCounters
                 dataCounters.push({
                     hero_id: selectedHeroObject.id,
-                    img_path: selectedHero.img_path, // O la forma en que accedas a la ruta de la imagen
+                    img_path: selectedHeroObject.img_path, // O la forma en que accedas a la ruta de la imagen
                     counters: []
                 });
                 countersSelectedHero = []; // Reiniciar la lista de counters mostrados
@@ -493,6 +515,7 @@
 
             // Renderizar la interfaz de usuario
             renderHeroCounters(selectedHeroObject);
+            shadeHeroImages(id);
         }
 
         // añade counter al heroe seleccionado
@@ -534,6 +557,59 @@
             renderHeroCounters(selectedHeroObject);
         }
 
+        function removeCounter(id) {
+            if (selectedHeroObject === null) {
+                // Manejar el caso en el que no se haya seleccionado un héroe objetivo
+                alert("Selecciona un héroe objetivo primero.");
+                return;
+            }
+
+            // Buscar el índice del counter en countersSelectedHero
+            let counterIndex = countersSelectedHero.findIndex(counter => counter.hero_id == id);
+
+            if (counterIndex !== -1) {
+                // Si se encuentra el counter, eliminarlo
+                countersSelectedHero.splice(counterIndex, 1);
+
+                // Actualizar dataCounters con la lista de counters actualizada
+                let heroDataIndex = dataCounters.findIndex(heroData => heroData.hero_id == selectedHeroObject.id);
+                dataCounters[heroDataIndex].counters = countersSelectedHero;
+
+                // Renderizar la interfaz de usuario para reflejar el cambio
+                renderHeroCounters(selectedHeroObject);
+            }
+        }
+
+        function shadeHeroImages(selectedHeroId) {
+            const heroImages = document.querySelectorAll('.imagen_heroe');
+            heroImages.forEach(image => {
+                if (image.dataset.id !== selectedHeroId) {
+                    image.classList.add('shaded');
+                } else {
+                    // Asegurarse de que la imagen seleccionada no tenga la clase 'shaded'
+                    image.classList.remove('shaded');
+                }
+            });
+        }
+
+        function shadeCounterSeleccionados() {
+            const counterImages = document.querySelectorAll(
+            '.imagen_heroe_footer'); // Seleccionar todas las imágenes de counters
+
+            counterImages.forEach(image => {
+                let counterId = image.dataset.id; // Obtener el ID del counter de la imagen
+
+                // Buscar si el ID del counter está en countersSelectedHero
+                let isSelected = countersSelectedHero.some(counter => counter.hero_id == counterId);
+
+                if (isSelected) {
+                    image.classList.add('shaded'); // Agregar la clase 'shaded' si el counter está seleccionado
+                } else {
+                    image.classList.remove('shaded'); // Quitar la clase 'shaded' si el counter no está seleccionado
+                }
+            });
+        }
+
         // Renderiza la interfaz de usuario del héroe seleccionado y sus counters
         function renderHeroCounters(selectedHero) {
             let contenedorSelectedHero = document.getElementById('heroe-selected');
@@ -541,33 +617,26 @@
 
             // Crear una imagen del heroe seleccionado
             contenedorSelectedHero.innerHTML = `
-        <img src="${selectedHero.img_path}" alt="${selectedHero.nombre}" class="imagen_hero_objetido" draggable="false" data-id="${selectedHero.id}" data-rol="${selectedHero.rol}">
-        <h3>${selectedHero.nombre}</h3>
-    `;
+                <img src="${selectedHero.img_path}" alt="${selectedHero.nombre}" class="imagen_hero_objetido" draggable="false" data-id="${selectedHero.id}" data-rol="${selectedHero.rol}">
+                <img src="/logos/${selectedHero.rol}Logo.svg" alt="logo de tank" width="30" height="30" class=" imagen_rol" draggable="false" data-id="${selectedHero.id}" data-rol="${selectedHero.rol}">
+                <h3>${selectedHero.nombre}</h3>
+            `;
             // Limpiar las imagenes de counters existentes
             countersContenedor.innerHTML = ` 
-        <div id = "counters_rol_tank" class="imagen_contenedor_row" ></div> 
-        <div id = "counters_rol_dps" class="imagen_contenedor_row" ></div> 
-        <div id = "counters_rol_supp" class="imagen_contenedor_row" ></div>
-    `;
+                <div id = "counters_rol_tank" class="imagen_contenedor_row" ></div> 
+                <div id = "counters_rol_dps" class="imagen_contenedor_row" ></div> 
+                <div id = "counters_rol_supp" class="imagen_contenedor_row" ></div>
+            `;
 
             // Renderizar los counters
             countersSelectedHero.forEach(counter => {
                 let contenedorRol = document.getElementById(`counters_rol_${counter.rol}`);
                 contenedorRol.innerHTML += `
-            <img onclick="removeCounter('${counter.hero_id}')" src="${counter.img_path}" alt="${counter.nombre}" class="imagen_hero_objetido" title="${counter.nombre}" data-hero-id="${counter.hero_id}" data-index="${countersSelectedHero.indexOf(counter)}">
-        `;
+                    <img onclick="removeCounter('${counter.hero_id}')" src="${counter.img_path}" alt="${counter.nombre}" class="imagen_hero_objetido" title="${counter.nombre}" data-hero-id="${counter.hero_id}" data-index="${countersSelectedHero.indexOf(counter)}">
+                `;
             });
-        }
-
-        function removeCounter(id) {
-            let existingCounterIndex = countersSelectedHero.findIndex(counter => counter.hero_id == id);
-            if (existingCounterIndex != -1) {
-                dataCounters.splice(existingCounterIndex, existingCounterIndex);
-                countersSelectedHero.splice(existingCounterIndex, existingCounterIndex);
-                console.log(existingCounterIndex);
-            }
-            renderHeroCounters(selectedHeroObject);
+            // Actualizar la clase 'shaded' en los counters seleccionados
+            shadeCounterSeleccionados()
         }
 
         document.addEventListener('DOMContentLoaded', function() {
