@@ -71,6 +71,9 @@
 
         .btn_toggle {
             position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             top: 10px;
             left: 10px;
             background: #f06414;
@@ -139,7 +142,8 @@
             width: 80%;
             text-decoration: none;
         }
-        .editar_contenedor{
+
+        .editar_contenedor {
             margin: 0 auto;
             width: 100%;
             max-width: 1200px;
@@ -148,6 +152,83 @@
             justify-content: flex-start;
             align-items: center;
             gap: 10px;
+        }
+
+        #contendor_heroes_objetivo {
+            width: 85vw;
+            height: 100px;
+            display: flex;
+            gap: 2px;
+            justify-content: center;
+            align-items: flex-start;
+            overflow: hidden;
+            /* Cambia a hidden para esconder las imágenes al inicio */
+            background: hsla(0, 0%, 100%, 0.50);
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+        .boton_rol {
+            width: 80px;
+            height: 80px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .boton_rol:hover {
+            background: rgba(255, 255, 255, 0.75);
+        }
+
+        .boton_rol:active {
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .boton_rol.seleccionado {
+            background: rgba(255, 255, 255)
+        }
+
+        .contenedor_heroes {
+            display: flex;
+            overflow-x: hidden;
+            width: 0;
+            /* Ancho inicial 0 para la animación */
+            white-space: nowrap;
+            transition: width 0.5s ease;
+            /* Transición del ancho */
+            background: hsla(0, 0%, 100%, 0.75);
+        }
+
+        .contenedor_heroes.active {
+            width: 80%;
+            overflow-x: auto;
+            /* Ancho al mostrar el contenedor, ajústalo según necesites */
+        }
+
+        .imagen_heroe {
+            box-sizing: border-box;
+            width: 80px;
+            height: 80px;
+            opacity: 0;
+            /* Oculta las imágenes inicialmente */
+            transition: opacity 0.3s ease;
+            /* Transición para que las imágenes aparezcan gradualmente */
+        }
+
+        .imagen_heroe.active {
+            opacity: 1;
+            /* Muestra las imágenes al activar la clase */
+        }
+
+        .imagen_heroe:hover {
+            border: 1px solid #f06414;
+        }
+
+        .imagen_heroe:active {
+            border: 1px solid #ffffff;
         }
     </style>
 
@@ -186,18 +267,82 @@
             <h1>Editar Counters</h1>
         </header>
         <section>
-            Aquí van los counters
+            <div id="contendor_heroes_objetivo">
+                @foreach ($HeroesRol as $rol => $heroes)
+                    <div class="boton_rol" data-rol="{{ $rol }}">
+                        @if ($rol == 'tank')
+                            <img src="/logos/tankLogo.svg" alt="logo de tank" width="30" height="30">
+                        @elseif($rol == 'dps')
+                            <img src="/logos/dpsLogo.svg" alt="logo de tank" width="30" height="30">
+                        @elseif($rol == 'supp')
+                            <img src="/logos/suppLogo.svg" alt="logo de tank" width="30" height="30">
+                        @endif
+                    </div>
+                    <div class="contenedor_heroes" data-rol="{{ $rol }}">
+                        @foreach ($heroes as $hero)
+                            <img src="{{ $hero['img_path'] }}" alt="{{ $hero['nombre'] }}" class="imagen_heroe">
+                        @endforeach
+                    </div>
+                @endforeach
+            </div>
+            <div id="contendor_hero_counters">
+
+            </div>
         </section>
         <footer>
-            Aqui van los botones de control
+            <div id="contendor_heroes_add">
+
+            </div>
+
         </footer>
     </article>
 
     <script>
+
         document.addEventListener('DOMContentLoaded', function() {
             const btnSidebar = document.getElementById('btnToggle');
             const btnCerrar = document.getElementById('cerrarsesion');
             const sidebar = document.getElementById('sidebar');
+
+            const botonesRol = document.querySelectorAll('.boton_rol');
+            const contenedoresHeroes = document.querySelectorAll('.contenedor_heroes');
+
+            botonesRol.forEach(boton => {
+                boton.addEventListener('click', function() {
+                    const rol = boton.dataset.rol;
+
+                    // Remover la clase .seleccionado de todos los botones
+                    botonesRol.forEach(b => b.classList.remove('seleccionado'));
+
+                    // Añadir la clase .seleccionado solo al botón activo
+                    boton.classList.add('seleccionado');
+
+                    // Expande las imágenes del rol seleccionado
+                    contenedoresHeroes.forEach(contenedor => {
+                        if (contenedor.dataset.rol === rol) {
+
+                            // Activa el contenedor
+                            contenedor.classList.add('active');
+
+                            // Activa las imágenes dentro del contenedor con un pequeño retraso
+                            const imagenes = contenedor.querySelectorAll('.imagen_heroe');
+                            setTimeout(() => {
+                                    imagenes.forEach(img => img.classList.add(
+                                        'active'));
+                                },
+                                200
+                            ); // Tiempo en milisegundos para que las imágenes aparezcan después del contenedor
+                        } else {
+                            // Resetea el contenedor si es otro rol
+                            contenedor.classList.remove('active');
+
+                            // También resetea las imágenes del contenedor
+                            const imagenes = contenedor.querySelectorAll('.imagen_heroe');
+                            imagenes.forEach(img => img.classList.remove('active'));
+                        }
+                    });
+                });
+            });
 
             // Cerrar sesión
             btnCerrar.onclick = function() {
@@ -234,6 +379,7 @@
                 }
             });
         });
+        
     </script>
 </body>
 
