@@ -787,16 +787,20 @@
         }
 
         function reinicarTodo() {
-            cargarDatosCounters();
-            // Esperar a que carguen los datos 
-            setTimeout(() => {
-                selectHero(selectedHeroObject.id);
-            }, 500);
+            cargarDatosCounters()
+                .then(() => { // Ejecutar selectHero después de que se resuelva la promesa de cargarDatosCounters()
+                    if (selectedHeroObject) {
+                        selectHero(selectedHeroObject.id);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al cargar los datos:', error);
+                });
         }
 
         function cargarDatosCounters() {
             // Obtener los datos del formulario
-            fetch('/counters/all', {
+            return fetch('/counters/all', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
