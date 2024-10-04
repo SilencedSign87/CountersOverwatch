@@ -100,13 +100,4 @@ class TierlistMakerController extends Controller
             return response()->json(['success' => false, 'message' => 'Error al guardar tierlist', 'error' => $e->getMessage()]);
         }
     }
-
-    public function CerrarSesion(Request $request)
-    {
-        auth()->logout();
-        $response = [];
-        $response['status'] = 'success';
-        $response['message'] = 'Sesión cerrada con éxito';
-        return response()->json($response);
-    }
 }

@@ -36,4 +36,26 @@ class countersController extends Controller
 
         return response()->json($heroes);
     }
+
+    public function getspecificCounter($heroId)
+    {
+
+        try {
+            $hero = hero::find($heroId);
+            $counteredBy = $hero->counteredBy;
+            return response()->json($counteredBy);
+
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th->getMessage()], 500);
+        }
+    }
+
+    public function CerrarSesion(Request $request)
+    {
+        auth()->logout();
+        $response = [];
+        $response['status'] = 'success';
+        $response['message'] = 'Sesión cerrada con éxito';
+        return response()->json($response);
+    }
 }

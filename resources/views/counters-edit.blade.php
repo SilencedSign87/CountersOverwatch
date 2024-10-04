@@ -544,7 +544,8 @@
             </div>
             <div id="contendor_hero_counters">
                 <div id="heroe-selected" class="contenedor_row">
-                    <h4>Seleccione un heroe para editar los counters</h4>
+                    <h4 style="width:100%; text-align: center; color:hsla(0, 0%, 0%, 0.5);">Seleccione un heroe para
+                        editar los counters</h4>
                 </div>
                 <div id="hero_selected_counters">
                     <div id="counters_rol_tank" class="imagen_contenedor_row">
@@ -583,7 +584,7 @@
             </div>
             <div class="imagen_contenedor_row" style="gap: 1em;">
                 <button class="btn_resaltado" onclick="abrirModal('modal-confirmar')">Guardar</button>
-                <button class="btn_accion">Cancelar actual</button>
+                <button class="btn_accion" onclick="recargarCountersSeleccionado()">Cancelar actual</button>
                 <button class="btn_accion" onclick="reinicarTodo()">Cancelar todo</button>
             </div>
         </footer>
@@ -599,7 +600,7 @@
                 <section id="modal-confirmar-contenido">
                     <p>¿Está seguro que quiere guardar los cambios?</p>
                 </section>
-                <footer style="padding: 5px;">
+                <footer style="padding: 5px; display: flex; justify-content: flex-end; gap: 5px;">
                     <button class="btn_resaltado" onclick="guardarCounters()">Guardar</button>
                     <button class="btn_accion" onclick="cerrarModal('modal-confirmar')">Cancelar</button>
                 </footer>
@@ -798,6 +799,42 @@
                 });
         }
 
+        function recargarCountersSeleccionado() {
+            let aux = fetch(`/counters/${selectedHeroObject.id}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // console.log(data);
+                    let heroDataIndex = dataCounters.findIndex(heroData => heroData.hero_id == selectedHeroObject.id);
+
+                    dataCounters[heroDataIndex].counters = data.map(counter => ({
+                        hero_id: counter.id,
+                        nombre: counter.nombre,
+                        img_path: counter.img_path,
+                        rol: counter.rol
+                    }));
+
+                    countersSelectedHero = data.map(counter => ({
+                        hero_id: counter.id,
+                        nombre: counter.nombre,
+                        img_path: counter.img_path,
+                        rol: counter.rol
+                    }));
+                })
+                .then(() => {
+                    // Renderizar la interfaz de usuario para reflejar los cambios
+                    renderHeroCounters(selectedHeroObject);
+                })
+                .catch(error => {
+                    console.error('Error al recargar los datos:', error);
+                });
+        }
+
         function cargarDatosCounters() {
             // Obtener los datos del formulario
             return fetch('/counters/all', {
@@ -944,7 +981,7 @@
 
             // Cerrar sesión
             btnCerrar.onclick = function() {
-                fetch('/tierlist-maker/logout', {
+                fetch('/logout', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -1011,6 +1048,10 @@
                 cerrarModal('modal-confirmar');
             }
         });
+
+        function guardarCounters() {
+
+        }
     </script>
 </body>
 

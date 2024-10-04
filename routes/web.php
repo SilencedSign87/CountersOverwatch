@@ -17,9 +17,10 @@ Route::get('/tierlist-maker', [TierlistMakerController::class, 'index']);
 // Middleware
 Route::group(['middleware' => 'auth'], function () {
     // Cerrar sesión
-    Route::post('/tierlist-maker/logout', [TierlistMakerController::class, 'CerrarSesion']);
+    Route::post('/logout', [countersController::class, 'CerrarSesion']);
     // Guardar la tierlist en la base de datos
     Route::post('/tierlist-maker/new', [TierlistMakerController::class, 'guardarTierlist']);
     Route::get('/panelControl', [countersController::class,'index']);
     Route::get('/counters/all', [countersController::class,'getAllCounters']);
+    Route::get('/counters/{heroId}', [countersController::class,'getspecificCounter']);
 });
