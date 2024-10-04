@@ -353,7 +353,7 @@
             display: flex;
             justify-content: flex-end;
             align-items: center;
-            padding-inline:2em;
+            padding-inline: 2em;
         }
 
         #counters_rol_tank {
@@ -583,8 +583,8 @@
             </div>
             <div class="imagen_contenedor_row" style="gap: 1em;">
                 <button class="btn_resaltado" onclick="abrirModal('modal-confirmar')">Guardar</button>
-                <button class="btn_accion">Limpiar counters</button>
-                <button class="btn_accion">Borrar todo</button>
+                <button class="btn_accion">Cancelar actual</button>
+                <button class="btn_accion" onclick="reinicarTodo()">Cancelar todo</button>
             </div>
         </footer>
     </article>
@@ -619,7 +619,7 @@
         cargarDatosCounters();
 
         // Cambia el heroe seleccionado
-        function selectHero(id) { // Solo se necesita el ID como argumento
+        function selectHero(id) {
             // Buscar el héroe en dataCounters
             let selectedHeroData = dataCounters.find(heroData => heroData.hero_id == id);
 
@@ -630,8 +630,9 @@
                     'nombre': selectedHeroData.nombre,
                     'img_path': selectedHeroData.img_path,
                     'rol': selectedHeroData.rol,
-                    'nota': selectedHeroData.nota // Agregar la nota
+                    'nota': selectedHeroData.nota
                 };
+
                 countersSelectedHero = selectedHeroData.counters;
 
                 // Renderizar la interfaz de usuario
@@ -785,9 +786,17 @@
             shadeCounterSeleccionados()
         }
 
+        function reinicarTodo() {
+            cargarDatosCounters();
+            // Esperar a que carguen los datos 
+            setTimeout(() => {
+                selectHero(selectedHeroObject.id);
+            }, 500);
+        }
+
         function cargarDatosCounters() {
             // Obtener los datos del formulario
-            let datos = fetch('/counters/all', {
+            fetch('/counters/all', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
