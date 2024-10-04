@@ -62,8 +62,8 @@
         }
 
         .btn_accion:hover {
-            background: #bdbdbd;
-            color: #ffffff;
+            background: rgba(255, 255, 255, 0.75);
+            color: #000000;
         }
 
         .btn_accion:active {
@@ -147,7 +147,7 @@
         .editar_contenedor {
             margin: 0 auto;
             width: 100%;
-            max-width: 1250px;
+            max-width: 1300px;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
@@ -256,6 +256,7 @@
 
         .imagen_heroe:hover {
             background: white;
+            cursor: pointer;
         }
 
         .imagen_heroe:active {
@@ -264,7 +265,7 @@
 
         #contendor_heroes_add {
             box-sizing: border-box;
-            width: 1250px;
+            width: 100%;
             display: flex;
             gap: 2px;
             justify-content: center;
@@ -315,11 +316,21 @@
             transition: all 0.3s ease;
         }
 
+        .imagen_heroe_footer:hover {
+            background: white;
+            cursor: pointer;
+        }
+
+        .imagen_heroe_footer:active {
+            scale: 0.9;
+        }
+
         .imagen_heroe_footer.active {
             opacity: 1;
         }
 
         #contendor_hero_counters {
+            margin-top: 0.75em;
             width: 100%;
         }
 
@@ -333,6 +344,16 @@
             width: 100%;
             min-height: 90px;
             gap: 1px;
+        }
+
+        #nota_heroe {
+            flex-grow: 1;
+            height: 90px;
+            overflow-x: auto;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding-inline:2em;
         }
 
         #counters_rol_tank {
@@ -360,10 +381,11 @@
             justify-content: flex-start;
             align-items: center;
             gap: 5px;
-            background: hsla(0, 0%, 100%, 0.75)
+            background: hsla(0, 0%, 100%, 0.75);
         }
 
         .imagen_rol {
+            padding-inline: 1em;
             background: transparent;
             width: 2em;
             height: 2em;
@@ -378,6 +400,87 @@
             justify-content: flex-start;
             align-items: center;
             min-height: 94px;
+        }
+
+        /* Estilos del modal */
+        .modal-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(20, 25, 44, 0.75);
+            z-index: 10;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-aux {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            height: fit-content;
+            width: fit-content;
+            background-color: rgba(255, 255, 255, 0.70);
+            border-radius: 10px;
+            padding: 2em;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+
+            /* Agregar display: flex y flex-direction: column */
+            display: flex;
+            flex-direction: column;
+
+            /* Transición para animar la ventana */
+            animation: slideDown 0.2s ease-in-out forwards;
+            /* Animación de entrada */
+        }
+
+        #modal-confirmar-contenido-heroes {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .modal-content.oculto {
+            /* Clase para ocultar el modal */
+            animation: slideUp 0.2s ease-in-out forwards;
+            /* Animación de salida */
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                /* Inicia fuera de la pantalla arriba */
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                /* Se coloca en su posición */
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(0);
+                /* Inicia en su posición */
+                opacity: 1;
+            }
+
+            to {
+                transform: translateY(-100%);
+                /* Se traslada fuera de la pantalla arriba */
+                opacity: 0;
+            }
         }
     </style>
 </head>
@@ -434,15 +537,14 @@
                         @foreach ($heroes as $hero)
                             <img src="{{ $hero['img_path'] }}" alt="{{ $hero['nombre'] }}" class="imagen_heroe"
                                 draggable="false" data-id="{{ $hero['id'] }}" data-rol="{{ $rol }}"
-                                onclick="selectHero('{{ $hero['id'] }}','{{ $hero['nombre'] }}' , '{{ $hero['img_path'] }}' , '{{ $rol }}')"
-                                title="{{ $hero['nombre'] }}">
+                                onclick="selectHero('{{ $hero['id'] }}')" title="{{ $hero['nombre'] }}">
                         @endforeach
                     </div>
                 @endforeach
             </div>
             <div id="contendor_hero_counters">
                 <div id="heroe-selected" class="contenedor_row">
-
+                    <h4>Seleccione un heroe para editar los counters</h4>
                 </div>
                 <div id="hero_selected_counters">
                     <div id="counters_rol_tank" class="imagen_contenedor_row">
@@ -479,8 +581,31 @@
                     </div>
                 @endforeach
             </div>
+            <div class="imagen_contenedor_row" style="gap: 1em;">
+                <button class="btn_resaltado" onclick="abrirModal('modal-confirmar')">Guardar</button>
+                <button class="btn_accion">Limpiar counters</button>
+                <button class="btn_accion">Borrar todo</button>
+            </div>
         </footer>
     </article>
+
+    {{-- Modal de confirmación --}}
+    <div class="modal-bg" id="modal-confirmar">
+        <div class="modal-aux">
+            <article class="modal-content">
+                <header>
+                    <h2>Confirmar Actualización</h2>
+                </header>
+                <section id="modal-confirmar-contenido">
+                    <p>¿Está seguro que quiere guardar los cambios?</p>
+                </section>
+                <footer style="padding: 5px;">
+                    <button class="btn_resaltado" onclick="guardarCounters()">Guardar</button>
+                    <button class="btn_accion" onclick="cerrarModal('modal-confirmar')">Cancelar</button>
+                </footer>
+            </article>
+        </div>
+    </div>
 
     <script>
         // Datos de los counters
@@ -490,34 +615,32 @@
         // matriz con los counters del heroe seleccionado
         let countersSelectedHero = [];
 
+        // Cargar Datos
+        cargarDatosCounters();
+
         // Cambia el heroe seleccionado
-        function selectHero(id, nombre, img_path, rol) {
-            selectedHeroObject = {
-                'id': id,
-                'nombre': nombre,
-                'img_path': img_path,
-                'rol': rol
-            }
+        function selectHero(id) { // Solo se necesita el ID como argumento
+            // Buscar el héroe en dataCounters
+            let selectedHeroData = dataCounters.find(heroData => heroData.hero_id == id);
 
-            // Buscar si el héroe ya tiene counters guardados en dataCounters
-            let existingHeroData = dataCounters.find(heroData => heroData.hero_id == selectedHeroObject.id);
+            if (selectedHeroData) {
+                // Si se encuentra el héroe, asignar los datos a selectedHeroObject y countersSelectedHero
+                selectedHeroObject = {
+                    'id': selectedHeroData.hero_id,
+                    'nombre': selectedHeroData.nombre,
+                    'img_path': selectedHeroData.img_path,
+                    'rol': selectedHeroData.rol,
+                    'nota': selectedHeroData.nota // Agregar la nota
+                };
+                countersSelectedHero = selectedHeroData.counters;
 
-            if (existingHeroData) {
-                // Si el héroe ya existe, cargar sus counters
-                countersSelectedHero = existingHeroData.counters;
+                // Renderizar la interfaz de usuario
+                renderHeroCounters(selectedHeroObject);
+                shadeHeroImages(id);
             } else {
-                // Si el héroe es nuevo, inicializar un objeto para él en dataCounters
-                dataCounters.push({
-                    hero_id: selectedHeroObject.id,
-                    img_path: selectedHeroObject.img_path, // O la forma en que accedas a la ruta de la imagen
-                    counters: []
-                });
-                countersSelectedHero = []; // Reiniciar la lista de counters mostrados
+                // Manejar el caso en que no se encuentre el héroe en dataCounters (opcional)
+                console.error(`Héroe con ID ${id} no encontrado en dataCounters`);
             }
-
-            // Renderizar la interfaz de usuario
-            renderHeroCounters(selectedHeroObject);
-            shadeHeroImages(id);
         }
 
         // añade counter al heroe seleccionado
@@ -597,7 +720,7 @@
 
         function shadeCounterSeleccionados() {
             const counterImages = document.querySelectorAll(
-            '.imagen_heroe_footer'); // Seleccionar todas las imágenes de counters
+                '.imagen_heroe_footer'); // Seleccionar todas las imágenes de counters
 
             counterImages.forEach(image => {
                 let counterId = image.dataset.id; // Obtener el ID del counter de la imagen
@@ -623,12 +746,21 @@
                 <img src="${selectedHero.img_path}" alt="${selectedHero.nombre}" class="imagen_hero_objetido" draggable="false" data-id="${selectedHero.id}" data-rol="${selectedHero.rol}">
                 <img src="/logos/${selectedHero.rol}Logo.svg" alt="logo de tank" width="30" height="30" class=" imagen_rol" draggable="false" data-id="${selectedHero.id}" data-rol="${selectedHero.rol}">
                 <h3>${selectedHero.nombre}</h3>
+                <div id="nota_heroe" contenteditable="true">
+                    ${selectedHero.nota}
+                </div>
             `;
             // Limpiar las imagenes de counters existentes
             countersContenedor.innerHTML = ` 
-                <div id = "counters_rol_tank" class="imagen_contenedor_row" ></div> 
-                <div id = "counters_rol_dps" class="imagen_contenedor_row" ></div> 
-                <div id = "counters_rol_supp" class="imagen_contenedor_row" ></div>
+                <div id = "counters_rol_tank" class="imagen_contenedor_row" >
+                    <img src="/logos/tankLogo.svg" alt="logo de tank" width="30" height="30" class=" imagen_rol" draggable="false">
+                </div> 
+                <div id = "counters_rol_dps" class="imagen_contenedor_row" >
+                    <img src="/logos/dpsLogo.svg" alt="logo de tank" width="30" height="30" class=" imagen_rol" draggable="false">
+                </div> 
+                <div id = "counters_rol_supp" class="imagen_contenedor_row" >
+                    <img src="/logos/suppLogo.svg" alt="logo de tank" width="30" height="30" class=" imagen_rol" draggable="false">
+                </div>
             `;
 
             // Renderizar los counters
@@ -638,8 +770,52 @@
                     <img onclick="removeCounter('${counter.hero_id}')" src="${counter.img_path}" alt="${counter.nombre}" class="imagen_hero_objetido" title="${counter.nombre}" data-hero-id="${counter.hero_id}" data-index="${countersSelectedHero.indexOf(counter)}">
                 `;
             });
+
+            // Añadir funcionalidad a la nota del héroe
+            let notaHeroeDiv = document.getElementById('nota_heroe');
+            notaHeroeDiv.addEventListener('input', function() {
+                // Actualizar la nota en dataCounters
+                let heroDataIndex = dataCounters.findIndex(heroData => heroData.hero_id == selectedHero.id);
+                if (heroDataIndex !== -1) {
+                    dataCounters[heroDataIndex].nota = notaHeroeDiv.textContent; // Guardar la nota
+                }
+            });
+
             // Actualizar la clase 'shaded' en los counters seleccionados
             shadeCounterSeleccionados()
+        }
+
+        function cargarDatosCounters() {
+            // Obtener los datos del formulario
+            let datos = fetch('/counters/all', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    // Cargar los datos
+                    dataCounters = data.map(hero => ({
+                        hero_id: hero.id,
+                        img_path: hero.img_path,
+                        nombre: hero.nombre,
+                        nota: hero.nota,
+                        rol: hero.rol,
+                        counters: hero.countered_by.map(counter => ({
+                            hero_id: counter.id,
+                            nombre: counter.nombre,
+                            img_path: counter.img_path,
+                            rol: counter.rol
+                        }))
+                    }));
+                    console.log(dataCounters);
+                })
+                .catch(error => {
+                    console.error('error:', error);
+                });
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -788,6 +964,39 @@
                 }
             });
 
+        });
+
+        // Funciones para abrir y cerrar modales
+        function abrirModal(modalId) {
+            if (dataCounters.length === 0) {
+                alert("No hay ningún héroe seleccionado para guardar.");
+                return;
+            }
+            let modal = document.getElementById(modalId);
+            let modalContent = modal.querySelector('.modal-content');
+            document.body.style.overflow = 'hidden';
+            modal.style.display = 'block';
+            modal.classList.add('mostrar');
+            modalContent.classList.remove('oculto');
+        }
+
+        function cerrarModal(modalId) {
+            let modal = document.getElementById(modalId);
+            let modalContent = modal.querySelector('.modal-content');
+            modalContent.classList.add('oculto');
+
+            setTimeout(function() {
+                document.body.style.overflow = 'auto';
+                modal.style.display = 'none';
+                modal.classList.remove('mostrar'); // Eliminar la clase "mostrar"
+            }, 200);
+        }
+
+        const modalTier = document.getElementById('modal-confirmar');
+        modalTier.addEventListener('click', (e) => {
+            if (e.target.className === 'modal-aux') {
+                cerrarModal('modal-confirmar');
+            }
         });
     </script>
 </body>

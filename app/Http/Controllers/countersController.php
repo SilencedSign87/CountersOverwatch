@@ -7,24 +7,33 @@ use Illuminate\Http\Request;
 
 class countersController extends Controller
 {
-    public function index(){
-        
-        $HeroesRol=[
-            'tank'=>[],
-            'dps'=>[],
-            'supp'=>[]
+    public function index()
+    {
+
+        $HeroesRol = [
+            'tank' => [],
+            'dps' => [],
+            'supp' => []
         ];
 
         $tank = hero::where('rol', 'tank')->orderBy('nombre')->get()->toArray();
         $dps = hero::where('rol', 'dps')->orderBy('nombre')->get()->toArray();
         $supp = hero::where('rol', 'supp')->orderBy('nombre')->get()->toArray();
 
-        $HeroesRol['tank']=$tank;
-        $HeroesRol['dps']=$dps;
-        $HeroesRol['supp']=$supp;
+        $HeroesRol['tank'] = $tank;
+        $HeroesRol['dps'] = $dps;
+        $HeroesRol['supp'] = $supp;
 
         // dd($HeroesRol);
 
         return view('counters-edit', compact('HeroesRol'));
+    }
+
+    public function getAllCounters()
+    {
+
+        $heroes = Hero::with('counteredBy')->get();
+
+        return response()->json($heroes);
     }
 }

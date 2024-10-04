@@ -21,4 +21,5 @@ Route::group(['middleware' => 'auth'], function () {
     // Guardar la tierlist en la base de datos
     Route::post('/tierlist-maker/new', [TierlistMakerController::class, 'guardarTierlist']);
     Route::get('/panelControl', [countersController::class,'index']);
+    Route::get('/counters/all', [countersController::class,'getAllCounters']);
 });
