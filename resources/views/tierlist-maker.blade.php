@@ -216,7 +216,7 @@
                         <input id="nombre_tierlist" type="text" name="nombre" placeholder="Nombre de la tierlist"
                             required>
                         <label for="descripcion_tierlist">Descripción de la tierlist:</label>
-                        <textarea id="descripcion_tierlist" name="descripcion" placeholder="Descripción de la tierlist" required></textarea>
+                        <textarea id="descripcion_tierlist" name="descripcion" placeholder="Descripción de la tierlist" required rows="5"></textarea>
                     </section>
                     <footer style="gap: 10px;">
                         <button class="btn_resaltado" onclick="guardarTierlist()">Guardar</button>

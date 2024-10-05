@@ -353,7 +353,12 @@
             display: flex;
             justify-content: flex-end;
             align-items: center;
+            flex-wrap: wrap;
             padding-inline: 2em;
+            cursor: text;
+
+            align-content: center;
+            text-align: end;
         }
 
         #counters_rol_tank {
@@ -1050,7 +1055,26 @@
         });
 
         function guardarCounters() {
-
+            fetch('/counters/update', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        counters: dataCounters
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.success) {
+                        alert(data.message);
+                    } else {
+                        alert(data.message);
+                        console.log(data.error);
+                    }
+                })
         }
     </script>
 </body>

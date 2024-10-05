@@ -195,6 +195,7 @@
             border-radius: 5px;
             /* Mastener el aspect ratio de la imagen */
             object-fit: cover;
+            user-select: none;
         }
 
         .filtro-t-selected {
@@ -261,16 +262,6 @@
             border: none;
             font-size: 1rem;
             font-weight: bold;
-        }
-
-        /* Imagenes de los heroes en el footer */
-        .imagen-footer img {
-            width: 80px;
-            height: 80px;
-        }
-
-        .imagen-footer span {
-            display: none;
         }
 
         .tier-footer {
