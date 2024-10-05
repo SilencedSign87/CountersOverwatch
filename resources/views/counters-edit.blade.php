@@ -253,6 +253,10 @@
             height: 90px;
             border-radius: 5px;
         }
+        .counter:hover{
+            filter: brightness(1.1);
+            cursor: pointer;
+        }
 
         .imagen_heroe:hover {
             background: white;
@@ -683,7 +687,8 @@
 
             } else {
                 // Si el counter ya existe:
-                // - No hacer nada
+                // - quitar el counter
+                removeCounter(id);
             }
 
             // Renderizar la interfaz de usuario
@@ -774,7 +779,7 @@
             countersSelectedHero.forEach(counter => {
                 let contenedorRol = document.getElementById(`counters_rol_${counter.rol}`);
                 contenedorRol.innerHTML += `
-                    <img onclick="removeCounter('${counter.hero_id}')" src="${counter.img_path}" alt="${counter.nombre}" class="imagen_hero_objetido" title="${counter.nombre}" data-hero-id="${counter.hero_id}" data-index="${countersSelectedHero.indexOf(counter)}">
+                    <img onclick="removeCounter('${counter.hero_id}')" src="${counter.img_path}" alt="${counter.nombre}" class="imagen_hero_objetido counter"  title="${counter.nombre}" data-hero-id="${counter.hero_id}" data-index="${countersSelectedHero.indexOf(counter)}">
                 `;
             });
 
@@ -996,7 +1001,7 @@
                     .then(response => response.json())
                     .then(data => {
                         console.log(data);
-                        window.location.href = '/';
+                        window.location.href = '/login';
                     })
                     .catch(error => {
                         console.error('Error al cerrar sesión:', error);
@@ -1074,6 +1079,7 @@
                         alert(data.message);
                         console.log(data.error);
                     }
+                    cerrarModal('modal-confirmar');
                 })
         }
     </script>

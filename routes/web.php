@@ -11,7 +11,6 @@ Route::get('/', MainPage::class);
 Route::get('/login', LoginComponent::class)->name('login');
 Route::get('/tierlist', tierlistComponent::class);
 
-
 Route::get('/tierlist-maker', [TierlistMakerController::class, 'index']);
 
 // Middleware

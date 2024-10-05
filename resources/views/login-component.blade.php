@@ -50,7 +50,8 @@
             pointer-events: none;
             /* Para que la imagen superior no interfiera con la interacción del usuario */
         }
-        .formulario{
+
+        .formulario {
             width: 100%;
             height: 100%;
             display: flex;
@@ -58,25 +59,30 @@
             justify-content: flex-start;
             align-items: center;
         }
-        .formulario form{
+
+        .formulario form {
             width: 100%;
             height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items:flex-start;
+            align-items: flex-start;
             gap: 10px;
         }
-        .formulario footer{
+
+        .formulario footer {
+            margin-block: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 10px;
         }
-        .label{
+
+        .label {
             font-size: 20px;
         }
-        .input-field{
+
+        .input-field {
             box-sizing: border-box;
             width: 100%;
             height: 50px;
@@ -87,38 +93,50 @@
             outline: none;
             margin-bottom: 10px;
         }
+
         .btn-login,
-        .btn-volver{
+        .btn-volver {
             width: fit-content;
-            height:fit-content;
+            height: fit-content;
             padding: 10px 20px;
-            background-color:transparent;
+            background-color: transparent;
             border-radius: 5px;
             transition: all 0.3s ease-in-out;
         }
 
-        .btn-login{
+        .btn-login {
             color: black;
             border: 2px solid black;
         }
 
-        .btn-volver{
+        .btn-volver {
             color: tomato;
             border: 2px solid tomato;
         }
 
         .btn-login:hover,
-        .btn-volver:hover{
+        .btn-volver:hover {
             cursor: pointer;
             color: white;
         }
-        .btn-login:hover{
+
+        .btn-login:hover {
             background-color: black;
         }
-        .btn-volver:hover{
+
+        .btn-volver:hover {
             background-color: tomato;
         }
 
+        .alert {
+            font-size: 10px;
+            color: red;
+            width: 100%;
+            height: fit-content;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
 
     <main class='bg'>
@@ -135,6 +153,30 @@
                     <input type="text" wire:model="correo" placeholder="Correo" class="input-field">
                     <label class="label" for="pass">Contraseña:</label>
                     <input type="password" wire:model="pass" placeholder="Contraseña" class="input-field">
+                    <span>
+                        <label for="rememberMe" class="label">Mantener sesión:</label>
+                        <input type="checkbox" wire:model="rememberMe" id="rememberMe" wire:model='rememberMe'>
+                    </span>
+                    @error('correo')
+                        <div class="alert">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                    @error('pass')
+                        <div class="alert">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                    @error('error')
+                        <div class="alert">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                    @if(session()->has('error'))
+                        <div class="alert">
+                            {{session()->get('error')}}
+                        </div>
+                    @endif
                     <footer>
                         <button type="submit" class="btn-login">Iniciar Sesión</button>
                         <a href="/">

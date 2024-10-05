@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\hero;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class countersController extends Controller
 {
@@ -32,36 +33,39 @@ class countersController extends Controller
 
     public function ActualizarCounters(Request $request)
     {
+        if (Auth::check()) {
+            $counters = $request->input('counters');
+            if ($counters) {
+                try {
+                    foreach ($counters as $heroData) {
+                        $hero = Hero::find($heroData['hero_id']);
+                        $hero->nota = $heroData['nota'];
 
-        $counters = $request->input('counters');
-        if ($counters) {
-            try {
-                foreach ($counters as $heroData) {
-                    $hero = Hero::find($heroData['hero_id']);
-                    $hero->nota = $heroData['nota'];
-                    
-                    // Obtener los IDs de los counters del array
-                    $counterIds = array_column($heroData['counters'], 'hero_id');
-                    
-                    // Sincronizar la relación counteredBy con los nuevos IDs
-                    $hero->counteredBy()->sync($counterIds);
-                    
-                    $hero->save();
+                        // Obtener los IDs de los counters del array
+                        $counterIds = array_column($heroData['counters'], 'hero_id');
+
+                        // Sincronizar la relación counteredBy con los nuevos IDs
+                        $hero->counteredBy()->sync($counterIds);
+
+                        $hero->save();
+                    }
+
+                    return response()->json(['success' => true, 'message' => 'Counters actualizados correctamente']);
+                } catch (\Throwable $th) {
+                    return response()->json(['success' => false, 'message' => $th->getMessage()], 500);
                 }
-
-                return response()->json(['success' => true, 'message' => 'Counters actualizados correctamente']);
-            } catch (\Throwable $th) {
-                return response()->json(['success' => false, 'message' => $th->getMessage()], 500);
+            } else {
+                return response()->json(['success' => false, 'message' => 'Faltan datos obligatorios, no se registró nada']);
             }
         } else {
-            return response()->json(['success' => false, 'message' => 'Faltan datos obligatorios, no se registró nada']);
+            return response()->json(['success' => false, 'message' => 'No estás autenticado, no se puede actualizar los counters']);
         }
     }
 
     public function getAllCounters()
     {
 
-        $heroes = Hero::with('counteredBy')->get();
+        $heroes = hero::with('counteredBy')->get();
 
         return response()->json($heroes);
     }
@@ -80,7 +84,7 @@ class countersController extends Controller
 
     public function CerrarSesion(Request $request)
     {
-        auth()->logout();
+        Auth::logout();
         $response = [];
         $response['status'] = 'success';
         $response['message'] = 'Sesión cerrada con éxito';
