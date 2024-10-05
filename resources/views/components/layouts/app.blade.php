@@ -45,6 +45,10 @@
             cursor: pointer;
             transition: background 0.2s ease-in-out;
             z-index: 15;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .btn_sesion:hover {

@@ -262,6 +262,7 @@ a {
     width: auto;
     max-height: 90px;
     border-radius: 5px;
+    user-select: none;
     cursor: grab;
     transition: scale 0.1s ease-in,
         border 0.1 ease-in;
@@ -423,8 +424,8 @@ a {
 .modal-content section textarea {
     min-width: 20em;
     max-width: 20em;
-    min-height: 2em;
     max-height: 7em;
+    field-sizing: content;
     font-size: 1.5rem;
     padding: 5px;
     border-radius: 5px;
@@ -540,6 +541,10 @@ a {
     font-size: 1rem;
     cursor: pointer;
     transition: background 0.2s ease-in-out;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .btn_sesion:hover {
