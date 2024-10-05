@@ -20,7 +20,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/logout', [countersController::class, 'CerrarSesion']);
     // Guardar la tierlist en la base de datos
     Route::post('/tierlist-maker/new', [TierlistMakerController::class, 'guardarTierlist']);
-    Route::get('/panelControl', [countersController::class,'index']);
-    Route::get('/counters/all', [countersController::class,'getAllCounters']);
-    Route::get('/counters/{heroId}', [countersController::class,'getspecificCounter']);
+    // Actualizar la lista de counters
+    Route::post('/counters/update',[countersController::class, 'ActualizarCounters']);
+
+    Route::get('/panelControl', [countersController::class, 'index']);
+    Route::get('/counters/all', [countersController::class, 'getAllCounters']);
+    Route::get('/counters/{heroId}', [countersController::class, 'getspecificCounter']);
 });
