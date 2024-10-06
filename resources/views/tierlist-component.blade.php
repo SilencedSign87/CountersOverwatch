@@ -59,7 +59,6 @@
             justify-content: center;
             align-items: center;
             gap: 0.5rem;
-            font-family: system-ui;
             text-transform: uppercase;
             font-weight: bold;
             font-size: 1.2rem;
@@ -274,9 +273,11 @@
 
     <header class="tier-header">
         <nav class="barra-navegacion">
-            <button class="boton-navegacion filtro-seleccionado" wire:navigate.hover href="/tierlist">
-                Ver Tierlist
-            </button>
+            <a href="#" style="text-decoration: none;">
+                <button class="boton-navegacion filtro-seleccionado">
+                    Ver Tierlist
+                </button>
+            </a>
             <a href="/tierlist-maker" style="text-decoration: none;">
                 <button class="boton-navegacion">
                     Hacer Tierlist

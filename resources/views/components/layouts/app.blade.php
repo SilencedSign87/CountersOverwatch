@@ -10,6 +10,13 @@
     <title>{{ $title ?? 'Page Title' }}</title>
     {{-- Icono de la parte superior del navegador --}}
     <link rel="icon" href="https://static.playoverwatch.com/img/favicon-2f5255d1c6.ico" type="image/x-icon">
+    {{-- Fuente --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
     <style>
         html,
         body {
@@ -24,8 +31,7 @@
             display: flex;
             flex-direction: column;
             min-height: 100%;
-
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'poppins', system-ui; 
         }
 
         #content {

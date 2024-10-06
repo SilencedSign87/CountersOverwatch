@@ -66,7 +66,6 @@
                   justify-content: center;
                   align-items: center;
                   gap: 0.5rem;
-                  font-family: system-ui;
                   text-transform: uppercase;
                   font-weight: bold;
                   font-size: 1.2rem;

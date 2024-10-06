@@ -6,7 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Modificar Counters</title>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
 
     <style>
         html,
@@ -22,8 +26,7 @@
             display: flex;
             flex-direction: column;
             min-height: 100%;
-
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'poppins', system-ui; 
         }
 
         #content {
@@ -352,7 +355,7 @@
 
         #nota_heroe {
             flex-grow: 1;
-            height: 90px;
+            height: fit-content;
             overflow-x: auto;
             display: flex;
             justify-content: flex-end;
@@ -553,7 +556,7 @@
             </div>
             <div id="contendor_hero_counters">
                 <div id="heroe-selected" class="contenedor_row">
-                    <h4 style="width:100%; text-align: center; color:hsla(0, 0%, 0%, 0.5);">Seleccione un heroe para
+                    <h4 style="width:100%; text-align: center; color:hsla(0, 0%, 0%, 0.5);">Seleccione un heroe de la parte superior para
                         editar los counters</h4>
                 </div>
                 <div id="hero_selected_counters">
