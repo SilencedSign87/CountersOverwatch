@@ -48,7 +48,7 @@ class TierlistMakerController extends Controller
                 return response()->json(['success' => false, 'message' => 'El nombre ya existe, no se registró nada']);
             }
             // Revisar si hay entries en el row final
-            if (count($tierlistData['tiers'][count($tierlistData['tiers']) - 1]) > 0) {
+            if (count($tierlistData['tiers'][count($tierlistData['tiers'])-1]['entries']) > 0) {
                 return response()->json(['success' => false, 'message' => 'Hay heroes sin registrar,  no se registró nada']);
             }
 
