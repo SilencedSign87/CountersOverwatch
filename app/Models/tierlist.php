@@ -4,10 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
 
-class hero extends Model
+class tierlist extends Model
 {
     use HasFactory;
     public $incrementing = false; // Deshabilitar el incremento automático
@@ -15,26 +14,14 @@ class hero extends Model
 
     protected $fillable = [
         'nombre',
-        'nota',
-        'rol',
-        'img_path'
+        'descripcion',
+        'fecha',
+        'num_tiers'
     ];
 
-    /**
-     * es counter
-     */
-    public function counters(): BelongsToMany
-    {
-        return $this->belongsToMany(Hero::class, 'hero_counter', 'hero_id', 'counter_id');
-    }
-
-    /**
-     * sus counters
-     */
-
-    public function counteredBy(): BelongsToMany
-    {
-        return $this->belongsToMany(Hero::class, 'hero_counter', 'counter_id', 'hero_id');
+    // Entradas de la tierlist
+    public function tiers() {
+        return $this->hasMany(tierlist_tier::class);
     }
 
     protected static function boot()

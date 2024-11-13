@@ -7,16 +7,16 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations, tabla pivote
+     * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('heroes', function (Blueprint $table) {
-            $table->uuid('id')->primary(); // UUID en lugar de id incremental
+        Schema::create('tierlists', function (Blueprint $table) {
+            $table->uuid('id')->primary();
             $table->string('nombre');
-            $table->text('nota')->nullable();
-            $table->string('rol'); // 1 tanque, 2 dps, 3 supp
-            $table->string('img_path')->nullable();
+            $table->string('descripcion')->nullable();
+            $table->date('fecha')->nullable();
+            $table->integer('num_tiers');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('heroes');
+        Schema::dropIfExists('tierlists');
     }
 };

@@ -2,39 +2,33 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\hero;
+use App\Models\tierlist_tier;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Str;
 
-class hero extends Model
+
+class tierlist_entry extends Model
 {
     use HasFactory;
     public $incrementing = false; // Deshabilitar el incremento automático
     protected $keyType = 'string'; // El tipo de la llave primaria será string
 
     protected $fillable = [
-        'nombre',
-        'nota',
-        'rol',
-        'img_path'
+        'tierlist_tier_id',
+        'hero_id',
+        'posicion'
     ];
 
-    /**
-     * es counter
-     */
-    public function counters(): BelongsToMany
-    {
-        return $this->belongsToMany(Hero::class, 'hero_counter', 'hero_id', 'counter_id');
+    // obtener el heroes que aparecen en la tierlist
+    public function hero() {
+        return $this->belongsTo(hero::class,'hero_id');
     }
 
-    /**
-     * sus counters
-     */
-
-    public function counteredBy(): BelongsToMany
-    {
-        return $this->belongsToMany(Hero::class, 'hero_counter', 'counter_id', 'hero_id');
+    // obtener la tierlist_row a la que pertenece
+    public function row() {
+        return $this->belongsTo(tierlist_tier::class, 'tierlist_tier_id');
     }
 
     protected static function boot()

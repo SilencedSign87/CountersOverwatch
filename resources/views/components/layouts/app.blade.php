@@ -1,24 +1,21 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> --}}
-
     {{-- Estilos de livewire --}}
     @livewireStyles()
-
-    {{-- estilos de bootstrap --}}
-    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"> --}}
-
     {{-- Titulo dado en el componente --}}
     <title>{{ $title ?? 'Page Title' }}</title>
-
     {{-- Icono de la parte superior del navegador --}}
     <link rel="icon" href="https://static.playoverwatch.com/img/favicon-2f5255d1c6.ico" type="image/x-icon">
+    {{-- Fuente --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
 
     <style>
         html,
@@ -34,34 +31,59 @@
             display: flex;
             flex-direction: column;
             min-height: 100%;
-
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'poppins', system-ui; 
         }
 
         #content {
             flex: 1;
         }
 
-        /* Estilo del scroll*/
-        ::-webkit-scrollbar {
-            width: 8px;
-            /* Tamaño del scroll */
+        .btn_sesion {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #f06414;
+            color: #ffffff;
+            border: 0;
+            border-radius: 0.25rem;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s ease-in-out;
+            z-index: 15;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.25);
-            /* Color del fondo del scroll */
+        .btn_sesion:hover {
+            background: #ff8b47;
+            color: #ffffff;
         }
 
-        ::-webkit-scrollbar-thumb {
-            background: rgb(194, 194, 194);
-            /* Color del scroll */
-            border-radius: 1rem;
+        .btn_sesion:active {
+            scale: 0.9;
         }
 
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgb(165, 165, 165);
-            /* Color del scroll al pasar el ratón */
+        .btn_nav {
+            background: #ffffff;
+            color: #414141;
+            border: 0;
+            border-radius: 0.25rem;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s ease-in-out;
+        }
+
+        .btn_nav:hover {
+            background: #464646;
+            color: #ffffff;
+        }
+
+        .btn_nav:active {
+            scale: 0.9;
         }
     </style>
 
@@ -70,13 +92,25 @@
 </head>
 
 <body>
+    @auth
+        <a href="/panelControl">
+            <button class="btn_sesion">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M4 6l16 0" />
+                    <path d="M4 12l16 0" />
+                    <path d="M4 18l16 0" />
+                </svg>
+            </button>
+        </a>
+    @endauth
+
     @csrf
     {{ $slot }}
 
     @livewireScripts()
-
-    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"> </script> --}}
 
     @stack('scripts')
 
